@@ -1,0 +1,109 @@
+object TMainForm
+  Title = 'XDE: XCL''s Development Environment'
+  Width = 800
+  Height = 600
+  object LangMan: TSourceLanguagesManager
+  end
+  object FS: TFileChooserDialog
+  end
+  object TActionList
+    object actFileNew: TAction
+      StockID = 'gtk-new'
+      OnExecute = FileNew
+    end
+    object actFileOpen: TAction
+      StockID = 'gtk-open'
+      OnExecute = FileOpen
+    end
+    object actFileSave: TAction
+      StockID = 'gtk-save'
+      OnExecute = FileSave
+      OnUpdate = FileSaveUpd
+    end
+    object actFileSaveAs: TAction
+      StockID = 'gtk-save-as'
+      OnExecute = FileSaveAs
+      OnUpdate = FileSaveAsUpd
+    end
+    object actFileClose: TAction
+      StockID = 'gtk-close'
+      OnExecute = FileClose
+      OnUpdate = FileCloseUpd
+    end
+    object actFileQuit: TAction
+      StockID = 'gtk-quit'
+      OnExecute = FileQuit
+    end
+  end
+  object TVBox
+    object TMenuBar
+      object TMenuItem
+        Caption = '_File'
+        object TMenuItem
+          Action = actFileNew
+        end
+        object TMenuItem
+          Action = actFileOpen
+        end
+        object TMenuItem
+          Action = actFileSave
+        end
+        object TMenuItem
+          Action = actFileSaveAs
+        end
+        object TSeparatorMenuItem
+        end
+        object TMenuItem
+          Action = actFileClose
+        end
+        object TSeparatorMenuItem
+        end
+        object TMenuItem
+          Action = actFileQuit
+        end
+      end
+      object TMenuItem
+        Caption = '_Options'
+        object TMenuItem
+          Caption = 'Compiler Options'
+          OnClick = ShowCompilerOptions
+        end
+        object TMenuItem
+          Caption = 'Editor Options'
+          OnClick = ShowEditorOptions
+        end
+      end
+      object TMenuItem
+        Caption = 'Help'
+        RightJustified = True
+        object TMenuItem
+          Caption = 'About...'
+        end
+      end
+    end
+    object TToolBar
+      ToolBarStyle = tbsIcons
+      object TToolButton
+        Action = actFileNew
+      end
+      object TToolButton
+        Action = actFileOpen
+      end
+      object TToolButton
+        Action = actFileSave
+      end
+      object TSeparatorToolItem
+      end
+      object TToolButton
+        Action = actFileClose
+      end
+      object TSeparatorToolItem
+      end
+    end
+    object NB: TNotebook
+    end
+    object TStatusBar
+      BoxExpand = False
+    end
+  end
+end

@@ -1,0 +1,34 @@
+/* XPM */
+static char *tvpaned[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 5 1",
+"  c black",
+". c #7B7B7B7B7B7B",
+"X c gray84",
+"o c gray100",
+"O c None",
+/* pixels */
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"Ooooooooooooooooooooo O",
+"OoXXXXXXXXXXXXXXXXXX. O",
+"OoXXXXXXXXXXXXXXXXXX. O",
+"OoXXXXXXXXXXXXXXXXXX. O",
+"OoXXXXXXXXXXXXXXXXXX. O",
+"OoXXXXXXXXXXXXXXXXXX. O",
+"OoXXXXXXXXXXXXXXXXXX. O",
+"OoXXXXXXXXXXX.....XX. O",
+"OoXXXXXXXXXXX.ooo..X. O",
+"Oo............ooo.... O",
+"O            .ooo..   O",
+"Ooooooooooooo......oo O",
+"OoXXXXXXXXXXXX.....X. O",
+"OoXXXXXXXXXXXXXXXXXX. O",
+"OoXXXXXXXXXXXXXXXXXX. O",
+"OoXXXXXXXXXXXXXXXXXX. O",
+"OoXXXXXXXXXXXXXXXXXX. O",
+"OoXXXXXXXXXXXXXXXXXX. O",
+"OoXXXXXXXXXXXXXXXXXX. O",
+"Oo................... O",
+"O                     O",
+"OOOOOOOOOOOOOOOOOOOOOOO"
+};

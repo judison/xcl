@@ -1,0 +1,34 @@
+/* XPM */
+static char *tradiotoolbutton[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 5 1",
+"  c black",
+". c #7B7B7B7B7B7B",
+"X c gray84",
+"o c gray100",
+"O c None",
+/* pixels */
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOooooooooooooooooooo O",
+"OOoXXXXXXXXXXXXXXXXX. O",
+"OOoXoooo oooo oooo X. O",
+"OOoXoXXX oXXX oXXX X. O",
+"OOoXoXXX oXXX oXXX X. O",
+"OOoXo    o    o    X. O",
+"OOoXXXXXXXXXXXXXXXXX. O",
+"OOo.................. O",
+"OO                    O",
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOO    OOOOOO",
+"OOOOOOOOOOOO XooX.OOOOO",
+"OOOOOOOOOOO Xo..oX.OOOO",
+"OOOOOOOOOOO o.  .o.OOOO",
+"OOOOOOOOOOO o.  .o.OOOO",
+"OOOOOOOOOOO Xo..oX.OOOO",
+"OOOOOOOOOOOO.XooX.OOOOO",
+"OOOOOOOOOOOOO....OOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO"
+};

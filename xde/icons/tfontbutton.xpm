@@ -1,0 +1,36 @@
+/* XPM */
+static char *tfontbutton[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 7 1",
+"  c black",
+". c #7B7B7B7B7B7B",
+"X c red",
+"o c #FFFFFFFF9C9C",
+"O c gray84",
+"+ c gray100",
+"@ c None",
+/* pixels */
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@++++++++++++++++++ @@",
+"@@+OOOOOOOOOOOOOOOO. @@",
+"@@+OOOOOOoooooOOOOO. @@",
+"@@+OOOOOOXXXXoOOOOO. @@",
+"@@+OOOOOXooXXoOOOOO. @@",
+"@@+OOOOOOOXoXoXXXOO. @@",
+"@@+OOOXooXXXXXoooXO. @@",
+"@@+OOXoXXXooXXoOOoO. @@",
+"@@+OOOoXooXOoXoOOOO. @@",
+"@@+OOOoXoXOOoXoooXO. @@",
+"@@+OOOoXooXOOoXXXoO. @@",
+"@@+OOOoXXXoOOOoooOO. @@",
+"@@+OOOOoooOOOOOOOOO. @@",
+"@@+................. @@",
+"@@                   @@",
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@@@@@@@@@@@@@@@@@@@@@@"
+};

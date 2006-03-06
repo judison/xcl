@@ -1,0 +1,35 @@
+/* XPM */
+static char *ttoggletoolbutton[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 6 1",
+"  c black",
+". c #7B7B7B7B7B7B",
+"X c #C5C5C2C2C5C5",
+"o c gray84",
+"O c gray100",
+"+ c None",
+/* pixels */
+"+++++++++++++++++++++++",
+"++OOOOOOOOOOOOOOOOOOO +",
+"++Oooooooooooooooooo. +",
+"++OoOOOO OOOO OOOO o. +",
+"++OoOooo Oooo Oooo o. +",
+"++OoOooo Oooo Oooo o. +",
+"++OoO    O    O    o. +",
+"++Oooooooooooooooooo. +",
+"++O.................. +",
+"++                    +",
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++",
+"++++++++............O++",
+"++++++++.           O++",
+"++++++++. XXXXXXXXXXO++",
+"++++++++. XX XX X XXO++",
+"++++++++. X X X . XXO++",
+"++++++++. X X X . XXO++",
+"++++++++. XX XX X XXO++",
+"++++++++. XXXXXXXXXXO++",
+"++++++++OOOOOOOOOOOOO++",
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++"
+};

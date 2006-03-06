@@ -1,0 +1,34 @@
+/* XPM */
+static char *tdrawingarea[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 5 1",
+"  c black",
+". c blue",
+"X c red",
+"o c yellow",
+"O c None",
+/* pixels */
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOO          OOOOOOOOOO",
+"OOO XXXXXXXX OOOOOOOOOO",
+"OOO XXXXXXXX     OOOOOO",
+"OOO XXXXXXX ooooo OOOOO",
+"OOO XXXXXX ooooooo OOOO",
+"OOO XXXXX ooooooooo OOO",
+"OOO XXXXX ooooooooo OOO",
+"OOO XXXXX ooooooooo OOO",
+"OOO XXXXX ooooooooo OOO",
+"OOO        ooooooo OOOO",
+"OOOOO ..... ooooo OOOOO",
+"OOOOO ......     OOOOOO",
+"OOOOO ......... OOOOOOO",
+"OOOOO ......... OOOOOOO",
+"OOOOO ......... OOOOOOO",
+"OOOOO           OOOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO"
+};

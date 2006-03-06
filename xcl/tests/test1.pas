@@ -1,0 +1,148 @@
+(*
+   $Id: test1.pas,v 1.8 2006/02/28 16:22:58 judison Exp $
+
+   XCL - XDE's Component Library
+   Copyright (C) 2005 Judison Oliveira Gil Filho
+
+   See the file COPYING.FPC, included in this distribution,
+   for details about the copyright.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*)
+
+program test1;
+{$H+}
+{$Mode ObjFpc}
+
+uses Classes, SysUtils, xcl, test1_xrc;
+
+type
+  TTest1 = class(TForm)
+    Btn1, Btn2: TButton;
+    Entry1: TEntry;
+    Timer1: TTimer;
+    Cal: TCalendar;
+    TV: TTextView;
+    CM: TListStore;
+    Img: TImage;
+    PB: TPixBuf;
+    procedure MyFormShow(Sender: TObject);
+    procedure Btn1FocusIn(Sender: TObject);
+    procedure Btn1FocusOut(Sender: TObject);
+    procedure Btn2Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure CalChanged(Sender: TObject);
+    procedure CloseFrm(Sender: TObject);
+    procedure Entry1Changed(Sender: TObject);
+    procedure OpenClicked(Sender: TObject);
+  public
+    constructor Create(AOwner: TComponent); override;
+  end;
+
+constructor TTest1.Create(AOwner: TComponent);
+var
+  It: TTreeIter;
+begin
+  inherited;
+  CM.Append(It); CM.SetStringValue(It, 0, 'Abacate');
+  CM.Append(It); CM.SetStringValue(It, 0, 'Ameixa');
+  CM.Append(It); CM.SetStringValue(It, 0, 'Banana');
+  CM.Append(It); CM.SetStringValue(It, 0, 'Laranja');
+  CM.Append(It); CM.SetStringValue(It, 0, 'Fruta do Conde');
+  CM.Append(It); CM.SetStringValue(It, 0, 'Maca');
+  CM.Append(It); CM.SetStringValue(It, 0, 'Melao');
+  CM.Append(It); CM.SetStringValue(It, 0, 'Melancia');
+  CM.Append(It); CM.SetStringValue(It, 0, 'Mixirica');
+  CM.Append(It); CM.SetStringValue(It, 0, 'Pera');
+  CM.Append(It); CM.SetStringValue(It, 0, 'Uva');
+end;
+
+procedure TTest1.OpenClicked(Sender: TObject);
+var
+  FCD: TFileChooserDialog;
+begin
+  FCD := TFileChooserDialog.Create(nil);
+  FCD.Execute;
+  PB.FileName := FCD.FileName;
+  FCD.Free;
+end;
+
+procedure TTest1.Entry1Changed(Sender: TObject);
+begin
+  WriteLn('Entry1.Changed: ', Entry1.Text);
+end;
+
+procedure TTest1.CalChanged(Sender: TObject);
+begin
+  WriteLn('Cal.Changed: ', DateToStr(Cal.Date));
+end;
+
+procedure TTest1.MyFormShow(Sender: TObject);
+begin
+  WriteLn('hehe OnShow');
+end;
+
+procedure TTest1.Btn1FocusIn(Sender: TObject);
+begin
+  WriteLn('Btn1 - Focus In');
+end;
+
+procedure TTest1.Btn1FocusOut(Sender: TObject);
+begin
+  WriteLn('Btn1 - Focus Out');
+end;
+
+procedure TTest1.Btn2Click(Sender: TObject);
+var
+  Stream: TStream;
+  FCD: TFileChooserDialog;
+begin
+  //==
+  WriteLn(TButton(Sender).Name + ' Clicked');
+  Stream := TFileStream.Create('out.frm', fmCreate);
+  WriteTxtFrm(Stream);
+  Stream.Free;
+  FCD := TFileChooserDialog.Create(nil);
+//  FCD.Action := fcaSave;
+  FCD.Execute;
+  FCD.Free;
+//  Close;
+end;
+
+procedure TTest1.Timer1Timer(Sender: TObject);
+begin
+  WriteLn('*** Timer!!');
+end;
+
+procedure TTest1.CloseFrm(Sender: TObject);
+begin
+  Close;
+end;
+
+var
+  MyForm : TTest1;
+begin
+  Application.Initialize;
+  Application.CreateForm(TTest1, MyForm);
+  Application.Run;
+end.
+{
+  $Log: test1.pas,v $
+  Revision 1.8  2006/02/28 16:22:58  judison
+  New resource system
+
+  Revision 1.7  2005/12/02 22:31:34  judison
+  Long-term changes (again) I need to use cvs more!
+
+  Revision 1.6  2005/11/18 20:06:58  judison
+  long-term changes...
+
+  Revision 1.5  2005/03/28 03:19:07  judison
+  New Resource System
+
+  Revision 1.4  2005/03/26 05:21:47  judison
+  + CVS Log Tag
+
+}

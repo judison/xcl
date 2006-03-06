@@ -1,0 +1,35 @@
+/* XPM */
+static char *tmenubar[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 6 1",
+"  c black",
+". c #7B7B7B7B7B7B",
+"X c gray84",
+"o c gray87",
+"O c gray100",
+"+ c None",
+/* pixels */
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++",
+"++OOOOOOOOOOOOOOOOOOO +",
+"++OXXXXXXXXXXXXXXXXX. +",
+"++OXoooo oooo oooo X. +",
+"++OXoXXX oXXX oXXX X. +",
+"++OXoXXX oXXX oXXX X. +",
+"++OXOOOOOOO.  o    X. +",
+"++OXOoooooo.XXXXXXXX. +",
+"++O.Oo....o.......... +",
+"++  Ooooooo.          +",
+"++++Oo....o. ++++++++++",
+"++++Ooooooo. ++++++++++",
+"++++Oo....o. ++++++++++",
+"++++Ooooooo. ++++++++++",
+"++++Oo....o. ++++++++++",
+"++++Ooooooo. ++++++++++",
+"++++O....... ++++++++++",
+"+++++        ++++++++++",
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++"
+};

@@ -1,0 +1,33 @@
+/* XPM */
+static char *tradiomenuitem[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 4 1",
+"  c black",
+". c #7B7B7B7B7B7B",
+"X c gray100",
+"o c None",
+/* pixels */
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"oooooooo.oooooooooooooo",
+"ooooooo...ooooooooooooo",
+"oooooo.. ..oooooooooooo",
+"ooooo.. o ..ooooooooooo",
+"oooo.. ooo ..oooooooooo",
+"ooo.. ooooo ..ooooooooo",
+"ooooXXoooooXXoooooooooo",
+"oooooXXoooXXooooooooooo",
+"ooooooXXoXXooooooo oooo",
+"oooooooXXXoooooo  ooooo",
+"ooooooooXooooo    ooooo",
+"oooooooooooo     oooooo",
+"ooooooooooooo    oooooo",
+"ooooooooooooo   ooooooo",
+"oooooooooooo oo ooooooo",
+"ooooooooooo ooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo"
+};
