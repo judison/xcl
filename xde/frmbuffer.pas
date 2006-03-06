@@ -1,6 +1,4 @@
 (*
-   $Id: frmbuffer.pas,v 1.9 2006/02/28 16:26:29 judison Exp $
-
    XDE - XCL's Development Environment
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -338,63 +336,3 @@ end;
 
 
 end.
-{
-$Log: frmbuffer.pas,v $
-Revision 1.9  2006/02/28 16:26:29  judison
-* New Resource System
-* Better Editing Functions
-
-Revision 1.8  2005/12/27 03:14:06  judison
-*** empty log message ***
-
-Revision 1.7  2005/12/22 23:57:01  judison
-*** empty log message ***
-
-Revision 1.6  2005/12/19 23:27:47  judison
-*** empty log message ***
-
-Revision 1.5  2005/12/18 07:26:50  judison
-*** empty log message ***
-
-Revision 1.4  2005/12/18 06:59:58  judison
-Added ComponentPalette and Icons
-
-Revision 1.3  2005/12/18 05:05:59  judison
-copyleft stuff
-
-Revision 1.2  2005/12/17 21:48:30  judison
-*** empty log message ***
-
-Revision 1.1.1.1  2005/12/17 17:29:39  judison
-Initial Import
-
-Revision 1.9  2005/12/16 03:29:53  judison
-*** empty log message ***
-
-Revision 1.8  2005/12/15 03:44:41  judison
-Added TIntegerPropEditor
-Some BugFix
-
-Revision 1.7  2005/12/14 00:57:51  judison
-*** empty log message ***
-
-Revision 1.6  2005/12/12 04:32:40  judison
-IDE Changes, new property editor
-
-Revision 1.5  2005/12/11 11:46:33  judison
-Added TPropertyEditor
-
-Revision 1.4  2005/12/10 17:53:36  judison
-Now uses DesignShowProp
-
-Revision 1.3  2005/12/10 07:47:18  judison
-Show component list and properties
-
-Revision 1.2  2005/12/08 22:44:23  judison
-Long term changes
-
-Revision 1.1  2005/12/02 22:31:34  judison
-Long-term changes (again) I need to use cvs more!
-
-
-}

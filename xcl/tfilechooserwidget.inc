@@ -1,6 +1,4 @@
 (*
-   $Id: tfilechooserwidget.inc,v 1.4 2005/03/28 05:52:42 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -46,12 +44,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: tfilechooserwidget.inc,v $
-Revision 1.4  2005/03/28 05:52:42  judison
-* GtkFileChooser Interface
-
-Revision 1.3  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

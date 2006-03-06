@@ -1,6 +1,4 @@
 (*
-   $Id: tadjustment.inc,v 1.3 2005/12/19 22:49:23 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -160,13 +158,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: tadjustment.inc,v $
-Revision 1.3  2005/12/19 22:49:23  judison
-various changes
-added TSpinButton
-
-Revision 1.2  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

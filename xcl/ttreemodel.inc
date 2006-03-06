@@ -1,6 +1,4 @@
 (*
-   $Id: ttreemodel.inc,v 1.3 2005/12/14 00:57:51 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -228,15 +226,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: ttreemodel.inc,v $
-Revision 1.3  2005/12/14 00:57:51  judison
-*** empty log message ***
-
-Revision 1.2  2005/12/10 07:48:32  judison
-*** empty log message ***
-
-Revision 1.1  2005/11/18 20:11:23  judison
-...
-
-}

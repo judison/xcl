@@ -1,6 +1,4 @@
 (*
-   $Id: syntax.pas,v 1.1 2005/12/17 17:43:41 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -365,16 +363,3 @@ begin
 end;
 
 end.
-{
-$Log: syntax.pas,v $
-Revision 1.1  2005/12/17 17:43:41  judison
-moved syntax.pas to tests/editor
-
-Revision 1.3  2005/03/27 19:44:35  judison
-* New Event System
-* Some Other Changes
-
-Revision 1.2  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

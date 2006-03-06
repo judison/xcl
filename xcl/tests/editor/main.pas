@@ -1,6 +1,4 @@
 (*
-   $Id: main.pas,v 1.4 2005/03/27 19:44:31 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -133,13 +131,3 @@ begin
 end;
 
 end.
-{
-$Log: main.pas,v $
-Revision 1.4  2005/03/27 19:44:31  judison
-* New Event System
-* Some Other Changes
-
-Revision 1.3  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

@@ -1,6 +1,4 @@
 (*
-   $Id
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -66,6 +64,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log
-}

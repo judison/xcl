@@ -1,6 +1,4 @@
 (*
-   $Id: tdblabel.inc,v 1.1 2005/12/30 17:21:38 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -101,10 +99,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: tdblabel.inc,v $
-Revision 1.1  2005/12/30 17:21:38  judison
-* Moved DB Comps to xcldb.inc
-* Added TCanvas
-
-}

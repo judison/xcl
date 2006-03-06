@@ -1,6 +1,4 @@
 (*
-   $Id: timage.inc,v 1.6 2006/03/01 20:52:34 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -149,19 +147,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: timage.inc,v $
-Revision 1.6  2006/03/01 20:52:34  judison
-Added TImage.Resource
-Removed TImage.StorageType
-
-Revision 1.5  2005/12/11 21:38:16  judison
-TImage.StorageType
-
-Revision 1.4  2005/12/02 22:31:34  judison
-Long-term changes (again) I need to use cvs more!
-
-Revision 1.3  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

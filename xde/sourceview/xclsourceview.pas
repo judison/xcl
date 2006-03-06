@@ -1,6 +1,4 @@
 (*
-   $Id: xclsourceview.pas,v 1.3 2006/03/04 16:46:10 judison Exp $
-
    XCL TSourceView Component
    Copyright (C) 2005 Judison Oliveira Gil Filho (judison@gmail.com)
 
@@ -18,10 +16,8 @@ unit XCLSourceView;
 {$H+}
 {$MODE ObjFpc}
 
-// By now, I can't compile GtkSourceView on win32
-{$IFNDEF WIN32}
-  {$DEFINE HAS_GTK_SOURCE_VIEW}
-{$ENDIF}
+// If you don't have gtksourceview undefine this
+{$DEFINE HAS_GTK_SOURCE_VIEW}
 
 interface
 
@@ -394,18 +390,3 @@ end;
 begin
   RegisterClass(TSourceView);
 end.
-
-{
-  $Log: xclsourceview.pas,v $
-  Revision 1.3  2006/03/04 16:46:10  judison
-  Changes to compile on Win32
-
-  Revision 1.2  2006/02/28 16:26:29  judison
-  * New Resource System
-  * Better Editing Functions
-
-  Revision 1.1  2006/02/25 19:19:16  judison
-  Added GtkSourceView/XCLSourceView
-  Removed all deps on Scintilla
-
-}

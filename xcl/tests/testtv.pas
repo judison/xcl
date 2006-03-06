@@ -1,6 +1,4 @@
 (*
-   $Id: testtv.pas,v 1.2 2006/02/28 16:22:58 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -69,12 +67,3 @@ begin
   Application.CreateForm(TTestTV, MyForm);
   Application.Run;
 end.
-{
-  $Log: testtv.pas,v $
-  Revision 1.2  2006/02/28 16:22:58  judison
-  New resource system
-
-  Revision 1.1  2005/11/18 20:24:46  judison
-  *** empty log message ***
-
-}

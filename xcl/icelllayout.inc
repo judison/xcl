@@ -1,6 +1,4 @@
 (*
-   $Id: icelllayout.inc,v 1.1 2005/11/18 20:11:23 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -74,9 +72,3 @@ begin
 end;
 
 {$ENDIF}
-{
-  $Log: icelllayout.inc,v $
-  Revision 1.1  2005/11/18 20:11:23  judison
-  ...
-
-}

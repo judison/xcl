@@ -1,6 +1,4 @@
 (*
-   $Id: tmenuitem.inc,v 1.7 2005/11/22 01:05:28 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -134,28 +132,3 @@ begin
 end;
 
 {$ENDIF}
-{
-  $Log: tmenuitem.inc,v $
-  Revision 1.7  2005/11/22 01:05:28  judison
-  * Action Support
-
-  Revision 1.6  2005/03/27 09:53:51  judison
-  * New Event System
-
-  Revision 1.5  2005/03/27 09:00:21  judison
-  * Bug Fix (Caption <> Text)
-
-  Revision 1.4  2005/03/27 01:55:06  judison
-  * Text -> Caption
-  + IsCaptionStored
-
-  Revision 1.3  2005/03/27 00:27:54  judison
-  + TControlActionLink, TControl.Action
-  + TCustomToolitem
-  + TMenuItem.Action, TToolItem.Action
-  + TControl.Visible
-
-  Revision 1.2  2005/03/26 05:21:47  judison
-  + CVS Log Tag
-
-}

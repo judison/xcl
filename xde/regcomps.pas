@@ -1,6 +1,4 @@
 (*
-   $Id: regcomps.pas,v 1.1 2006/02/27 15:16:48 judison Exp $
-
    XDE - XCL's Development Environment
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -134,9 +132,3 @@ initialization
 finalization
   ComponentPages.Free;
 end.
-{
-$Log: regcomps.pas,v $
-Revision 1.1  2006/02/27 15:16:48  judison
-*** empty log message ***
-
-}

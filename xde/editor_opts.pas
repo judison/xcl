@@ -1,6 +1,4 @@
 (*
-   $Id: editor_opts.pas,v 1.2 2005/12/18 05:05:59 judison Exp $
-
    XDE - XCL's Development Environment
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -48,12 +46,3 @@ begin
 end;
 
 end.
-{
-  $Log: editor_opts.pas,v $
-  Revision 1.2  2005/12/18 05:05:59  judison
-  copyleft stuff
-
-  Revision 1.1  2005/12/17 21:49:44  judison
-  *** empty log message ***
-
-}

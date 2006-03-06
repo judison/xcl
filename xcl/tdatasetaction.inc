@@ -1,6 +1,4 @@
 (*
-   $Id: tdatasetaction.inc,v 1.3 2005/12/30 17:21:38 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -372,10 +370,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: tdatasetaction.inc,v $
-Revision 1.3  2005/12/30 17:21:38  judison
-* Moved DB Comps to xcldb.inc
-* Added TCanvas
-
-}

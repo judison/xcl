@@ -1,6 +1,4 @@
 (*
-   $Id: ttoolbar.inc,v 1.5 2005/11/18 20:28:08 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -137,10 +135,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: ttoolbar.inc,v $
-Revision 1.5  2005/11/18 20:28:08  judison
-*** empty log message ***
-
-
-}

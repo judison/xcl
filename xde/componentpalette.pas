@@ -1,6 +1,4 @@
 (*
-   $Id: componentpalette.pas,v 1.4 2006/03/04 20:15:54 judison Exp $
-
    XDE - XCL's Development Environment
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -100,19 +98,3 @@ begin
 end;
 
 end.
-{
-$Log: componentpalette.pas,v $
-Revision 1.4  2006/03/04 20:15:54  judison
-Now uses ToolTips
-icons_xrc.pp permanent
-
-Revision 1.3  2006/03/01 20:54:38  judison
-Now using TImage.Resource
-
-Revision 1.2  2006/03/01 18:41:13  judison
-Changes to use new PIXDATA resources
-
-Revision 1.1  2006/02/27 15:16:48  judison
-*** empty log message ***
-
-}

@@ -1,6 +1,4 @@
 (*
-   $Id: tapplication.inc,v 1.8 2006/03/04 20:17:28 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -211,28 +209,3 @@ end;
 
 
 {$ENDIF}
-{
-$Log: tapplication.inc,v $
-Revision 1.8  2006/03/04 20:17:28  judison
-Added ToolTip
-
-Revision 1.7  2006/02/27 17:43:30  judison
-Added TClipboard
-
-Revision 1.6  2005/12/19 22:49:23  judison
-various changes
-added TSpinButton
-
-Revision 1.5  2005/12/02 22:31:34  judison
-Long-term changes (again) I need to use cvs more!
-
-Revision 1.4  2005/11/22 01:05:28  judison
-* Action Support
-
-Revision 1.3  2005/03/27 09:53:51  judison
-* New Event System
-
-Revision 1.2  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

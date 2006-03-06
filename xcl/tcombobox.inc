@@ -1,6 +1,4 @@
 (*
-   $Id: tcombobox.inc,v 1.2 2005/12/14 00:57:51 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -261,12 +259,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: tcombobox.inc,v $
-Revision 1.2  2005/12/14 00:57:51  judison
-*** empty log message ***
-
-Revision 1.1  2005/11/18 20:11:23  judison
-...
-
-}

@@ -1,6 +1,4 @@
 (*
-   $Id: itreesortable.inc,v 1.2 2005/12/12 23:35:02 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -85,12 +83,3 @@ begin
 end;
 
 {$ENDIF}
-{
-  $Log: itreesortable.inc,v $
-  Revision 1.2  2005/12/12 23:35:02  judison
-  Removed Warnings
-
-  Revision 1.1  2005/12/10 17:52:00  judison
-  Added ITreeSortable (Gtk Interface) and TSortType
-
-}

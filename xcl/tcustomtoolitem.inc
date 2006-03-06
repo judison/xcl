@@ -1,6 +1,4 @@
 (*
-   $Id: tcustomtoolitem.inc,v 1.2 2005/03/27 09:53:51 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -115,16 +113,3 @@ begin
 end;
 
 {$ENDIF}
-{
-  $Log: tcustomtoolitem.inc,v $
-  Revision 1.2  2005/03/27 09:53:51  judison
-  * New Event System
-
-  Revision 1.1  2005/03/27 00:27:54  judison
-  + TControlActionLink, TControl.Action
-  + TCustomToolitem
-  + TMenuItem.Action, TToolItem.Action
-  + TControl.Visible
-
-
-}

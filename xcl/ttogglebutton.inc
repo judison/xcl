@@ -1,6 +1,4 @@
 (*
-   $Id: ttogglebutton.inc,v 1.5 2005/12/16 03:29:52 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -102,18 +100,3 @@ begin
 end;
 
 {$ENDIF}
-{
-  $Log: ttogglebutton.inc,v $
-  Revision 1.5  2005/12/16 03:29:52  judison
-  *** empty log message ***
-
-  Revision 1.4  2005/11/18 20:06:58  judison
-  long-term changes...
-
-  Revision 1.3  2005/03/27 09:53:51  judison
-  * New Event System
-
-  Revision 1.2  2005/03/26 05:21:47  judison
-  + CVS Log Tag
-
-}

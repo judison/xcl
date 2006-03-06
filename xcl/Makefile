@@ -1,5 +1,3 @@
-# $Id: Makefile,v 1.6 2005/12/17 17:57:33 judison Exp $
-
 OPT=
 FPC=ppc386
 

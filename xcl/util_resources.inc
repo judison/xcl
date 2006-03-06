@@ -1,6 +1,4 @@
 (*
-   $Id: util_resources.inc,v 1.3 2006/03/01 18:32:40 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -107,15 +105,3 @@ begin
 end;
 
 {$ENDIF}
-{
-  $Log: util_resources.inc,v $
-  Revision 1.3  2006/03/01 18:32:40  judison
-  Added PIXDATA resources
-
-  Revision 1.2  2006/02/28 16:22:57  judison
-  New resource system
-
-  Revision 1.1  2005/03/28 02:50:35  judison
-  + New Resource System
-
-}

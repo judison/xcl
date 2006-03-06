@@ -1,6 +1,4 @@
 (*
-   $Id: tcontrolactionlink.inc,v 1.1 2005/03/27 00:27:54 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -60,13 +58,3 @@ begin
 end;
 
 {$ENDIF}
-{
-  $Log: tcontrolactionlink.inc,v $
-  Revision 1.1  2005/03/27 00:27:54  judison
-  + TControlActionLink, TControl.Action
-  + TCustomToolitem
-  + TMenuItem.Action, TToolItem.Action
-  + TControl.Visible
-
-
-}

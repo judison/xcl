@@ -1,6 +1,4 @@
 (*
-   $Id: dbtest.pas,v 1.3 2006/02/28 16:22:58 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -24,15 +22,3 @@ begin
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.
-{
-$Log: dbtest.pas,v $
-Revision 1.3  2006/02/28 16:22:58  judison
-New resource system
-
-Revision 1.2  2005/11/22 01:08:44  judison
-removed "useless uses"
-
-Revision 1.1  2005/11/18 20:30:28  judison
-*** empty log message ***
-
-}

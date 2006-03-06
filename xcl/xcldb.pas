@@ -1,6 +1,4 @@
 (*
-   $Id: xcldb.pas,v 1.3 2005/12/30 17:21:38 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -63,16 +61,3 @@ initialization
 //---------------------------------
 finalization
 end.
-{
-  $Log: xcldb.pas,v $
-  Revision 1.3  2005/12/30 17:21:38  judison
-  * Moved DB Comps to xcldb.inc
-  * Added TCanvas
-
-  Revision 1.2  2005/12/23 00:39:35  judison
-  *** empty log message ***
-
-  Revision 1.1  2005/11/18 20:11:23  judison
-  ...
-
-}
