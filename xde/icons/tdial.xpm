@@ -1,0 +1,33 @@
+/* XPM */
+static char *tdial[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 4 1",
+"  c black",
+". c gray61",
+"X c gray84",
+"o c None",
+/* pixels */
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooo ooooooooooo",
+"ooooooo ooo ooo ooooooo",
+"ooooooooooooooooooooooo",
+"oooo ooooooooooooX oooo",
+"ooooo ooooooooooX Xoooo",
+"ooooooooooooooXX Xooooo",
+"oo ooooooooooX. Xooo oo",
+"ooooooooooooX. .Xoooooo",
+"oooooooooooX. .Xooooooo",
+"ooooooooooX  .Xoooooooo",
+"o  ooooooo   Xoooooo  o",
+"ooooooooooX Xoooooooooo",
+"ooooooooooooooooooooooo",
+"oo ooooooooooooooooo oo",
+"ooooooooooooooooooooooo",
+"ooooo ooooooooooo ooooo",
+"oooo ooooooooooooo oooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo"
+};

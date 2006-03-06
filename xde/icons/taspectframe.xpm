@@ -1,0 +1,34 @@
+/* XPM */
+static char *taspectframe[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 5 1",
+"  c black",
+". c #7B7B7B7B7B7B",
+"X c gray84",
+"o c gray100",
+"O c None",
+/* pixels */
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOO   O OOOOOOOOOOOO",
+"OO...X X X   X......oOO",
+"OO.ooX   X X Xooooo.oOO",
+"OO.oXX X X   XXXXXX.oOO",
+"OO.oXXXXXXXXXXXXXXX.oOO",
+"OO.oXXXXXXX.XXXXXXX.oOO",
+"OO.oXXXXXX...XXXXXX.oOO",
+"OO.oXXXXX.X.X.XXXXX.oOO",
+"OO.oXXXXXXX.XXXXXXX.oOO",
+"OO.oXX.XXXX.XXXX.XX.oOO",
+"OO.oX.XXXXX.XXXXX.X.oOO",
+"OO.o................oOO",
+"OO.oX.XXXXX.XXXXX.X.oOO",
+"OO.oXX.XXXX.XXXX.XX.oOO",
+"OO.oXXXXX.X.X.XXXXX.oOO",
+"OO.oXXXXXX...XXXXXX.oOO",
+"OO.oXXXXXXX.XXXXXXX.oOO",
+"OO..................oOO",
+"OOoooooooooooooooooooOO",
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO"
+};

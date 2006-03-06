@@ -1,0 +1,35 @@
+/* XPM */
+static char *tcomboboxentry[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 6 1",
+"  c black",
+". c #7B7B7B7B7B7B",
+"X c gray84",
+"o c gray87",
+"O c gray100",
+"+ c None",
+/* pixels */
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++",
+"+                     +",
+"+ OOOOOOOOOOOOO ooooo +",
+"+ OOOOOOOOOOOOO  ooo  +",
+"+ OOOOOOOOOOOOO   o   +",
+"+                     +",
+"+ OOOOOOOOOOOOO OOOOOO+",
+"+ OOOOOOOOOOOOO XXXXX +",
+"+ O.........OOO XX XX +",
+"+ OOOOOOOOOOOOO X   X +",
+"+ OOOOOOOOOOOOO XXXXX +",
+"+ O...........O       +",
+"+ OOOOOOOOOOOOO OOOOO +",
+"+ OOOOOOOOOOOOO OXXXX +",
+"+ O..........OO ..... +",
+"+ OOOOOOOOOOOOO OOOOO +",
+"+ OOOOOOOOOOOOO XXXXX +",
+"+ O...........O X   X +",
+"+ OOOOOOOOOOOOO XX XX +",
+"+ OOOOOOOOOOOOO XXXXX +",
+"+                     +",
+"+++++++++++++++++++++++"
+};

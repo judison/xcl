@@ -1,0 +1,45 @@
+==========================
+XCL's TScintilla Component
+==========================
+
+===============
+ Linux
+=======
+
+To compile the TScitilla component you need to:
+
+1- Download Scintilla (http://www.scintilla.org/)
+2- Change "scintilla/gtk/makefile" as is described at the end of this file
+3- Compile it (type "make" in "scintilla/gtk" directory)
+4- as root copy libscintilla.so to /usr/local/lib
+5- Copy "scintilla/include/Scintilla.iface" to here
+6- Type "make" here
+
+===============
+Windows
+=======
+
+The idea is the same as for linux... I belive you can do it!
+
+I think you will need need to change the $LINKLIB directive in scintilla.tmpl
+
+If you manage to compile it in windows please tell me: judison@gmail.com
+
+===============
+
+modifications to scintilla/gtk/makefile
+
+# after COMPLIB=../bin/scintilla.a add:
+SHAREDLIB=../bin/libscintilla.so
+
+# chage all: $(COMPLIB) to:
+all: $(COMPLIB) $(SHAREDLIB)
+
+#aftec "$(COMPLIB)" rule add:
+
+$(SHAREDLIB): DocumentAccessor.o WindowAccessor.o KeyWords.o StyleContext.o Document.o CallTip.o \
+	ScintillaBase.o ContractionState.o Editor.o ExternalLexer.o PropSet.o PlatGTK.o \
+	KeyMap.o LineMarker.o ScintillaGTK.o CellBuffer.o ViewStyle.o \
+	RESearch.o Style.o Indicator.o AutoComplete.o UniConversion.o XPM.o \
+	$(MARSHALLER) $(LEXOBJS)
+	$(CC) -shared `$(CONFIGFLAGS)` $(CXXFLAGS) -o $@ $^

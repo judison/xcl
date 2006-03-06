@@ -1,0 +1,35 @@
+/* XPM */
+static char *ttextview[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 6 1",
+"  c black",
+". c #7B7B7B7B7B7B",
+"X c gray84",
+"o c gray87",
+"O c gray100",
+"+ c None",
+/* pixels */
+"+++++++++++++++++++++++",
+"+....................O+",
+"+.                  XO+",
+"+. OOOOOOOOOOOOOOOOOXO+",
+"+. OOOOOOO OOOOOOOOOXO+",
+"+. OOOOOOO OOOOOOOOOXO+",
+"+. OO   OO o  OOo  OXO+",
+"+. O.OOO O  Oo O Oo XO+",
+"+. OO    O OOO O OOOXO+",
+"+. O OOO O OOO O OOOXO+",
+"+. O OOO O OOo O Oo XO+",
+"+. OO    O    OOo  OXO+",
+"+. OOOOOOOOOOOOOOOOOXO+",
+"+. OOOOO OOOOOOOOO  XO+",
+"+. OOOOO OO   OOO oOXO+",
+"+. OO    O oOo OO OOXO+",
+"+. O oOo O oOO O   OXO+",
+"+. O OOO O    OOO OOXO+",
+"+. O oOo O OOO.OO OOXO+",
+"+. OO    OO   OOO OOXO+",
+"+.XXXXXXXXXXXXXXXXXXXO+",
+"+OOOOOOOOOOOOOOOOOOOOO+",
+"+++++++++++++++++++++++"
+};

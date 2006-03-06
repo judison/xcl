@@ -1,0 +1,33 @@
+/* XPM */
+static char *tarrow[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 4 1",
+"  c black",
+". c gray84",
+"X c gray100",
+"o c None",
+/* pixels */
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooXXooooooooooooooooo",
+"ooooX.XXooooooooooooooo",
+"ooooX...XXooooooooooooo",
+"ooooX.....XXooooooooooo",
+"ooooX.......XXooooooooo",
+"ooooX.........XXooooooo",
+"ooooX...........  ooooo",
+"ooooX.........  ooooooo",
+"ooooX.......  ooooooooo",
+"ooooX.....  ooooooooooo",
+"ooooX...  ooooooooooooo",
+"ooooX.  ooooooooooooooo",
+"ooooX ooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo"
+};

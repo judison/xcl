@@ -1,0 +1,36 @@
+/* XPM */
+static char *tcolorbutton[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 7 1",
+"  c black",
+". c #7B7B7B7B7B7B",
+"X c #949495959494",
+"o c #E6E6A1A1CDCD",
+"O c gray84",
+"+ c gray100",
+"@ c None",
+/* pixels */
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@++++++++++++++++++ @@",
+"@@+OOOOOOOOOOOOOOOO. @@",
+"@@+OOOOOOOOOOOOOOOO. @@",
+"@@+OO++++++++++++XO. @@",
+"@@+OO+XXXXXXXXXX+XO. @@",
+"@@+OO+Xooooooooo+XO. @@",
+"@@+OO+Xooooooooo+XO. @@",
+"@@+OO+Xooooooooo+XO. @@",
+"@@+OO+Xooooooooo+XO. @@",
+"@@+OO+Xooooooooo+XO. @@",
+"@@+OO++++++++++++XO. @@",
+"@@+OOXXXXXXXXXXXXXO. @@",
+"@@+OOOOOOOOOOOOOOOO. @@",
+"@@+................. @@",
+"@@                   @@",
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@@@@@@@@@@@@@@@@@@@@@@",
+"@@@@@@@@@@@@@@@@@@@@@@@"
+};

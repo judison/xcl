@@ -1,0 +1,33 @@
+/* XPM */
+static char *tscrolledwindow[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 4 1",
+"  c black",
+". c gray84",
+"X c gray100",
+"o c None",
+/* pixels */
+"ooooooooooooooooooooooo",
+"oXXXXXXXXXXXXXXXXXXXXXo",
+"oX.............X..... o",
+"oX.............X.. .. o",
+"oX.............X.   . o",
+"oX.............X..... o",
+"oX.............X      o",
+"oX.............XXXXXX o",
+"oX.............XX.... o",
+"oX.............XX.... o",
+"oX.............XXXXXX o",
+"oX.............X..... o",
+"oX.............X.   . o",
+"oX.............X.. .. o",
+"oX.............X..... o",
+"oXXXXXXXXXXXXXXX      o",
+"oX.... XXX .... ......o",
+"oX.. . X.. . .. ......o",
+"oX.  . X.. .  . ......o",
+"oX.. . X.. . .. ......o",
+"oX.... X.. .... ......o",
+"oX              ......o",
+"ooooooooooooooooooooooo"
+};

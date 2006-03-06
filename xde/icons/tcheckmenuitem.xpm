@@ -1,0 +1,33 @@
+/* XPM */
+static char *tcheckmenuitem[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 4 1",
+"  c black",
+". c #7B7B7B7B7B7B",
+"X c gray100",
+"o c None",
+/* pixels */
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"oooXXXXXXXXoooooooooooo",
+"oooXooooo. oooooooooooo",
+"oooXooooo. oooooooooooo",
+"oooXooooo. oooooooooooo",
+"oooXooooo. ooooooo oooo",
+"oooXo..... ooooo  ooooo",
+"oooX       ooo    ooooo",
+"oooooooooooo     oooooo",
+"ooooooooooooo    oooooo",
+"ooooooooooooo   ooooooo",
+"oooooooooooo oo ooooooo",
+"ooooooooooo ooooooooooo",
+"oooooooooo oooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo"
+};

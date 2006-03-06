@@ -1,0 +1,33 @@
+/* XPM */
+static char *tradiobutton[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 4 1",
+"  c black",
+". c #949495959494",
+"X c gray100",
+"o c None",
+/* pixels */
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooo....oooooooooo",
+"ooooooo..     .oooooooo",
+"oooooo.  XXXXX .ooooooo",
+"oooooo. XXXXXXX.ooooooo",
+"ooooo. XXX   XXX.Xooooo",
+"ooooo. XX     XX.Xooooo",
+"ooooo. XX     XX.Xooooo",
+"ooooo. XX     XX.Xooooo",
+"oooooo XXX   XX.Xoooooo",
+"oooooo. XXXXXXX.Xoooooo",
+"ooooooo..XXXX..Xooooooo",
+"ooooooooo....XXoooooooo",
+"oooooooooXXXXoooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo"
+};

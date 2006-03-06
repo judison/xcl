@@ -1,0 +1,33 @@
+/* XPM */
+static char *tvseparator[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 4 1",
+"  c black",
+". c #7B7B7B7B7B7B",
+"X c gray100",
+"o c None",
+/* pixels */
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooo.Xoooooooooo",
+"ooooooooooooooooooooooo",
+"ooooooooooooooooooooooo"
+};

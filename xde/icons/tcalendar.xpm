@@ -1,0 +1,34 @@
+/* XPM */
+static char *tcalendar[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 5 1",
+"  c black",
+". c gray87",
+"X c #DFDFDFDFDFDF",
+"o c gray100",
+"O c None",
+/* pixels */
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"O                     O",
+"O ................... O",
+"O .  .  .  .  .  .  . O",
+"O ................... O",
+"O                     O",
+"O ooooooooooooooooooo O",
+"O oo.oo oo oo oo oo o O",
+"O ooooooooooooooooooo O",
+"O oo oo oo oo oo oo o O",
+"O ooooooooooooooooooo O",
+"O oo oo oo oo oo oo o O",
+"O ooooooooooooooooooo O",
+"O oo oo oo oo oo oo o O",
+"O ooooooooooooooooooo O",
+"O oo oo oo oo.oo.oo.o O",
+"O ooooooooooooooooooo O",
+"O oo.oo.oo.oo.oo.oo.o O",
+"O ooooooooooooooooooo O",
+"O                     O",
+"OOOOOOOOOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOOOOOOOOOOOO"
+};

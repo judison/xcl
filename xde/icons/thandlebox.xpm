@@ -1,0 +1,35 @@
+/* XPM */
+static char *thandlebox[] = {
+/* columns rows colors chars-per-pixel */
+"23 23 6 1",
+"  c black",
+". c #7B7B7B7B7B7B",
+"X c gray84",
+"o c gray87",
+"O c gray100",
+"+ c None",
+/* pixels */
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++",
+"++OOOOOOOOOOOOOOOOOO ++",
+"++Ooooo.XXXXXXXXXXX. ++",
+"++OOooo.XXXXXXXXXXX. ++",
+"++Oo.Oo.XXXXXXXXXXX. ++",
+"++Oooo..XXXXXXXXXXX. ++",
+"++OOooo.XXXXXXXXXXX. ++",
+"++Oo.Oo.XXXXXXXXXXX. ++",
+"++Oooo..XXXXXXXXXXX. ++",
+"++OOooo.XXXXXXXXXXX. ++",
+"++Oo.Oo.XXXXXXXXXXX. ++",
+"++Oooo..XXXXXXXXXXX. ++",
+"++O................. ++",
+"++                   ++",
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++",
+"+++++++++++++++++++++++"
+};

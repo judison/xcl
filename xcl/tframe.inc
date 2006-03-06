@@ -1,0 +1,73 @@
+(*
+   $Id: tframe.inc,v 1.3 2005/12/02 22:31:34 judison Exp $
+
+   XCL - XDE's Component Library
+   Copyright (C) 2005 Judison Oliveira Gil Filho
+
+   See the file COPYING.FPC, included in this distribution,
+   for details about the copyright.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*)
+{$IFDEF INC_READ_INTERFACE}
+//** INTERFACE
+//****************************************************************************
+
+  TFrame = class(TBinControl)
+  private
+    function GetCaption: string;
+    function GetShadowType: TShadowType;
+    procedure SetCaption(Value: string);
+    procedure SetShadowType(Value: TShadowType);
+  protected
+    procedure CreateHandle; override;
+  public
+  published
+    property Caption: string read GetCaption write SetCaption;
+    property ShadowType: TShadowType read GetShadowType write SetShadowType default stEtchedIn;
+  end;
+
+{$ENDIF}
+{$IFDEF INC_READ_IMPLEMENTATION}
+//** IMPLEMENTATION
+//****************************************************************************
+
+{ TFrame }
+
+procedure TFrame.CreateHandle;
+begin
+  Handle := gtk_frame_new(nil);
+end;
+
+function TFrame.GetCaption: string;
+begin
+  Result := gtk_frame_get_label(Handle);
+end;
+
+function TFrame.GetShadowType: TShadowType;
+begin
+  Result := TShadowType(gtk_frame_get_shadow_type(Handle));
+end;
+
+procedure TFrame.SetCaption(Value: string);
+begin
+  gtk_frame_set_label(Handle, PChar(Value));
+end;
+
+procedure TFrame.SetShadowType(Value: TShadowType);
+begin
+  gtk_frame_set_shadow_type(Handle, Ord(Value));
+end;
+
+{$ENDIF}
+{
+$Log: tframe.inc,v $
+Revision 1.3  2005/12/02 22:31:34  judison
+Long-term changes (again) I need to use cvs more!
+
+Revision 1.2  2005/03/26 05:21:47  judison
++ CVS Log Tag
+
+}
