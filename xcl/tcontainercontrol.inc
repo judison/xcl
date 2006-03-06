@@ -1,6 +1,4 @@
 (*
-   $Id: tcontainercontrol.inc,v 1.6 2005/12/22 22:15:33 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -159,19 +157,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: tcontainercontrol.inc,v $
-Revision 1.6  2005/12/22 22:15:33  judison
-MoveChild -> ReorderControl
-
-Revision 1.5  2005/12/22 21:33:31  judison
-Added TControl.BoxPosition
-Other Stuff
-
-Revision 1.4  2005/12/17 21:50:20  judison
-*** empty log message ***
-
-Revision 1.3  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

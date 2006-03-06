@@ -1,6 +1,4 @@
 (*
-   $Id: tpixbuf.inc,v 1.3 2006/03/01 18:32:40 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -160,16 +158,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: tpixbuf.inc,v $
-Revision 1.3  2006/03/01 18:32:40  judison
-Added PIXDATA resources
-
-Revision 1.2  2005/12/30 17:21:38  judison
-* Moved DB Comps to xcldb.inc
-* Added TCanvas
-
-Revision 1.1  2005/12/02 22:31:34  judison
-Long-term changes (again) I need to use cvs more!
-
-}

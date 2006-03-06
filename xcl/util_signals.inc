@@ -1,6 +1,4 @@
 (*
-   $Id: util_signals.inc,v 1.3 2005/03/27 19:40:44 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -47,12 +45,3 @@ begin
 end;
 
 {$ENDIF}
-{
-  $Log: util_signals.inc,v $
-  Revision 1.3  2005/03/27 19:40:44  judison
-  * New Event System
-
-  Revision 1.2  2005/03/26 05:21:47  judison
-  + CVS Log Tag
-
-}

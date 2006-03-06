@@ -1,6 +1,4 @@
 (*
-   $Id: ttextbuffer.inc,v 1.6 2006/02/27 17:43:30 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -274,21 +272,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: ttextbuffer.inc,v $
-Revision 1.6  2006/02/27 17:43:30  judison
-Added TClipboard
-
-Revision 1.5  2006/02/25 17:17:54  judison
-Added CreateHandle
-
-Revision 1.4  2005/11/18 20:06:58  judison
-long-term changes...
-
-Revision 1.3  2005/03/27 19:39:26  judison
-* New Event System
-
-Revision 1.2  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

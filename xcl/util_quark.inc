@@ -1,6 +1,4 @@
 (*
-   $Id: util_quark.inc,v 1.1 2005/03/27 09:53:06 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -40,9 +38,3 @@ begin
 end;
 
 {$ENDIF}
-{
-  $Log: util_quark.inc,v $
-  Revision 1.1  2005/03/27 09:53:06  judison
-  + First Version
-
-}

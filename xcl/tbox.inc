@@ -1,6 +1,4 @@
 (*
-   $Id: tbox.inc,v 1.3 2005/12/22 22:15:33 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -87,12 +85,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: tbox.inc,v $
-Revision 1.3  2005/12/22 22:15:33  judison
-MoveChild -> ReorderControl
-
-Revision 1.2  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

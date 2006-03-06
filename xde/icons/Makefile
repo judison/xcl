@@ -1,5 +1,3 @@
-# $Id: Makefile,v 1.2 2006/03/04 20:15:56 judison Exp $
-
 XCL_PATH=../../xcl
 XRC_PATH=$(XCL_PATH)/tools
 

@@ -1,6 +1,4 @@
 (*
-   $Id: gtk2.inc,v 1.14 2005/12/19 22:49:23 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -199,27 +197,3 @@ procedure gtk_tool_button_set_use_underline(abutton: pointer; ause_underline: gb
 function gtk_tool_button_get_use_underline(abutton: pointer): gboolean; cdecl; external gtklib;
 procedure gtk_tool_button_set_stock_id(abutton: pointer; const astock_id: PGChar); cdecl; external gtklib;
 function gtk_tool_button_get_stock_id(abutton: pointer): PGChar; cdecl; external gtklib;
-
-{
-$Log: gtk2.inc,v $
-Revision 1.14  2005/12/19 22:49:23  judison
-various changes
-added TSpinButton
-
-Revision 1.13  2005/12/13 00:42:35  judison
-*** empty log message ***
-
-Revision 1.12  2005/12/12 23:34:05  judison
-Added gtk_misc_get_alignment
-Added gtk_misc_get_padding
-
-Revision 1.11  2005/11/18 20:06:58  judison
-long-term changes...
-
-Revision 1.10  2005/03/28 06:03:39  judison
-*** empty log message ***
-
-Revision 1.9  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

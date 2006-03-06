@@ -1,6 +1,4 @@
 (*
-   $Id: test1.pas,v 1.8 2006/02/28 16:22:58 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -128,21 +126,3 @@ begin
   Application.CreateForm(TTest1, MyForm);
   Application.Run;
 end.
-{
-  $Log: test1.pas,v $
-  Revision 1.8  2006/02/28 16:22:58  judison
-  New resource system
-
-  Revision 1.7  2005/12/02 22:31:34  judison
-  Long-term changes (again) I need to use cvs more!
-
-  Revision 1.6  2005/11/18 20:06:58  judison
-  long-term changes...
-
-  Revision 1.5  2005/03/28 03:19:07  judison
-  New Resource System
-
-  Revision 1.4  2005/03/26 05:21:47  judison
-  + CVS Log Tag
-
-}

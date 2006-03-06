@@ -1,6 +1,4 @@
 (*
-   $Id: tglist.inc,v 1.2 2005/03/26 05:21:47 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -86,9 +84,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: tglist.inc,v $
-Revision 1.2  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

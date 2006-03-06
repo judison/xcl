@@ -1,6 +1,4 @@
 {
-  $Id: sheditor.pas,v 1.1 2005/12/17 17:47:06 judison Exp $
-
   GTK/XCL implementation for SHEdit
   Copyright (C) 2005 by Judison Oliveira Gil Filho (judison@gmail.com)
   Copyright (C) 1999-2000 by Sebastian Guenther (sg@freepascal.org)
@@ -713,19 +711,3 @@ begin
 end;
 
 end.
-
-{
-  $Log: sheditor.pas,v $
-  Revision 1.1  2005/12/17 17:47:06  judison
-  *** empty log message ***
-
-  Revision 1.2  2005/12/02 22:31:34  judison
-  Long-term changes (again) I need to use cvs more!
-
-  Revision 1.1  2005/11/18 20:28:08  judison
-  *** empty log message ***
-
-  Revision 1.5  2005/02/14 17:13:17  peter
-    * truncate log
-
-}

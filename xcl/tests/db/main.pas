@@ -1,6 +1,4 @@
 (*
-   $Id: main.pas,v 1.2 2005/11/22 01:05:28 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -49,12 +47,3 @@ begin
 end;
 
 end.
-{
-$Log: main.pas,v $
-Revision 1.2  2005/11/22 01:05:28  judison
-* Action Support
-
-Revision 1.1  2005/11/18 20:30:28  judison
-*** empty log message ***
-
-}

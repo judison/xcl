@@ -1,6 +1,4 @@
 (*
-   $Id: propeditor.pas,v 1.4 2005/12/27 03:14:06 judison Exp $
-
    XDE - XCL's Development Environment
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -581,6 +579,5 @@ begin
     Changed;
   end;
 end;
-
 
 end.

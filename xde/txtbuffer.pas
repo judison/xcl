@@ -1,6 +1,4 @@
 (*
-   $Id: txtbuffer.pas,v 1.5 2006/02/28 16:26:29 judison Exp $
-
    XDE - XCL's Development Environment
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -181,27 +179,3 @@ begin
 end;
 
 end.
-{
-$Log: txtbuffer.pas,v $
-Revision 1.5  2006/02/28 16:26:29  judison
-* New Resource System
-* Better Editing Functions
-
-Revision 1.4  2006/02/25 19:19:16  judison
-Added GtkSourceView/XCLSourceView
-Removed all deps on Scintilla
-
-Revision 1.3  2005/12/18 05:05:59  judison
-copyleft stuff
-
-Revision 1.2  2005/12/17 21:48:30  judison
-*** empty log message ***
-
-Revision 1.1.1.1  2005/12/17 17:29:45  judison
-Initial Import
-
-Revision 1.1  2005/12/09 02:47:17  judison
-Added TTxtBuffer, now TPasBuffer derives from TTxtBuffer
-
-
-}

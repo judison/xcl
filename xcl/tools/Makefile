@@ -1,5 +1,3 @@
-# $Id: Makefile,v 1.3 2005/12/23 20:43:50 judison Exp $
-
 XCL_PATH=..
 OPT=-Fu$(XCL_PATH)
 FPC=ppc386

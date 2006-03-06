@@ -1,6 +1,4 @@
 (*
-   $Id: xcl.inc,v 1.19 2006/02/27 17:43:30 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -11,7 +9,6 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
-
 
 {$I gtk_signals.inc}
 {$I tcolormap.inc}
@@ -100,50 +97,3 @@
 {$I util_color.inc}
 {$I util_signals.inc}
 {$I util_resources.inc}
-
-{
-$Log: xcl.inc,v $
-Revision 1.19  2006/02/27 17:43:30  judison
-Added TClipboard
-
-Revision 1.18  2005/12/30 17:21:38  judison
-* Moved DB Comps to xcldb.inc
-* Added TCanvas
-
-Revision 1.17  2005/12/19 22:49:23  judison
-various changes
-added TSpinButton
-
-Revision 1.16  2005/12/11 11:45:30  judison
-Added TTable
-TControl.X, .Y, .Position -> .FixedX, .FixedY, .FixedPosition
-
-Revision 1.15  2005/12/02 22:31:34  judison
-Long-term changes (again) I need to use cvs more!
-
-Revision 1.14  2005/11/18 20:06:58  judison
-long-term changes...
-
-Revision 1.13  2005/04/03 16:50:33  judison
-+ Added TGStings
-
-Revision 1.12  2005/03/28 05:41:23  judison
-- TEditableControl
-+ GtkEditableControl Interface Implementation
-
-Revision 1.11  2005/03/28 02:50:35  judison
-+ New Resource System
-
-Revision 1.10  2005/03/27 09:53:51  judison
-* New Event System
-
-Revision 1.9  2005/03/27 00:27:54  judison
-+ TControlActionLink, TControl.Action
-+ TCustomToolitem
-+ TMenuItem.Action, TToolItem.Action
-+ TControl.Visible
-
-Revision 1.8  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

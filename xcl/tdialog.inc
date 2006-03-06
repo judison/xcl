@@ -1,6 +1,4 @@
 (*
-   $Id: tdialog.inc,v 1.3 2005/03/28 06:03:39 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -119,12 +117,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: tdialog.inc,v $
-Revision 1.3  2005/03/28 06:03:39  judison
-*** empty log message ***
-
-Revision 1.2  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

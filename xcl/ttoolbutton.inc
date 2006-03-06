@@ -1,6 +1,4 @@
 (*
-   $Id: ttoolbutton.inc,v 1.7 2005/12/02 22:31:34 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -134,24 +132,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: ttoolbutton.inc,v $
-Revision 1.7  2005/12/02 22:31:34  judison
-Long-term changes (again) I need to use cvs more!
-
-Revision 1.6  2005/11/18 20:06:58  judison
-long-term changes...
-
-Revision 1.5  2005/03/27 09:53:51  judison
-* New Event System
-
-Revision 1.4  2005/03/27 00:27:54  judison
-+ TControlActionLink, TControl.Action
-+ TCustomToolitem
-+ TMenuItem.Action, TToolItem.Action
-+ TControl.Visible
-
-Revision 1.3  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

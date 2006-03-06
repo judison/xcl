@@ -1,6 +1,4 @@
 (*
-   $Id: ttreeviewcolumn.inc,v 1.2 2005/12/15 03:43:44 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -362,12 +360,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: ttreeviewcolumn.inc,v $
-Revision 1.2  2005/12/15 03:43:44  judison
-*** empty log message ***
-
-Revision 1.1  2005/11/18 20:11:23  judison
-...
-
-}

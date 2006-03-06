@@ -1,6 +1,4 @@
 (*
-   $Id: tlabel.inc,v 1.6 2005/12/30 17:21:38 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -142,22 +140,3 @@ begin
 end;
 
 {$ENDIF}
-{
-  $Log: tlabel.inc,v $
-  Revision 1.6  2005/12/30 17:21:38  judison
-  * Moved DB Comps to xcldb.inc
-  * Added TCanvas
-
-  Revision 1.5  2005/11/18 20:06:58  judison
-  long-term changes...
-
-  Revision 1.4  2005/03/27 22:12:34  judison
-  * Remove '_'s from caption when UseUnderline = False (we get _ from Actions)
-
-  Revision 1.3  2005/03/27 01:55:26  judison
-  * Text -> Caption
-
-  Revision 1.2  2005/03/26 05:21:47  judison
-  + CVS Log Tag
-
-}

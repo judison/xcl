@@ -1,6 +1,4 @@
 (*
-   $Id: tfixed.inc,v 1.4 2005/12/11 11:45:30 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -50,13 +48,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: tfixed.inc,v $
-Revision 1.4  2005/12/11 11:45:30  judison
-Added TTable
-TControl.X, .Y, .Position -> .FixedX, .FixedY, .FixedPosition
-
-Revision 1.3  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

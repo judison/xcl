@@ -1,6 +1,4 @@
 (*
-   $Id: tspinbutton.inc,v 1.2 2005/12/30 17:21:38 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -172,14 +170,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: tspinbutton.inc,v $
-Revision 1.2  2005/12/30 17:21:38  judison
-* Moved DB Comps to xcldb.inc
-* Added TCanvas
-
-Revision 1.1  2005/12/19 22:49:23  judison
-various changes
-added TSpinButton
-
-}

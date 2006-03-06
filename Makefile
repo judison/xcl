@@ -1,5 +1,3 @@
-# $Id$
-
 OPT=
 FPC=ppc386
 

@@ -1,6 +1,4 @@
 (*
-   $Id: tcontrol.inc,v 1.20 2006/03/04 20:17:29 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -847,69 +845,3 @@ begin
 end;
 
 {$ENDIF}
-{
-$Log: tcontrol.inc,v $
-Revision 1.20  2006/03/04 20:17:29  judison
-Added ToolTip
-
-Revision 1.19  2005/12/22 22:15:33  judison
-MoveChild -> ReorderControl
-
-Revision 1.18  2005/12/22 21:33:31  judison
-Added TControl.BoxPosition
-Other Stuff
-
-Revision 1.17  2005/12/17 17:35:38  judison
-Added WidthRequest and HeightRequest
-
-Revision 1.16  2005/12/16 03:29:52  judison
-*** empty log message ***
-
-Revision 1.15  2005/12/15 03:42:47  judison
-Moved FontDesc from Pubished to Public
-
-Revision 1.14  2005/12/13 05:18:27  judison
-Bug Fix
-
-Revision 1.13  2005/12/12 04:32:12  judison
-TTable Stuff
-
-Revision 1.12  2005/12/11 11:45:30  judison
-Added TTable
-TControl.X, .Y, .Position -> .FixedX, .FixedY, .FixedPosition
-
-Revision 1.11  2005/12/10 17:53:02  judison
-Added DesignShowProp
-
-Revision 1.10  2005/12/10 07:48:32  judison
-*** empty log message ***
-
-Revision 1.9  2005/11/22 01:05:28  judison
-* Action Support
-
-Revision 1.8  2005/11/18 20:06:58  judison
-long-term changes...
-
-Revision 1.7  2005/03/28 06:34:56  judison
-*** empty log message ***
-
-Revision 1.6  2005/03/27 22:11:48  judison
-* TControl.Pos -> TControl.Position (Avoids System.Pos conflict)
-
-Revision 1.5  2005/03/27 19:43:37  judison
-* QTControl -> QTObject
-+ ObjectByHandle
-
-Revision 1.4  2005/03/27 09:53:51  judison
-* New Event System
-
-Revision 1.3  2005/03/27 00:27:54  judison
-+ TControlActionLink, TControl.Action
-+ TCustomToolitem
-+ TMenuItem.Action, TToolItem.Action
-+ TControl.Visible
-
-Revision 1.2  2005/03/26 05:21:47  judison
-+ CVS Log Tag
-
-}

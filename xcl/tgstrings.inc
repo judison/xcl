@@ -1,6 +1,4 @@
 (*
-   $Id: tgstrings.inc,v 1.2 2005/04/03 18:26:15 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -154,12 +152,3 @@ begin
 end;
 
 {$ENDIF}
-{
-  $Log: tgstrings.inc,v $
-  Revision 1.2  2005/04/03 18:26:15  judison
-  * TGStrings
-
-  Revision 1.1  2005/04/03 16:50:33  judison
-  + Added TGStings
-
-}

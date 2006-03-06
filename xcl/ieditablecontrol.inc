@@ -1,6 +1,4 @@
 (*
-   $Id: ieditablecontrol.inc,v 1.1 2005/03/28 05:38:23 judison Exp $
-
    XCL - XDE's Component Library
    Copyright (C) 2005 Judison Oliveira Gil Filho
 
@@ -109,18 +107,4 @@ begin
   gtk_editable_select_region(Handle, AStartPos, AEndPos);
 end;
 
-
 {$ENDIF}
-{
-  $Log: ieditablecontrol.inc,v $
-  Revision 1.1  2005/03/28 05:38:23  judison
-  - TEditableControl
-  + Interface Implementation for GtkEditableControl
-
-  Revision 1.3  2005/03/27 09:53:51  judison
-  * New Event System
-
-  Revision 1.2  2005/03/26 05:21:47  judison
-  + CVS Log Tag
-
-}
