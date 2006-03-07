@@ -1,6 +1,6 @@
 (*
    Extra Components for XCL/XDE
-   Copyright (C) 2005 Judison Oliveira Gil Filho
+   Copyright (C) 2006 Judison Oliveira Gil Filho
 
    TGtkSpell - GtkSpell for XCL
 
