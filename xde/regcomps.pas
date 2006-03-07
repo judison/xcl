@@ -15,6 +15,10 @@ unit regcomps;
 {$H+}
 {$MODE ObjFpc}
 
+{$IFNDEF WIN32}
+  {$DEFINE USE_PQ_CONN}
+{$ENDIF}
+
 interface
 
 uses Classes;
@@ -41,7 +45,7 @@ uses
   memds,
   dbf,
 //  mysqldb4,
-  sqldb, ibconnection, pqconnection, mysql4conn,
+  sqldb, ibconnection, {$IFDEF USE_PQ_CONN}pqconnection,{$ENDIF} mysql4conn,
   XCLDB,
   sdfdata;
 
@@ -109,7 +113,7 @@ end;
 
 procedure sqldb_Register;
 begin
-  RegisterComponents('Data Access', [TSQLTransaction, TSQLQuery, TIBConnection, TPQConnection, TMySQlConnection]);
+  RegisterComponents('Data Access', [TSQLTransaction, TSQLQuery, TIBConnection, {$IFDEF USE_PQ_CONN}TPQConnection,{$ENDIF} TMySQlConnection]);
 end;
 
 procedure DoRegComps;
