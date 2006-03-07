@@ -1,9 +1,10 @@
 # XCL Path
 XCL_PATH=..
+EXTRA_PATH=$(XCL_PATH)/extra
 
 XRC=$(XCL_PATH)/tools/xrc
 
-OPT=-Fu$(XCL_PATH)
+OPT=-Fu$(XCL_PATH) -Fu$(EXTRA_PATH)
 FPC=ppc386
 
 all: test1 testtv

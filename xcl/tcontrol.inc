@@ -82,7 +82,6 @@
   protected
     // moved here....
     Handle: Pointer;
-
     //** Action *******************************
     procedure SetAction(AValue: TAction); virtual;
     function GetAction: TAction; virtual;
@@ -130,6 +129,8 @@
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+    //--
+    function GetHandle: Pointer;
     //
     function HasParent: Boolean; override;
     //-
@@ -252,6 +253,11 @@ end;
 procedure TControl.DestroyHandle;
 begin
   gtk_widget_destroy(Handle);
+end;
+
+function TControl.GetHandle: Pointer;
+begin
+  Result := Handle;
 end;
 
 procedure TControl.ReadState(Reader: TReader);
