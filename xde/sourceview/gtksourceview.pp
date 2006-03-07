@@ -31,7 +31,7 @@ uses glib2, gdk2, gdk2pixbuf, gtk2;
 
 const
 {$ifdef win32}
-  gsvlib = 'gtksourceview.dll';
+  gsvlib = 'libgtksourceview-1-0-0.dll';
   {$IFDEF FPC}
     {$smartlink on}
   {$ENDIF}
