@@ -175,7 +175,7 @@ object TTest1
               object TScrolledWindow
                 ShadowType = stIn
                 object TV: TTextView
-                  TextBuffer.Text = 'unit test;'
+                  TextBuffer.Text = 'Hello world.'
                 end
               end
             end
@@ -221,5 +221,8 @@ object TTest1
     Active = False
     Interval = 500
     OnTimer = Timer1Timer
+  end
+  object TGtkSpell
+    TextView = TV
   end
 end

@@ -11,10 +11,11 @@
 *)
 
 program test1;
+
 {$H+}
 {$Mode ObjFpc}
 
-uses Classes, SysUtils, xcl, test1_xrc;
+uses Classes, SysUtils, xcl, gtkspell, test1_xrc;
 
 type
   TTest1 = class(TForm)
