@@ -1,6 +1,6 @@
 (*
    XCL - XDE's Component Library
-   Copyright (C) 2005 Judison Oliveira Gil Filho
+   Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    See the file COPYING.FPC, included in this distribution,
    for details about the copyright.
@@ -17,6 +17,10 @@
   FPC, remover daqui. (judison)
 
 *)
+
+// GtkLabel
+function gtk_label_get_ellipsize  (_label: pointer): longint; cdecl; external gtklib;
+procedure gtk_label_set_ellipsize (_label: pointer; mode: longint); cdecl; external gtklib;
 
 // GtkColorButton (Since 2.4)
 

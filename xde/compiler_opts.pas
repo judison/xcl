@@ -1,6 +1,6 @@
 (*
    XDE - XCL's Development Environment
-   Copyright (C) 2005 Judison Oliveira Gil Filho
+   Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    See the file COPYING, included in this distribution, for
    details about the copyright.

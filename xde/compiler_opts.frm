@@ -4,6 +4,7 @@ object FrmCompilerOpts: TFrmCompilerOpts
   object TVBox
     Spacing = 4
     object TNotebook
+      ShowTabs = True
       BoxExpand = True
       object TNotebookPage
         Caption = 'Syntax'

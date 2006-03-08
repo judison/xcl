@@ -166,6 +166,7 @@ type
   TCanvasFunction = (fnCopy, fnInvert, fnXor, fnClear, fnAnd, fnAndReverse, fnAndInvert, fnNoop, fnOr, fnEquiv, fnOrReverse, fnCopyInvert, fnOrInvert, fnNand, fnNor, fnSet);
   TCanvasFill = (flSolid, flTiled, flStippled, fsOpaqueStippled);
   TWrapMode = (wmNone, wmChar, wmWord, wmWordChar);
+  TEllipsizeMode = (emNone, emStart, emMiddle, emEnd);
 
   {*** Sets ***}
   TAttachOptions = set of TAttachOption;

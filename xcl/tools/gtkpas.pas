@@ -17,20 +17,28 @@ program gtkpas;
 
 uses Classes, SysUtils;
 
-// gtkpas <gtk_prefix> <gtk_name> <type> <xcl_name> [rw] [default]
-
 var
+  F: TStringList;
+  inc_file: String;
   gtk_prefix: String;
   gtk_name: String;
   a_type: String;
   xcl_name: String;
   xcl_type: String;
   gtk_type: char;
+  class_name: String;
+  I: Integer;
 begin
-  gtk_prefix := ParamStr(1);
-  gtk_name := ParamStr(2);
-  a_type := ParamStr(3);
-  xcl_name := ParamStr(4);
+  if ParamCount < 5 then
+  begin
+    WriteLn('usage: ',ExtractFileName(paramstr(0)),' <inc_file> <gtk_prefix> <gtk_name> <type> <xcl_name> [rw] [default]');
+    exit;
+  end;
+  inc_file := ParamStr(1);
+  gtk_prefix := ParamStr(2);
+  gtk_name := ParamStr(3);
+  a_type := ParamStr(4);
+  xcl_name := ParamStr(5);
 
   a_type := lowercase(a_type);
 
@@ -61,33 +69,49 @@ begin
   end
   else
   begin
-    xcl_type := ParamStr(3);//a_type;
+    xcl_type := ParamStr(4);//a_type;
     gtk_type := 'o';
   end;
 
-  WriteLn('  private');
-  WriteLn('    function Get',xcl_name,': ', xcl_type,';');
-  WriteLn('    procedure Set',xcl_name,'(AValue: ',xcl_type,');');
-  WriteLn;
-  WriteLn('  published');
-  WriteLn('    property ',xcl_name,': ',xcl_type,' read Get',xcl_name,' write Set',xcl_name,';');
-  WriteLn;
-  WriteLn('function Get',xcl_name,': ',xcl_type,';');
-  WriteLn('begin');
-  case gtk_type of
-    'n': WriteLn('  Result := ',gtk_prefix,'_get_',gtk_name,'(Handle);');
-    's': WriteLn('  Result := ',gtk_prefix,'_get_',gtk_name,'(Handle);');
-    'o': WriteLn('  Result := ',xcl_type,'(',gtk_prefix,'_get_',gtk_name,'(Handle));');
-  end;
-  WriteLn('end;');
-  WriteLn;
-  WriteLn('procedure Set',xcl_name,'(AValue: ',xcl_type,');');
-  WriteLn('begin');
-  case gtk_type of
-    'n': WriteLn('  ',gtk_prefix,'_set_',gtk_name,'(Handle, AValue);');
-    's': WriteLn('  ',gtk_prefix,'_set_',gtk_name,'(Handle, PChar(AValue));');
-    'o': WriteLn('  ',gtk_prefix,'_set_',gtk_name,'(Handle, Ord(AValue));');
-  end;
-  WriteLn('end;');
+  F := TStringList.Create;
+  F.LoadFromFile(inc_file);
 
+  I := F.IndexOf('  private') - 1;
+  class_name := Copy(F[I], 3, Pos('=', F[I])-4);
+
+  I := F.IndexOf('  protected');
+
+  F.Insert(I, '    function Get'+xcl_name+': '+xcl_type+';'); Inc(I);
+  F.Insert(I, '    procedure Set'+xcl_name+'(AValue: '+xcl_type+');');
+
+  I := F.IndexOf('  end;');
+
+  F.Insert(I, '    property '+xcl_name+': '+xcl_type+' read Get'+xcl_name+' write Set'+xcl_name+';');
+
+  I := F.Count -1;
+  while F[I] <> '{$ENDIF}' do
+    Dec(I);
+  if F[I-1] = '' then
+    Dec(I);
+
+  F.Insert(I, ''); Inc(I);
+  F.Insert(I, 'function '+class_name+'.Get'+xcl_name+': '+xcl_type+';'); Inc(I);
+  F.Insert(I, 'begin'); Inc(I);
+  case gtk_type of
+    'n': F.Insert(I, '  Result := '+gtk_prefix+'_get_'+gtk_name+'(Handle);');
+    's': F.Insert(I, '  Result := '+gtk_prefix+'_get_'+gtk_name+'(Handle);');
+    'o': F.Insert(I, '  Result := '+xcl_type+'('+gtk_prefix+'_get_'+gtk_name+'(Handle));');
+  end; Inc(I);
+  F.Insert(I, 'end;'); Inc(I);
+  F.Insert(I, ''); Inc(I);
+  F.Insert(I, 'procedure '+class_name+'.Set'+xcl_name+'(AValue: '+xcl_type+');'); Inc(I);
+  F.Insert(I, 'begin'); Inc(I);
+  case gtk_type of
+    'n': F.Insert(I, '  '+gtk_prefix+'_set_'+gtk_name+'(Handle, AValue);');
+    's': F.Insert(I, '  '+gtk_prefix+'_set_'+gtk_name+'(Handle, PChar(AValue));');
+    'o': F.Insert(I, '  '+gtk_prefix+'_set_'+gtk_name+'(Handle, Ord(AValue));');
+  end; Inc(I);
+  F.Insert(I, 'end;'); Inc(I);
+  //
+  F.SaveToFile(inc_file);
 end.

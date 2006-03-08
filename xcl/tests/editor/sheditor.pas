@@ -1,6 +1,6 @@
 {
   GTK/XCL implementation for SHEdit
-  Copyright (C) 2005 by Judison Oliveira Gil Filho (judison@gmail.com)
+  Copyright (C) 2005-2006 by Judison Oliveira Gil Filho (judison@gmail.com)
   Copyright (C) 1999-2000 by Sebastian Guenther (sg@freepascal.org)
 
   See the file COPYING.FPC, included in this distribution,

@@ -1,6 +1,6 @@
 (*
    XCL - XDE's Component Library
-   Copyright (C) 2005 Judison Oliveira Gil Filho
+   Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    See the file COPYING.FPC, included in this distribution,
    for details about the copyright.
@@ -9,32 +9,18 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
+{** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-//** INTERFACE
-//****************************************************************************
+  protected
+    procedure CellLayoutPackStart(ARenderer: Pointer; AExpand: Boolean); inline;
+    procedure CellLayoutPackEnd(ARenderer: Pointer; AExpand: Boolean); inline;
+    procedure CellLayoutReorder(ARenderer: Pointer; APosition: Integer); inline;
+    procedure CellLayoutClear(); inline;
+    //procedure CellLayoutSetAttributes(ARenderer: Pointer; const Args: array of const); inline;
+    procedure CellLayoutAddAttribute(ARenderer: Pointer; AAttribute: PChar; AColumn: Integer); inline;
+    procedure CellLayoutClearAttributes(ARenderer: Pointer); inline;
 
-{$IFDEF INTF_PRIVATE}
-{$ENDIF}
-{$IFDEF INTF_PROTECTED}
-  procedure CellLayoutPackStart(ARenderer: Pointer; AExpand: Boolean); inline;
-  procedure CellLayoutPackEnd(ARenderer: Pointer; AExpand: Boolean); inline;
-  procedure CellLayoutReorder(ARenderer: Pointer; APosition: Integer); inline;
-  procedure CellLayoutClear(); inline;
-  //procedure CellLayoutSetAttributes(ARenderer: Pointer; const Args: array of const); inline;
-  procedure CellLayoutAddAttribute(ARenderer: Pointer; AAttribute: PChar; AColumn: Integer); inline;
-  procedure CellLayoutClearAttributes(ARenderer: Pointer); inline;
-{$ENDIF}
-{$IFDEF INTF_PUBLIC}
-{$ENDIF}
-{$IFDEF INTF_PUBLISHED}
-{$ENDIF}
-
-
-//** IMPLEMENTATION
-//****************************************************************************
-
-
-{$IFDEF INTF_IMPLEMENTATION}
+{** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 procedure the_class.CellLayoutPackStart(ARenderer: Pointer; AExpand: Boolean); inline;
 begin

@@ -1,6 +1,6 @@
 (*
    XCL - XDE's Component Library
-   Copyright (C) 2005 Judison Oliveira Gil Filho
+   Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    See the file COPYING.FPC, included in this distribution,
    for details about the copyright.
@@ -9,9 +9,7 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
-//** INTERFACE
-//****************************************************************************
-{$IFDEF INC_READ_INTERFACE}
+{** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
   TDataSetAction = class(TCustomAction)
   private
@@ -108,10 +106,7 @@
     function Execute: Boolean; override;
   end;
 
-{$ENDIF}
-//** IMPLEMENTATION
-//****************************************************************************
-{$IFDEF INC_READ_IMPLEMENTATION}
+{** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 { TDataSetAction }
 

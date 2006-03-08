@@ -1,6 +1,6 @@
 (*
    XCL - XDE's Component Library
-   Copyright (C) 2005 Judison Oliveira Gil Filho
+   Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    See the file COPYING.FPC, included in this distribution,
    for details about the copyright.
@@ -9,9 +9,7 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
-//** INTERFACE
-//****************************************************************************
-{$IFDEF INC_READ_INTERFACE}
+{** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
   TLabel = class(TMiscControl)
   private
@@ -30,6 +28,8 @@
     procedure SetSelectable(AValue: Boolean);
     procedure SetUseMarkup(AValue: Boolean);
     procedure SetUseUnderline(AValue: Boolean);
+    function GetEllipsize: TEllipsizeMode;
+    procedure SetEllipsize(AValue: TEllipsizeMode);
   protected
     procedure CreateHandle; override;
   public
@@ -42,12 +42,10 @@
     property Selectable: Boolean read GetSelectable write SetSelectable default False;
     property UseMarkup: Boolean read getUseMarkup write SetUseMarkup default False;
     property UseUnderline: Boolean read getUseUnderline write SetUseUnderline default False;
+    property Ellipsize: TEllipsizeMode read GetEllipsize write SetEllipsize;
   end;
 
-{$ENDIF}
-//** IMPLEMENTATION
-//****************************************************************************
-{$IFDEF INC_READ_IMPLEMENTATION}
+{** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 { TLabel }
 
@@ -137,6 +135,16 @@ begin
   gtk_label_set_use_underline(Handle, AValue);
   if AValue and (Pos('_', FCaption) <> 0) then
     gtk_label_set_label(Handle, PChar(FCaption));
+end;
+
+function TLabel.GetEllipsize: TEllipsizeMode;
+begin
+  Result := TEllipsizeMode(gtk_label_get_ellipsize(Handle));
+end;
+
+procedure TLabel.SetEllipsize(AValue: TEllipsizeMode);
+begin
+  gtk_label_set_ellipsize(Handle, Ord(AValue));
 end;
 
 {$ENDIF}

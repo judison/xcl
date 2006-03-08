@@ -1,6 +1,6 @@
 (*
    XCL - XDE's Component Library
-   Copyright (C) 2005 Judison Oliveira Gil Filho
+   Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    See the file COPYING.FPC, included in this distribution,
    for details about the copyright.
@@ -9,20 +9,14 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
+{** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-//** INTERFACE
-//****************************************************************************
-
-{$IFDEF INTF_PRIVATE}
+  private
     function GetEditable: Boolean;
     function GetPosition: Integer;
     procedure SetEditable(AValue: Boolean);
     procedure SetPosition(AValue: Integer);
-{$ENDIF}
-{$IFDEF INTF_PROTECTED}
-
-{$ENDIF}
-{$IFDEF INTF_PUBLIC}
+  public
     procedure CutClipboard;
     procedure CopyClipboard;
     procedure PasteClipboard;
@@ -31,18 +25,11 @@
     procedure DeleteText(AStartPos, AEndPos: Integer);
     procedure GetSelection(var AStartPos, AEndPos: Integer);
     procedure SetSelection(AStartPos, AEndPos: Integer);
-{$ENDIF}
-{$IFDEF INTF_PUBLISHED}
+  published
     property Editable: Boolean read GetEditable write SetEditable default True;
     property Position: Integer read GetPosition write SetPosition;
-{$ENDIF}
 
-
-//** IMPLEMENTATION
-//****************************************************************************
-
-
-{$IFDEF INTF_IMPLEMENTATION}
+{** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 function the_class.GetEditable: Boolean;
 begin
