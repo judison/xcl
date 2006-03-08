@@ -1,6 +1,6 @@
 (*
    XCL - XDE's Component Library
-   Copyright (C) 2005 Judison Oliveira Gil Filho
+   Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    See the file COPYING.FPC, included in this distribution,
    for details about the copyright.
@@ -9,9 +9,7 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
-{$IFDEF INC_READ_INTERFACE}
-//** INTERFACE
-//****************************************************************************
+{** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
 type
   TResourceStream = class(TCustomMemoryStream)
@@ -24,10 +22,7 @@ procedure AddResource(const RType, RName: AnsiString; const RData; RSize: LongWo
 procedure GetResource(const RType, RName: AnsiString; var RData: Pointer; var RSize: LongWord);
 function ResourceExists(const RType, RName: AnsiString): Boolean;
 
-{$ENDIF}
-{$IFDEF INC_READ_IMPLEMENTATION}
-//** IMPLEMENTATION
-//****************************************************************************
+{** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 constructor TResourceStream.Create(RType, RName: AnsiString);
 var

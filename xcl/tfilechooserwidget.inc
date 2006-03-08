@@ -1,6 +1,6 @@
 (*
    XCL - XDE's Component Library
-   Copyright (C) 2005 Judison Oliveira Gil Filho
+   Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    See the file COPYING.FPC, included in this distribution,
    for details about the copyright.
@@ -9,34 +9,24 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
-{$IFDEF INC_READ_INTERFACE}
-//** INTERFACE
-//****************************************************************************
+{** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
   TFileChooserWidget = class(TControl)
+  {$I ifilechooser.inc}
   private
-    {$DEFINE INTF_PRIVATE}{$I ifilechooser.inc}{$UNDEF INTF_PRIVATE}
   protected
-    {$DEFINE INTF_PROTECTED}{$I ifilechooser.inc}{$UNDEF INTF_PROTECTED}
     procedure CreateHandle; override;
   public
-    {$DEFINE INTF_PUBLIC}{$I ifilechooser.inc}{$UNDEF INTF_PUBLIC}
   published
-    {$DEFINE INTF_PUBLISHED}{$I ifilechooser.inc}{$UNDEF INTF_PUBLISHED}
   end;
 
-{$ENDIF}
-{$IFDEF INC_READ_IMPLEMENTATION}
-//** IMPLEMENTATION
-//****************************************************************************
+{** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 { TFileChooserWidget }
 
-{$DEFINE INTF_IMPLEMENTATION}
-  {$define the_class := TFileChooserWidget }
-    {$I ifilechooser.inc}
-  {$undef the_class}
-{$UNDEF INTF_IMPLEMENTATION}
+{$define the_class := TFileChooserWidget }
+  {$I ifilechooser.inc}
+{$undef the_class}
 
 procedure TFileChooserWidget.CreateHandle;
 begin

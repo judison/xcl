@@ -1,5 +1,5 @@
 {
-   Copyright (C) 2006 - Judison Oliveira Gil Filho <judison@gmail.com>
+   Copyright (C) 2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    Based on work of others, mainly Gustavo Giraldez and Paolo Maggi.
    Copyright notices are provided for each part of this file.

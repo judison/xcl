@@ -1,6 +1,6 @@
 (*
    XCL TSourceView Component
-   Copyright (C) 2005 Judison Oliveira Gil Filho (judison@gmail.com)
+   Copyright (C) 2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    See the file COPYING.FPC, included in this distribution,
    for details about the copyright.

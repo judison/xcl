@@ -1,6 +1,6 @@
 (*
    XCL - XDE's Component Library
-   Copyright (C) 2005 Judison Oliveira Gil Filho
+   Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    See the file COPYING.FPC, included in this distribution,
    for details about the copyright.
@@ -9,13 +9,11 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
-{$IFDEF INC_READ_INTERFACE}
-//** INTERFACE
-//****************************************************************************
+{** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
   TComboBox = class(TControl)
+  {$I icelllayout.inc}
   private
-    {$DEFINE INTF_PRIVATE}{$I icelllayout.inc}{$UNDEF INTF_PRIVATE}
     FRenderer: Pointer;
     FOnChanged: TNotifyEvent;
     //== Properties
@@ -30,7 +28,6 @@
     function GetHasFrame: Boolean;
     procedure SetHasFrame(AValue: Boolean);
   protected
-    {$DEFINE INTF_PROTECTED}{$I icelllayout.inc}{$UNDEF INTF_PROTECTED}
     procedure CreateHandle; override;
     procedure DestroyHandle; override;
     procedure ConnectSignals; override;
@@ -43,7 +40,6 @@
     procedure SetTextColumn(AValue: Integer); virtual;
     property HasFrame: Boolean read GetHasFrame write SetHasFrame default True;
   public
-    {$DEFINE INTF_PUBLIC}{$I icelllayout.inc}{$UNDEF INTF_PUBLIC}
     constructor Create(AOwner: TComponent); override;
     //--
     procedure SetActiveIter(const AIter: TTreeIter);
@@ -54,7 +50,6 @@
     //== Properties
     property Active: Integer read GetActive write SetActive;
   published
-    {$DEFINE INTF_PUBLISHED}{$I icelllayout.inc}{$UNDEF INTF_PUBLISHED}
     property Model: TTreeModel read FModel write SetModel;
     property WrapWidth: Integer read GetWrapWidth write SetWrapWidth default 0;
     property RowSpanColumn: Integer read GetRowSpanColumn write SetRowSpanColumn default -1;
@@ -79,18 +74,13 @@
   end;
 
 
-{$ENDIF}
-{$IFDEF INC_READ_IMPLEMENTATION}
-//** IMPLEMENTATION
-//****************************************************************************
+{** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 { TComboBox }
 
-{$DEFINE INTF_IMPLEMENTATION}
-  {$define the_class := TComboBox }
-    {$I icelllayout.inc}
-  {$undef the_class}
-{$UNDEF INTF_IMPLEMENTATION}
+{$define the_class := TComboBox }
+  {$I icelllayout.inc}
+{$undef the_class}
 
 constructor TComboBox.Create(AOwner: TComponent);
 begin

@@ -1,6 +1,6 @@
 (*
    XCL - XDE's Component Library
-   Copyright (C) 2005 Judison Oliveira Gil Filho
+   Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    See the file COPYING.FPC, included in this distribution,
    for details about the copyright.
@@ -9,14 +9,16 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
-{$IFDEF INC_READ_INTERFACE}
-//** INTERFACE
-//****************************************************************************
+{** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
   TNotebook = class(TContainerControl)
   private
     function GetCurrentPage: Integer;
     procedure SetCurrentPage(AValue: Integer);
+    function GetShowTabs: Boolean;
+    procedure SetShowTabs(AValue: Boolean);
+    function GetScrollable: Boolean;
+    procedure SetScrollable(AValue: Boolean);
   protected
     procedure CreateHandle; override;
     procedure AddControl(AControl: TControl); override;
@@ -32,12 +34,11 @@
     property Pages[Index: Integer]: TNotebookPage read GetNthPage;
     property PageCount: Integer read GetNPages;
   published
+    property ShowTabs: Boolean read GetShowTabs write SetShowTabs;
+    property Scrollable: Boolean read GetScrollable write SetScrollable;
   end;
 
-{$ENDIF}
-{$IFDEF INC_READ_IMPLEMENTATION}
-//** IMPLEMENTATION
-//****************************************************************************
+{** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 { TNotebook }
 
@@ -102,6 +103,26 @@ end;
 procedure TNotebook.PrevPage;
 begin
   gtk_notebook_prev_page(Handle);
+end;
+
+function TNotebook.GetShowTabs: Boolean;
+begin
+  Result := gtk_notebook_get_show_tabs(Handle);
+end;
+
+procedure TNotebook.SetShowTabs(AValue: Boolean);
+begin
+  gtk_notebook_set_show_tabs(Handle, AValue);
+end;
+
+function TNotebook.GetScrollable: Boolean;
+begin
+  Result := gtk_notebook_get_scrollable(Handle);
+end;
+
+procedure TNotebook.SetScrollable(AValue: Boolean);
+begin
+  gtk_notebook_set_scrollable(Handle, AValue);
 end;
 
 {$ENDIF}

@@ -1,6 +1,6 @@
 (*
    XCL - XDE's Component Library
-   Copyright (C) 2005 Judison Oliveira Gil Filho
+   Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    See the file COPYING.FPC, included in this distribution,
    for details about the copyright.
@@ -10,14 +10,12 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
 
-//** INTERFACE
-//****************************************************************************
-{$IFDEF INC_READ_INTERFACE}
+{** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
   TCustomEntry = class(TControl)
+  {$I ieditablecontrol.inc}
   private
     FOnChanged: TNotifyEvent;
-    {$DEFINE INTF_PRIVATE}{$I ieditablecontrol.inc}{$UNDEF INTF_PRIVATE}
     function GetHasFrame: Boolean;
     procedure SetHasFrame(AValue: Boolean);
     function GetVisibility: Boolean;
@@ -27,7 +25,6 @@
     function GetWidthChars: Integer;
     procedure SetWidthChars(AValue: Integer);
   protected
-    {$DEFINE INTF_PROTECTED}{$I ieditablecontrol.inc}{$UNDEF INTF_PROTECTED}
     procedure CreateHandle; override;
     procedure ConnectSignals; override;
     //== Do's
@@ -36,11 +33,8 @@
     FText: String; // duplicated :(
     function GetText: String; inline;
     procedure SetText(AValue: String); inline;
-
   public
-    {$DEFINE INTF_PUBLIC}{$I ieditablecontrol.inc}{$UNDEF INTF_PUBLIC}
   published
-    {$DEFINE INTF_PUBLISHED}{$I ieditablecontrol.inc}{$UNDEF INTF_PUBLISHED}
     property HasFrame: Boolean read GetHasFrame write SetHasFrame default True;
     property MaxLength: Integer read GetMaxLength write SetMaxLength default 0;
     property Text: String read FText write SetText;
@@ -56,18 +50,13 @@
   published
   end;
 
-{$ENDIF}
-//** IMPLEMENTATION
-//****************************************************************************
-{$IFDEF INC_READ_IMPLEMENTATION}
+{** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 { TCustomEntry }
 
-{$DEFINE INTF_IMPLEMENTATION}
-  {$define the_class := TCustomEntry }
-    {$I ieditablecontrol.inc}
-  {$undef the_class}
-{$UNDEF INTF_IMPLEMENTATION}
+{$define the_class := TCustomEntry }
+  {$I ieditablecontrol.inc}
+{$undef the_class}
 
 procedure TCustomEntry.CreateHandle;
 begin

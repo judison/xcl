@@ -1,6 +1,6 @@
 (*
    XCL - XDE's Component Library
-   Copyright (C) 2005 Judison Oliveira Gil Filho
+   Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
    See the file COPYING.FPC, included in this distribution,
    for details about the copyright.
@@ -9,11 +9,9 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
+{** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-//** INTERFACE
-//****************************************************************************
-
-{$IFDEF INTF_PRIVATE}
+  private
     procedure SetFileAction(AValue: TFileChooserAction);
     function GetFileAction: TFileChooserAction;
     procedure SetLocalOnly(AValue: Boolean);
@@ -30,27 +28,18 @@
     function GetURI: String;
     procedure SetCurrentFolderURI(AValue: String);
     function GetCurrentFolderURI: String;
-{$ENDIF}
-{$IFDEF INTF_PROTECTED}
-
-{$ENDIF}
-{$IFDEF INTF_PUBLIC}
+  public
     property FileName: String read GetFileName write SetFileName;
     property CurrentFolder: String read GetCurrentFolder write SetCurrentFolder;
     property URI: String read GetURI write SetURI;
     property CurrentFolderURI: String read GetCurrentFolderURI write SetCurrentFolderURI;
-{$ENDIF}
-{$IFDEF INTF_PUBLISHED}
+  published
     property FileAction: TFileChooserAction read GetFileAction write SetFileAction default fcaOpen;
     property LocalOnly: Boolean read GetLocalOnly write SetLocalOnly default True;
     property SelectMultiple: Boolean read GetSelectMultiple write SetSelectMultiple default False;
     property ShowHidden: Boolean read GetShowHidden write SetShowHidden default False;
-{$ENDIF}
 
-//** IMPLEMENTATION
-//****************************************************************************
-
-{$IFDEF INTF_IMPLEMENTATION}
+{** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 procedure the_class.SetFileAction(AValue: TFileChooserAction);
 begin

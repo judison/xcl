@@ -22,9 +22,6 @@
 {$I tcontrolactionlink.inc}
 //--------------------- Interfaces
 {$I idesigner.inc}
-{$I ifilechooser.inc}
-{$I ieditablecontrol.inc}
-{$I icelllayout.inc}
 //--------------------- Non Visual
 {$I tclipboard.inc}
 {$I tcanvas.inc}
