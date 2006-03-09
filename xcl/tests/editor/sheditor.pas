@@ -1,14 +1,14 @@
 {
-  GTK/XCL implementation for SHEdit
-  Copyright (C) 2005-2006 by Judison Oliveira Gil Filho (judison@gmail.com)
-  Copyright (C) 1999-2000 by Sebastian Guenther (sg@freepascal.org)
+   GTK/XCL implementation for SHEdit
+   Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
+   Copyright (C) 1999-2000 Sebastian Guenther <sg@freepascal.org>
 
-  See the file COPYING.FPC, included in this distribution,
-  for details about the copyright.
+   See the file COPYING.XCL, included in this distribution,
+   for details about the copyright.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 }
 
 unit sheditor;
