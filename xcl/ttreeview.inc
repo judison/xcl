@@ -35,6 +35,7 @@
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure ColumnsAutosize;
     procedure ExpandAll;
     procedure CollapseAll;
@@ -87,6 +88,16 @@ procedure TTreeView.ConnectSignals;
 begin
   inherited;
   XCL.ConnectGtkSignal(FSelection, 'changed');
+end;
+
+procedure TTreeView.Notification(AComponent: TComponent; Operation: TOperation);
+begin
+  if (AComponent = FModel) and (Operation = opRemove) then
+  begin
+    FModel := nil;
+    gtk_tree_view_set_model(Handle, nil);
+  end;
+  inherited;
 end;
 
 procedure TTreeView.SetColumns(AValue: TTreeViewColumns);
@@ -167,8 +178,16 @@ procedure TTreeView.SetModel(AValue: TTreeModel);
 begin
   if AValue <> FModel then
   begin
+    if Assigned(FModel) then
+      FModel.RemoveFreeNotification(Self);
     FModel := AValue;
-    gtk_tree_view_set_model(Handle, FModel.Handle);
+    if Assigned(FModel) then
+    begin
+      gtk_tree_view_set_model(Handle, FModel.Handle);
+      FModel.FreeNotification(Self);
+    end
+    else
+      gtk_tree_view_set_model(Handle, nil);
   end;
 end;
 

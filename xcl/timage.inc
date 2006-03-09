@@ -11,7 +11,7 @@
 *)
 {** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-  TImage = class(TMiscControl, IPixBufClient)
+  TImage = class(TMiscControl, IPixbufClient)
   private
     FResource: String;
     FResPB: TPixbuf;
@@ -20,7 +20,7 @@
     FStockID: String;
     procedure SetStockIconSize(AValue: TIconSize);
     procedure SetStockID(AValue: String);
-    procedure SetPixBuf(AValue: TPixbuf);
+    procedure SetPixbuf(AValue: TPixbuf);
     procedure SetResource(AValue: String);
   protected
     procedure CreateHandle; override;
@@ -28,10 +28,11 @@
     procedure PixbufChanged(APixbuf: TPixbuf);
     procedure ClearSourceProps;
   public
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   published
     property Resource: String read FResource write SetResource;
     //--
-    property Pixbuf: TPixBuf read FPixbuf write SetPixbuf;
+    property Pixbuf: TPixbuf read FPixbuf write SetPixbuf;
     //--
     property StockIconSize: TIconSize read FStockIconSize write SetStockIconSize default iszInvalid;
     property StockID: String read FStockID write SetStockID;
@@ -46,14 +47,24 @@ begin
   Handle := gtk_image_new;
 end;
 
+procedure TImage.Notification(AComponent: TComponent; Operation: TOperation);
+begin
+  if (AComponent = FPixbuf) and (Operation = opRemove) then
+  begin
+    FPixbuf := nil;
+    ChangeImage;
+  end;
+  inherited;
+end;
+
 procedure TImage.ChangeImage;
 begin
   if FPixbuf <> nil then
-    gtk_image_set_from_pixbuf(Handle, FPixBuf.GetGdkPixBuf)
+    gtk_image_set_from_pixbuf(Handle, FPixbuf.GetGdkPixbuf)
   else if (FStockID <> '') and (FStockIconSize <> iszInvalid) then
     gtk_image_set_from_stock(Handle, PChar(FStockID), Ord(FStockIconSize))
   else if (FResource <> '') and (FResPB <> nil) then
-    gtk_image_set_from_pixbuf(Handle, FResPB.GetGdkPixBuf)
+    gtk_image_set_from_pixbuf(Handle, FResPB.GetGdkPixbuf)
   else
     gtk_image_set_from_stock(Handle, nil, 1); // trick to get a "blank" image
 end;
@@ -64,9 +75,10 @@ begin
   FStockID := '';
 
   //== Pixbuf
-  if Assigned(FPixBuf) then
+  if Assigned(FPixbuf) then
   begin
-    FPixBuf.RemoveClient(Self);
+    FPixbuf.RemoveClient(Self);
+    FPixbuf.RemoveFreeNotification(Self);
     FPixbuf := nil;
   end;
 
@@ -121,23 +133,29 @@ begin
   end;
 end;
 
-procedure TImage.SetPixBuf(AValue: TPixBuf);
+procedure TImage.SetPixbuf(AValue: TPixbuf);
 begin
-  if FPixBuf <> AValue then
+  if FPixbuf <> AValue then
   begin
-    ClearSourceProps;
-    FPixBuf := AValue;
+    if Assigned(FPixbuf) then
+      FPixbuf.RemoveFreeNotification(Self);
 
-    if Assigned(FPixBuf) then
-      FPixBuf.AddClient(Self);
+    ClearSourceProps;
+    FPixbuf := AValue;
+
+    if Assigned(FPixbuf) then
+    begin
+      FPixbuf.AddClient(Self);
+      FPixbuf.FreeNotification(Self);
+    end;
 
     ChangeImage;
   end;
 end;
 
-procedure TImage.PixBufChanged(APixBuf: TPixBuf);
+procedure TImage.PixbufChanged(APixbuf: TPixbuf);
 begin
-  if APixBuf = FPixBuf then
+  if APixbuf = FPixbuf then
     ChangeImage;
 end;
 
