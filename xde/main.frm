@@ -6,6 +6,14 @@ object TMainForm
   end
   object FS: TFileChooserDialog
   end
+  object TAccelerator
+    AccelName = '<Alt>Left'
+    OnActivate = GoLeft
+  end
+  object TAccelerator
+    AccelName = '<Alt>Right'
+    OnActivate = GoRight
+  end
   object TActionList
     object actFileNew: TAction
       StockID = 'gtk-new'
