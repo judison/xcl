@@ -43,6 +43,8 @@ type
     procedure FileQuit(Sender: TObject);
     procedure ShowCompilerOptions(Sender: TObject);
     procedure ShowEditorOptions(Sender: TObject);
+    procedure GoLeft(Sender: TObject);
+    procedure GoRight(Sender: TObject);
   private
     function CurrentBuffer: TBuffer;
   protected
@@ -176,6 +178,16 @@ begin
   finally
     FrmEditorOpts.Free;
   end;
+end;
+
+procedure TMainForm.GoLeft(Sender: TObject);
+begin
+  NB.PrevPage;
+end;
+
+procedure TMainForm.GoRight(Sender: TObject);
+begin
+  NB.NextPage;
 end;
 
 end.
