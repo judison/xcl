@@ -15,6 +15,7 @@
   private
     FInModal: Boolean;
     FDesigner: IDesigner;
+    FAccelGroup: TAccelGroup;
     function GetHeight: Integer;
     function GetTitle: string;
     function GetWidth: Integer;
@@ -33,6 +34,7 @@
     procedure DoCloseQuery(CanClose: Boolean); virtual;
   public
     constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
     procedure GetSize(var AWidth, AHeight: Integer);
     procedure Resize(AWidth, AHeight: Integer);
     //
@@ -49,6 +51,9 @@
     procedure Close;
     procedure DoDeleteEvent(var Msg: TGtkSigEvent); message 'GTK:delete-event';
     //
+    procedure AddAccelGroup(AAccelGroup: TAccelGroup);
+    procedure RemoveAccelGroup(AAccelGroup: TAccelGroup);
+    //
     procedure ReadBinFrm(AStream: TStream);
     procedure ReadTxtFrm(AStream: TStream);
     procedure WriteBinFrm(AStream: TStream);
@@ -57,6 +62,7 @@
     procedure GetChildren(Proc: TGetChildProc; Root: TComponent); override;
     //--
     property Designer: IDesigner read FDesigner write FDesigner;
+    property AccelGroup: TAccelGroup read FAccelGroup;
   published
     property Title: string read GetTitle write SetTitle;
     property Width: Integer read GetWidth write SetWidth;
@@ -80,6 +86,9 @@ begin
   // e na ordem (TForm, TMyCustomForm, TMyCustomFormAA, TMyForm) ir lendo os .frm de cada classe
   // tornando assim, possivel a hierarquia de forms (.frm)
   inherited;
+  //---
+  FAccelGroup := TAccelGroup.Create(nil);
+  AddAccelGroup(FAccelGroup);
   //---
   try
     Stream := TResourceStream.Create('FORMDATA', ClassName);
@@ -105,6 +114,12 @@ begin
       end;
     end;
   end;
+end;
+
+destructor TForm.Destroy;
+begin
+  FAccelGroup.Free;
+  inherited;
 end;
 
 procedure TForm.CreateHandle;
@@ -272,6 +287,16 @@ procedure TForm.DoDeleteEvent(var Msg: TGtkSigEvent);
 begin
   Close;
   Msg.Stop := True;
+end;
+
+procedure TForm.AddAccelGroup(AAccelGroup: TAccelGroup);
+begin
+  gtk_window_add_accel_group(Handle, AAccelGroup.Handle);
+end;
+
+procedure TForm.RemoveAccelGroup(AAccelGroup: TAccelGroup);
+begin
+  gtk_window_remove_accel_group(Handle, AAccelGroup.Handle);
 end;
 
 //--------------------

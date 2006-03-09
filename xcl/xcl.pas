@@ -36,7 +36,6 @@ type
   TQuark = DWord;
   TColor = String; // For the user a color is a string
   TColorData = Pointer; // PGdkColor
-  TAccelerator = String;
 
   TTreeIter = record // Think of it as a read-only structure
     STP: Integer;  // Do not touch
