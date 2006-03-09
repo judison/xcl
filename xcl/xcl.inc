@@ -26,6 +26,8 @@
 {$I tclipboard.inc}
 {$I tcanvas.inc}
 {$I tpixbuf.inc}
+{$I taccelgroup.inc}
+{$I taccelerator.inc}
 //---------------------
 {$I tapplication.inc}
 {$I tcontrol.inc}
