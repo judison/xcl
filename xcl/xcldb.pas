@@ -4,7 +4,7 @@
 
    DB Aware Controls
 
-   See the file COPYING.FPC, included in this distribution,
+   See the file COPYING.XCL, included in this distribution,
    for details about the copyright.
 
    This program is distributed in the hope that it will be useful,

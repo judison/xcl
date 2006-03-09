@@ -2,7 +2,7 @@
    GtkPas - Code generation tool
    Copyright (C) 2006 Judison Oliveira Gil Filho
 
-   See the file COPYING.FPC, included in this distribution,
+   See the file COPYING.XCL, included in this distribution,
    for details about the copyright.
 
    This program is distributed in the hope that it will be useful,

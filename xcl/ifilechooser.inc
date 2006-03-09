@@ -2,7 +2,7 @@
    XCL - XDE's Component Library
    Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
-   See the file COPYING.FPC, included in this distribution,
+   See the file COPYING.XCL, included in this distribution,
    for details about the copyright.
 
    This program is distributed in the hope that it will be useful,
