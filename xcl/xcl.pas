@@ -221,6 +221,8 @@ initialization
   RegisterClass(TListStore);
   RegisterClass(TPixBuf);
   RegisterClass(TTimer);
+  RegisterClass(TAccelGroup);
+  RegisterClass(TAccelerator);
 //-------------------- Visuais
   RegisterClass(TArrow);                //OK
   RegisterClass(TLabel);                //OK

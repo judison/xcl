@@ -27,6 +27,7 @@
     destructor Destroy; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure DoActivate;
+  published
     property AccelGroup: TAccelGroup read FAccelGroup write SetAccelGroup;
     property AccelName: String read FAccelName write SetAccelName;
     property OnActivate: TNotifyEvent read FOnActivate write FOnActivate;
