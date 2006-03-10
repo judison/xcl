@@ -44,6 +44,7 @@
 {$I tbutton.inc}
 {$I ttogglebutton.inc}
 {$I tcheckbutton.inc}
+{$I tradiobutton.inc}
 {$I tadjustment.inc}
 {$I tscrolledwindow.inc}
 {$I tnotebookpage.inc}
