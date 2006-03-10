@@ -87,15 +87,15 @@ object FrmCompilerOpts: TFrmCompilerOpts
               Caption = 'Target processor'
               BoxExpand = True
               object TVBox
-                object TCheckButton
+                object TRadioButton
                   Caption = 'i386/i486'
                   BoxExpand = True
                 end
-                object TCheckButton
+                object TRadioButton
                   Caption = 'Pentium/PentiumMMX (tm)'
                   BoxExpand = True
                 end
-                object TCheckButton
+                object TRadioButton
                   Caption = 'PPro/PII/c6x86/K6 (tm)'
                   BoxExpand = True
                 end
@@ -175,15 +175,15 @@ object FrmCompilerOpts: TFrmCompilerOpts
         object TFrame
           Caption = 'Browser'
           object TVBox
-            object TCheckButton
+            object TRadioButton
               Caption = 'No browser'
               BoxExpand = True
             end
-            object TCheckButton
+            object TRadioButton
               Caption = 'Only Global browser'
               BoxExpand = True
             end
-            object TCheckButton
+            object TRadioButton
               Caption = 'Local and global browser'
               BoxExpand = True
             end
@@ -199,15 +199,15 @@ object FrmCompilerOpts: TFrmCompilerOpts
               Caption = 'Assembler reader'
               BoxExpand = True
               object TVBox
-                object TCheckButton
+                object TRadioButton
                   Caption = 'Direct assembler'
                   BoxExpand = True
                 end
-                object TCheckButton
+                object TRadioButton
                   Caption = 'AT&T style assembler'
                   BoxExpand = True
                 end
-                object TCheckButton
+                object TRadioButton
                   Caption = 'Intel style assembler'
                   BoxExpand = True
                 end
@@ -236,39 +236,39 @@ object FrmCompilerOpts: TFrmCompilerOpts
             Caption = 'Assembler output'
             BoxExpand = True
             object TVBox
-              object TCheckButton
+              object TRadioButton
                 Caption = 'Use default output'
                 BoxExpand = True
               end
-              object TCheckButton
+              object TRadioButton
                 Caption = 'Use GNU as'
                 BoxExpand = True
               end
-              object TCheckButton
+              object TRadioButton
                 Caption = 'Use NASM coff'
                 BoxExpand = True
               end
-              object TCheckButton
+              object TRadioButton
                 Caption = 'Use NASM elf'
                 BoxExpand = True
               end
-              object TCheckButton
+              object TRadioButton
                 Caption = 'Use NASM obj'
                 BoxExpand = True
               end
-              object TCheckButton
+              object TRadioButton
                 Caption = 'Use MASM'
                 BoxExpand = True
               end
-              object TCheckButton
+              object TRadioButton
                 Caption = 'Use TASM'
                 BoxExpand = True
               end
-              object TCheckButton
+              object TRadioButton
                 Caption = 'Use coff'
                 BoxExpand = True
               end
-              object TCheckButton
+              object TRadioButton
                 Caption = 'Use pecoff'
                 BoxExpand = True
               end

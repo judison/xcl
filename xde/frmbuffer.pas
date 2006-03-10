@@ -64,6 +64,7 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     //==
+    procedure New; override;
     procedure Open(AFileName: String); override;
     procedure Save; override;
   end;
@@ -155,6 +156,14 @@ begin
     ComponentTV.ExpandTo(It);
     ComponentTV.SelectIter(It);
   end;
+end;
+
+procedure TFrmBuffer.New;
+begin
+  JITForms.AddNewJITComponent('jit_unit', TDesignForm);
+  MyForm := TDesignForm(JITForms[0]);
+  MyForm.Parent := ClientArea;
+  LoadComponents;
 end;
 
 procedure TFrmBuffer.Open(AFileName: String);
