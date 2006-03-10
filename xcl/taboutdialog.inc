@@ -11,8 +11,9 @@
 *)
 {** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-  TAboutDialog = class(TDialog)
+  TAboutDialog = class(TDialog, IPixbufClient)
   private
+    FLogo: TPixbuf;
     function GetAppName: String;
     procedure SetAppName(AValue: String);
     function GetVersion: String;
@@ -29,9 +30,13 @@
     procedure SetWebsite(AValue: String);
     function GetWebsiteLabel: String;
     procedure SetWebsiteLabel(AValue: String);
+    procedure SetLogo(AValue: TPixbuf);
   protected
     procedure CreateHandle; override;
+    procedure PixbufChanged(APixbuf: TPixbuf);
+    procedure ChangeLogo;
   public
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   published
     property AppName: String read GetAppName write SetAppName;
     property Version: String read GetVersion write SetVersion;
@@ -41,6 +46,7 @@
     property WrapLicense: Boolean read GetWrapLicense write SetWrapLicense;
     property Website: String read GetWebsite write SetWebsite;
     property WebsiteLabel: String read GetWebsiteLabel write SetWebsiteLabel;
+    property Logo: TPixbuf read FLogo write SetLogo;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
@@ -50,6 +56,30 @@
 procedure TAboutDialog.CreateHandle;
 begin
   Handle := gtk_about_dialog_new();
+end;
+
+procedure TAboutDialog.Notification(AComponent: TComponent; Operation: TOperation);
+begin
+  if (AComponent = FLogo) and (Operation = opRemove) then
+  begin
+    FLogo := nil;
+    ChangeLogo;
+  end;
+  inherited;
+end;
+
+procedure TAboutDialog.PixbufChanged(APixbuf: TPixbuf);
+begin
+  if APixbuf = FLogo then
+    ChangeLogo;
+end;
+
+procedure TAboutDialog.ChangeLogo;
+begin
+  if Assigned(FLogo) then
+    gtk_about_dialog_set_logo(Handle, FLogo.GetGdkPixbuf)
+  else
+    gtk_about_dialog_set_logo(Handle, nil);
 end;
 
 function TAboutDialog.GetAppName: String;
@@ -130,6 +160,21 @@ end;
 procedure TAboutDialog.SetWebsiteLabel(AValue: String);
 begin
   gtk_about_dialog_set_website_label(Handle, PChar(AValue));
+end;
+
+procedure TAboutDialog.SetLogo(AValue: TPixbuf);
+begin
+  if AValue <> FLogo then
+  begin
+    if Assigned(FLogo) then
+      FLogo.RemoveFreeNotification(Self);
+
+    FLogo := AValue;
+    ChangeLogo;
+
+    if Assigned(FLogo) then
+      FLogo.FreeNotification(Self);
+  end;
 end;
 
 {$ENDIF}
