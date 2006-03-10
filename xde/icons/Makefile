@@ -81,6 +81,7 @@ ICON_FILES = unknown.xpm \
 	tmysqlconnection.xpm \
 	tpqconnection.xpm \
 	tprogressbar.xpm \
+	tradiobutton.xpm \
 	tscrolledwindow.xpm \
 	tsdfdataset.xpm \
 	tspinbutton.xpm \

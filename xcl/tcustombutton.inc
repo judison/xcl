@@ -19,11 +19,11 @@
     function GetRelief: TRelief;
     function GetUseStock: Boolean;
     function GetUseUnderline: Boolean;
-    procedure SetCaption(Value: string);
-    procedure SetFocusOnClick(Value: Boolean);
-    procedure SetRelief(Value: TRelief);
-    procedure SetUseStock(Value: Boolean);
-    procedure SetUseUnderline(Value: Boolean);
+    procedure SetCaption(AValue: string);
+    procedure SetFocusOnClick(AValue: Boolean);
+    procedure SetRelief(AValue: TRelief);
+    procedure SetUseStock(AValue: Boolean);
+    procedure SetUseUnderline(AValue: Boolean);
   protected
     procedure CreateHandle; override;
     procedure DestroyHandle; override;
@@ -95,29 +95,29 @@ begin
   Result := gtk_button_get_use_underline(Handle);
 end;
 
-procedure TCustomButton.SetCaption(Value: string);
+procedure TCustomButton.SetCaption(AValue: string);
 begin
-  gtk_button_set_label(Handle, PChar(Value));
+  gtk_button_set_label(Handle, PChar(AValue));
 end;
 
-procedure TCustomButton.SetFocusOnClick(Value: Boolean);
+procedure TCustomButton.SetFocusOnClick(AValue: Boolean);
 begin
-  gtk_button_set_focus_on_click(Handle, Value);
+  gtk_button_set_focus_on_click(Handle, AValue);
 end;
 
-procedure TCustomButton.SetRelief(Value: TRelief);
+procedure TCustomButton.SetRelief(AValue: TRelief);
 begin
-  gtk_button_set_relief(Handle, Ord(Value));
+  gtk_button_set_relief(Handle, Ord(AValue));
 end;
 
-procedure TCustomButton.SetUseStock(Value: Boolean);
+procedure TCustomButton.SetUseStock(AValue: Boolean);
 begin
-  gtk_button_set_use_stock(Handle, Value);
+  gtk_button_set_use_stock(Handle, AValue);
 end;
 
-procedure TCustomButton.SetUseUnderline(Value: Boolean);
+procedure TCustomButton.SetUseUnderline(AValue: Boolean);
 begin
-  gtk_button_set_use_underline(Handle, Value);
+  gtk_button_set_use_underline(Handle, AValue);
 end;
 
 procedure TCustomButton.ConnectSignals;

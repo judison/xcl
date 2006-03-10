@@ -82,7 +82,7 @@ type
   {  |   |   |       \-} TCustomToggleButton = class;
   {  |   |   |           |-} TToggleButton = class;
   {  |   |   |           \-} TCheckButton = class;
-  {  |   |   |               \-  TRadioButton = class;}
+  {  |   |   |               \-} TRadioButton = class;
   {  |   |   |-} TScrolledWindow = class;
   {  |   |   |-} TNotebookPage = class;
   {  |   |   |-} THandleBox = class;
@@ -206,7 +206,7 @@ uses
 procedure Register;
 begin
   RegisterComponents('Containers', [THBox, TVBox, TTable, THPaned, TVPaned, THButtonBox, TVButtonBox, TFrame, TExpander, THandleBox, TScrolledWindow, TViewPort, TFixed]);
-  RegisterComponents('Standard', [TLabel, TButton, TToggleButton, TEntry, TSpinButton, TTextView, TCheckButton, TComboBox, TComboBoxEntry, TImage]);
+  RegisterComponents('Standard', [TLabel, TButton, TToggleButton, TEntry, TSpinButton, TTextView, TCheckButton, TRadioButton, TComboBox, TComboBoxEntry, TImage]);
   RegisterComponents('Additional', [THSeparator, TVSeparator, THScrollbar, TVScrollBar, THScale, TVScale, TProgressBar, TStatusBar, TArrow]);
   RegisterComponents('Extra', [TCalendar, TColorButton, TColorSelection, TFileChooserWidget]);
 end;
@@ -234,6 +234,7 @@ initialization
   RegisterClass(TColorButton);          //OK
   RegisterClass(TToggleButton);         //OK
   RegisterClass(TCheckButton);          //OK
+  RegisterClass(TRadioButton);          //OK
   RegisterClass(TScrolledWindow);       //OK
   RegisterClass(TNotebookPage);
   RegisterClass(THandleBox);            //OK
