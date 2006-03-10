@@ -103,8 +103,8 @@ all: icons_xrc.pp
 $(XRC):
 	make -C $(XRC_PATH)
 
-icons_xrc.pp: $(ICON_FILES) $(XRC)
-	$(XRC) $(ICON_FILES) $@
+icons_xrc.pp: xde.png $(ICON_FILES) $(XRC)
+	$(XRC) xde.png $(ICON_FILES) $@
 
 clean:
 	rm -f *~ *.ppu *.xrc *.o ppas.sh core
