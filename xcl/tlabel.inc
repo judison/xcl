@@ -42,7 +42,7 @@
     property Selectable: Boolean read GetSelectable write SetSelectable default False;
     property UseMarkup: Boolean read getUseMarkup write SetUseMarkup default False;
     property UseUnderline: Boolean read getUseUnderline write SetUseUnderline default False;
-    property Ellipsize: TEllipsizeMode read GetEllipsize write SetEllipsize;
+    property Ellipsize: TEllipsizeMode read GetEllipsize write SetEllipsize default emNone;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
