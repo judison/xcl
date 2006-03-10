@@ -163,7 +163,24 @@ begin
 end;
 
 procedure TMainForm.HelpAbout(Sender: TObject);
+var
+  SL: TStringList;
+  S: TStream;
 begin
+  try
+    S := TResourceStream.Create('STR', 'license');
+    try
+      SL := TStringList.Create;
+      SL.LoadFromStream(S);
+      AboutDlg.WrapLicense := True;
+      AboutDlg.License := SL.Text;
+      SL.Free;
+    finally
+      S.Free;
+    end;
+  except
+    // Does not show License Button on About Dialog :D
+  end;
   AboutDlg.Execute;
 end;
 

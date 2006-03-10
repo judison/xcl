@@ -42,8 +42,8 @@ icons/icons_xrc.pp:
 $(XRC):
 	make -C $(XRC_PATH)
 
-xde_xrc.pp: $(FRM_FILES) $(XRC)
-	$(XRC) $(FRM_FILES) $@
+xde_xrc.pp: $(FRM_FILES) license.str $(XRC)
+	$(XRC) $(FRM_FILES) license.str $@
 
 sourceview/xclsourceview.ppu:
 	make -C sourceview
