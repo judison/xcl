@@ -84,7 +84,10 @@ begin
     frmNewFile.Free;
   end;
   if Assigned(B) then
+  begin
     B.Parent := NB;
+    B.New;
+  end;
 end;
 
 procedure TMainForm.FileOpen(Sender: TObject);

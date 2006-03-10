@@ -35,6 +35,7 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     //--
+    procedure New; virtual;
     procedure Open(AFileName: String); virtual;
     procedure SaveAs(AFileName: String); virtual;
     procedure Save; virtual;
@@ -55,6 +56,10 @@ end;
 destructor TBuffer.Destroy;
 begin
   inherited;
+end;
+
+procedure TBuffer.New;
+begin
 end;
 
 procedure TBuffer.Open(AFileName: String);
