@@ -29,6 +29,7 @@ type
     actFileSaveAs: TAction;
     actFileClose: TAction;
     actFileQuit: TAction;
+    AboutDlg: TAboutDialog;
     MenuBar: TMenuBar;
     NB: TNoteBook;
     FS: TFileChooserDialog;
@@ -41,6 +42,7 @@ type
     procedure FileClose(Sender: TObject);
     procedure FileCloseUpd(Sender: TObject);
     procedure FileQuit(Sender: TObject);
+    procedure HelpAbout(Sender: TObject);
     procedure ShowCompilerOptions(Sender: TObject);
     procedure ShowEditorOptions(Sender: TObject);
     procedure GoLeft(Sender: TObject);
@@ -158,6 +160,11 @@ end;
 procedure TMainForm.FileQuit(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TMainForm.HelpAbout(Sender: TObject);
+begin
+  AboutDlg.Execute;
 end;
 
 procedure TMainForm.ShowCompilerOptions(Sender: TObject);

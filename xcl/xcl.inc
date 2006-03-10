@@ -83,6 +83,7 @@
 {$I ttimer.inc}
 {$I ttextbuffer.inc}
 {$I tdialog.inc}
+{$I taboutdialog.inc}
 {I tfileseldialog.inc Deprecated}
 {$I tfilechooserdialog.inc}
 // TreeView Itens (Arrumar ordem depois)

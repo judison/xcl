@@ -63,6 +63,7 @@ type
   {  \-} TControlActionLink = class;
   { *** Dialog Hierarchy *** }
   {} TDialog = class;
+  {  |-} TAboutDialog = class;
   {  |-  TFileSelDialog = class;  Deprecated!! }
   {  \-} TFileChooserDialog = class;
   { *** Class Hierarchy *** }
