@@ -4,6 +4,9 @@ object TMainForm
   Height = 600
   object LangMan: TSourceLanguagesManager
   end
+  object PBLogo: TPixbuf
+    Resource = 'xde'
+  end
   object FS: TFileChooserDialog
   end
   object AboutDlg: TAboutDialog
@@ -12,6 +15,7 @@ object TMainForm
     Copyright = 'Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>'
     Comments = 'XCL''s Development Environment'
     Website = 'http://xcl.sourceforge.net/'
+    Logo = PBLogo
   end
   object TAccelerator
     AccelName = '<Alt>Left'
