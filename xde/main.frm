@@ -6,6 +6,13 @@ object TMainForm
   end
   object FS: TFileChooserDialog
   end
+  object AboutDlg: TAboutDialog
+    AppName = 'XDE'
+    Version = 'alpha'
+    Copyright = 'Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>'
+    Comments = 'XCL''s Development Environment'
+    Website = 'http://xcl.sourceforge.net/'
+  end
   object TAccelerator
     AccelName = '<Alt>Left'
     OnActivate = GoLeft
@@ -41,6 +48,10 @@ object TMainForm
     object actFileQuit: TAction
       StockID = 'gtk-quit'
       OnExecute = FileQuit
+    end
+    object actHelpAbout: TAction
+      StockID = 'gtk-about'
+      OnExecute = HelpAbout
     end
   end
   object TVBox
@@ -82,10 +93,10 @@ object TMainForm
         end
       end
       object TMenuItem
-        Caption = 'Help'
+        Caption = '_Help'
         RightJustified = True
         object TMenuItem
-          Caption = 'About...'
+          Action = actHelpAbout
         end
       end
     end

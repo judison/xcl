@@ -11,31 +11,22 @@
 *)
 {** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-{$IFDEF FPC}
   TApplication = class(TCustomApplication)
-{$ELSE}
-  TApplication = class(TComponent)
-{$ENDIF}
   private
     FColormap: TColormap;
     FCurrentLocale: string;
     FMainForm: TForm;
     FActionList: TList;
     FToolTips: Pointer;
-{$IFNDEF FPC}
-    FTerminated: Boolean;
-{$ENDIF}
   protected
-    procedure SetTitle(const AValue: string); {$IFDEF FPC} override; {$ENDIF}
-    procedure DoRun; {$IFDEF FPC} override; {$ENDIF}
+    procedure SetTitle(const AValue: string); override;
+    procedure DoRun; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure Initialize; {$IFDEF FPC} override; {$ENDIF}
-    procedure ShowException(E: Exception); {$IFDEF FPC} override; {$ENDIF}
-    procedure Terminate; {$IFDEF FPC} override; {$ENDIF}
-
+    procedure Initialize; override;
+    procedure ShowException(E: Exception); override;
     procedure CreateForm(AClass: TFormClass; var Ref);
     // ToolTips
     procedure EnableToolTips;
@@ -46,18 +37,11 @@
     //
     procedure AddAction(AAction: TCustomAction);
     procedure RemoveAction(AAction: TCustomAction);
-{$IFNDEF FPC}
-    procedure Run;
-{$ENDIF}
 
     property Colormap: TColormap read FColormap;
     property CurrentLocale: string read FCurrentLocale;
     property MainForm: TForm read FMainForm write FMainForm;
-{$IFNDEF FPC}
-    property Terminated: Boolean read FTerminated write FTerminated;
-{$ENDIF}
   end;
-
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
@@ -142,19 +126,14 @@ end;
 procedure TApplication.SetTitle(const AValue: string);
 begin
   inherited;
-  //???
+  g_set_application_name(PChar(AValue));
 end;
 
 procedure TApplication.Initialize;
 begin
   inherited;
   FCurrentLocale := PChar(gtk_set_locale);
-{$IFDEF FPC}
   gtk_init(@argc, @argv);
-{$ELSE}
-  // TODO
-  gtk_init(nil, nil);
-{$ENDIF}
 
   // create default colormap
   FColormap := TColormap.Create(gdk_colormap_get_system);
@@ -168,24 +147,12 @@ end;
 
 procedure TApplication.ShowException(E: Exception);
 begin
-{IFDEF FPC}
 //  inherited;
-{ELSE}
   WriteLn('***************');
   WriteLn('** EXCEPTION **');
   WriteLn('***************');
   WriteLn(E.Message);
   WriteLn('***************');
-{ENDIF}
-end;
-
-procedure TApplication.Terminate;
-begin
-{$IFDEF FPC}
-  inherited;
-{$ELSE}
-  FTerminated := True
-{$ENDIF}
 end;
 
 procedure TApplication.CreateForm(AClass: TFormClass; var Ref);
@@ -194,13 +161,6 @@ begin
   if FMainForm = nil then
     FMainForm := TForm(Ref);
 end;
-
-{$IFNDEF FPC}
-procedure TApplication.Run;
-begin
-  DoRun;
-end;
-{$ENDIF}
 
 
 {$ENDIF}
