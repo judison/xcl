@@ -21,6 +21,8 @@
     procedure SetFraction(AValue: Double);
     procedure SetPulseStep(AValue: Double);
     procedure SetOrientation(AValue: TProgressBarOrientation);
+    function GetEllipsize: TEllipsizeMode;
+    procedure SetEllipsize(AValue: TEllipsizeMode);
   protected
     procedure CreateHandle; override;
   public
@@ -30,6 +32,7 @@
     property Fraction: Double read GetFraction write SetFraction;
     property PulseStep: Double read GetPulseStep write SetPulseStep;
     property Orientation: TProgressBarOrientation read GetOrientation write SetOrientation;
+    property Ellipsize: TEllipsizeMode read GetEllipsize write SetEllipsize default emNone;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
@@ -84,6 +87,16 @@ end;
 procedure TProgressBar.SetOrientation(AValue: TProgressBarOrientation);
 begin
   gtk_progress_bar_set_orientation(Handle, TGtkProgressBarOrientation(AValue));
+end;
+
+function TProgressBar.GetEllipsize: TEllipsizeMode;
+begin
+  Result := TEllipsizeMode(gtk_progress_bar_get_ellipsize(Handle));
+end;
+
+procedure TProgressBar.SetEllipsize(AValue: TEllipsizeMode);
+begin
+  gtk_progress_bar_set_ellipsize(Handle, Ord(AValue));
 end;
 
 {$ENDIF}

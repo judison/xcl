@@ -62,8 +62,14 @@ function gtk_about_dialog_set_email_hook(func:TGtkAboutDialogActivateLinkFunc; d
 function gtk_about_dialog_set_url_hook(func:TGtkAboutDialogActivateLinkFunc; data:gpointer; destroy:TGDestroyNotify):TGtkAboutDialogActivateLinkFunc;cdecl;external gtklib;
 
 // GtkLabel
+
 function gtk_label_get_ellipsize  (_label: pointer): longint; cdecl; external gtklib;
 procedure gtk_label_set_ellipsize (_label: pointer; mode: longint); cdecl; external gtklib;
+
+// GtkProgressBar
+
+function gtk_progress_bar_get_ellipsize (pbar: pointer): longint; cdecl; external gtklib;
+procedure gtk_progress_bar_set_ellipsize(pbar: pointer; mode: longint); cdecl; external gtklib;
 
 // GtkColorButton (Since 2.4)
 
