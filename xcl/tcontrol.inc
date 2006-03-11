@@ -134,6 +134,8 @@
     //-
     function GetForm: TForm;
     //--
+    procedure GrabFocus;
+    //--
     procedure Show; virtual;
     procedure Hide; virtual;
     //==
@@ -280,6 +282,11 @@ begin
     Result := TForm(C)
   else
     Result := nil;
+end;
+
+procedure TControl.GrabFocus;
+begin
+  gtk_widget_grab_focus(Handle);
 end;
 
 procedure TControl.Notification(AComponent: TComponent; Operation: TOperation);
