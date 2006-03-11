@@ -142,6 +142,9 @@ type
   TFormClass = class of TForm;
   //TTreeViewColumnClass = class of TTreeViewColumn;
 
+  { *** Events *** }
+  TSwitchPageEvent = procedure(Sender: TObject; NewPage: Integer) of object;
+
   { *** Enumerations *** }
   TResizeMode = (rmParent, rmQueue, rmImmediate);
   TShadowType = (stNone, stIn, stOut, stEtchedIn, stEtchedOut);

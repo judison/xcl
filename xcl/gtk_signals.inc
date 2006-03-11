@@ -13,6 +13,8 @@
 
   TGtkSig = record
     Signal: ShortString;
+    P1, P2: Pointer;
+    I1, I2: Integer;
   end;
 
   TGtkSigEvent = record
@@ -22,19 +24,6 @@
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
-
-procedure Hnd_GTK_Generic(Handle: Pointer; Signal: PChar); cdecl;
-var
-  Msg: TGtkSig;
-begin
-  Msg.Signal := 'GTK:'+Signal;
-  try
-    ControlByHandle(Handle).DispatchStr(Msg);
-  except
-    on E: Exception do
-      Application.ShowException(E);
-  end;
-end;
 
 function Hnd_GTK_GenericEvent(Handle: Pointer; Event: Pointer; Signal: PChar): gboolean; cdecl;
 var
@@ -52,9 +41,31 @@ begin
   Result := Msg.Stop;
 end;
 
+procedure Dispatch_GtkSig(Handle: Pointer; Signal: ShortString; P1, P2: Pointer; I1, I2: Integer);
+var
+  Msg: TGtkSig;
+begin
+  Msg.Signal := Signal;
+  Msg.P1 := P1;
+  Msg.P2 := P2;
+  Msg.I1 := I1;
+  Msg.I2 := I2;
+  try
+    ControlByHandle(Handle).DispatchStr(Msg);
+  except
+    on E: Exception do
+      Application.ShowException(E);
+  end;
+end;
+
+procedure Hnd_GTK_Generic(Handle: Pointer; Signal: PChar); cdecl;
+begin
+  Dispatch_GtkSig(Handle, 'GTK:'+Signal, nil, nil, 0, 0);
+end;
+
 procedure Hnd_GtkNotebook_Switch_Page(Handle: Pointer; page: pointer; page_num: guint; Signal: PChar); cdecl;
 begin
-  Hnd_GTK_Generic(Handle, Signal);
+  Dispatch_GtkSig(Handle, 'GTK:'+Signal, page, nil, page_num, 0);
 end;
 
 type
