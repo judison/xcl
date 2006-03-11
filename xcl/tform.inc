@@ -11,18 +11,20 @@
 *)
 {** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-  TForm = class(TBinControl)
+  TForm = class(TBinControl, IPixbufClient)
   private
+    FIcon: TPixbuf;
     FInModal: Boolean;
     FDesigner: IDesigner;
     FAccelGroup: TAccelGroup;
-    function GetHeight: Integer;
     function GetTitle: string;
+    function GetHeight: Integer;
     function GetWidth: Integer;
     function GetResizable: Boolean;
     function GetDecorated: Boolean;
-    procedure SetHeight(Value: Integer);
     procedure SetTitle(Value: string);
+    procedure SetIcon(Value: TPixbuf);
+    procedure SetHeight(Value: Integer);
     procedure SetWidth(Value: Integer);
     procedure SetResizable(Value: Boolean);
     procedure SetDecorated(Value: Boolean);
@@ -30,11 +32,15 @@
     procedure CreateHandle; override;
     procedure DestroyHandle; override;
     //--
+    procedure PixbufChanged(APixbuf: TPixbuf);
+    procedure ChangeIcon;
+    //--
     procedure ConnectSignals; override;
     procedure DoCloseQuery(CanClose: Boolean); virtual;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure GetSize(var AWidth, AHeight: Integer);
     procedure Resize(AWidth, AHeight: Integer);
     //
@@ -65,6 +71,7 @@
     property AccelGroup: TAccelGroup read FAccelGroup;
   published
     property Title: string read GetTitle write SetTitle;
+    property Icon: TPixbuf read FIcon write SetIcon;
     property Width: Integer read GetWidth write SetWidth;
     property Height: Integer read GetHeight write SetHeight;
     property ResizeMode default rmQueue; // override default value don't work in fpc
@@ -132,6 +139,30 @@ begin
   inherited;
 end;
 
+procedure TForm.Notification(AComponent: TComponent; Operation: TOperation);
+begin
+  if (AComponent = FIcon) and (Operation = opRemove) then
+  begin
+    FIcon := nil;
+    ChangeIcon;
+  end;
+  inherited;
+end;
+
+procedure TForm.PixbufChanged(APixbuf: TPixbuf);
+begin
+  if APixbuf = FIcon then
+    ChangeIcon;
+end;
+
+procedure TForm.ChangeIcon;
+begin
+  if Assigned(FIcon) then
+    gtk_window_set_icon(Handle, FIcon.GetGdkPixbuf)
+  else
+    gtk_window_set_icon(Handle, nil);
+end;
+
 function TForm.GetHeight: Integer;
 var
   Dummy: Integer;
@@ -175,6 +206,26 @@ begin
   gtk_window_resize(Handle, AWidth, AHeight);
 end;
 
+procedure TForm.SetTitle(Value: string);
+begin
+  gtk_window_set_title(Handle, PChar(Value));
+end;
+
+procedure TForm.SetIcon(Value: TPixbuf);
+begin
+  if Value <> FIcon then
+  begin
+    if Assigned(FIcon) then
+      FIcon.RemoveFreeNotification(Self);
+
+    FIcon := Value;
+    ChangeIcon;
+
+    if Assigned(FIcon) then
+      FIcon.FreeNotification(Self);
+  end;
+end;
+
 procedure TForm.SetHeight(Value: Integer);
 var
   W, H: Integer;
@@ -184,10 +235,6 @@ begin
     Resize(W, Value);
 end;
 
-procedure TForm.SetTitle(Value: string);
-begin
-  gtk_window_set_title(Handle, PChar(Value));
-end;
 
 procedure TForm.SetWidth(Value: Integer);
 var

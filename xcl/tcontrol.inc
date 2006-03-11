@@ -135,6 +135,7 @@
     function GetForm: TForm;
     //--
     procedure GrabFocus;
+    function IsFocus: Boolean;
     //--
     procedure Show; virtual;
     procedure Hide; virtual;
@@ -287,6 +288,11 @@ end;
 procedure TControl.GrabFocus;
 begin
   gtk_widget_grab_focus(Handle);
+end;
+
+function TControl.IsFocus: Boolean;
+begin
+  Result := gtk_widget_is_focus(Handle);
 end;
 
 procedure TControl.Notification(AComponent: TComponent; Operation: TOperation);
