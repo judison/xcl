@@ -13,7 +13,7 @@
 
   TNotebook = class(TContainerControl)
   private
-    FOnSwitchPage: TNotifyEvent;
+    FOnSwitchPage: TSwitchPageEvent;
     function GetCurrentPage: Integer;
     procedure SetCurrentPage(AValue: Integer);
     function GetShowTabs: Boolean;
@@ -39,7 +39,7 @@
   published
     property ShowTabs: Boolean read GetShowTabs write SetShowTabs;
     property Scrollable: Boolean read GetScrollable write SetScrollable;
-    property OnSwitchPage: TNotifyEvent read FOnSwitchPage write FOnSwitchPage;
+    property OnSwitchPage: TSwitchPageEvent read FOnSwitchPage write FOnSwitchPage;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
@@ -138,7 +138,7 @@ end;
 procedure TNotebook.DoSwitchPage(var Msg: TGtkSig);
 begin
   if Assigned(FOnSwitchPage) then
-    FOnSwitchPage(Self);
+    FOnSwitchPage(Self, Msg.I1);
 end;
 
 {$ENDIF}
