@@ -52,6 +52,11 @@ begin
   Result := Msg.Stop;
 end;
 
+procedure Hnd_GtkNotebook_Switch_Page(Handle: Pointer; page: pointer; page_num: guint; Signal: PChar); cdecl;
+begin
+  Hnd_GTK_Generic(Handle, Signal);
+end;
+
 type
   TSignalHandler = record
     Signal: ShortString;
@@ -59,7 +64,7 @@ type
   end;
 
 const
-  GTKSignalHandlers_Count = 44;
+  GTKSignalHandlers_Count = 45;
   GTKSignalHandlers: array[0..GTKSignalHandlers_Count-1] of TSignalHandler = (
     //** GtkWidget Events ****************************************************
     (Signal: 'button-press-event';          Handler: @Hnd_GTK_GenericEvent),
@@ -135,7 +140,9 @@ const
     //** GtkMenuItem *********************************************************
     (Signal: 'activate';                    Handler: @Hnd_GTK_Generic),
     //** GtkEditable *********************************************************
-    (Signal: 'changed';                     Handler: @Hnd_GTK_Generic)
+    (Signal: 'changed';                     Handler: @Hnd_GTK_Generic),
+    //** GtkNotebook *********************************************************
+    (Signal: 'switch-page';                 Handler: @Hnd_GtkNotebook_Switch_Page)
   );
 
 function GtkSignalHandler(S: ShortString): Pointer;

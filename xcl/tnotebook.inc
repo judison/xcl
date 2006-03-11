@@ -13,6 +13,7 @@
 
   TNotebook = class(TContainerControl)
   private
+    FOnSwitchPage: TNotifyEvent;
     function GetCurrentPage: Integer;
     procedure SetCurrentPage(AValue: Integer);
     function GetShowTabs: Boolean;
@@ -23,6 +24,8 @@
     procedure CreateHandle; override;
     procedure AddControl(AControl: TControl); override;
     procedure InternalRemoveControl(AControl: TControl); override;
+    procedure ConnectSignals; override;
+    procedure DoSwitchPage(var Msg: TGtkSig); message 'GTK:switch-page';
   public
     function GetNthPage(AIdx: Integer): TNotebookPage;
     function GetNPages: Integer;
@@ -36,6 +39,7 @@
   published
     property ShowTabs: Boolean read GetShowTabs write SetShowTabs;
     property Scrollable: Boolean read GetScrollable write SetScrollable;
+    property OnSwitchPage: TNotifyEvent read FOnSwitchPage write FOnSwitchPage;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
@@ -123,6 +127,18 @@ end;
 procedure TNotebook.SetScrollable(AValue: Boolean);
 begin
   gtk_notebook_set_scrollable(Handle, AValue);
+end;
+
+procedure TNotebook.ConnectSignals;
+begin
+  inherited;
+  ConnectGtkSignal('switch-page');
+end;
+
+procedure TNotebook.DoSwitchPage(var Msg: TGtkSig);
+begin
+  if Assigned(FOnSwitchPage) then
+    FOnSwitchPage(Self);
 end;
 
 {$ENDIF}
