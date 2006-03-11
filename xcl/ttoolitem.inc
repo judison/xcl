@@ -74,7 +74,9 @@ end;
 // TODO: Isso deve se tornar deprecated, usar TToolButton
 procedure TToolItem.CreateControls;
 begin
-  Homogeneous := True;
+  if Parent is TToolBar then
+    Homogeneous := True;
+
   FBtn := TButton.Create(Self);
   FBtn.Relief := rlfNone;
   FBtn.FocusOnClick := False;
