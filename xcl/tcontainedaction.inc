@@ -76,9 +76,9 @@ end;
 
 procedure TContainedAction.ReadState(Reader: TReader);
 begin
-  inherited ReadState(Reader);
   if Reader.Parent is TActionList then
     ActionList := TActionList(Reader.Parent);
+  inherited ReadState(Reader);
 end;
 
 procedure TContainedAction.SetIndex(Value: Integer);
