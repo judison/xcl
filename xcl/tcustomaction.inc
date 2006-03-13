@@ -44,6 +44,7 @@
 
   TAction = class(TCustomAction)
   published
+    property Accelerator;
     property Caption;
     property StockID;
     property Sensitive;
