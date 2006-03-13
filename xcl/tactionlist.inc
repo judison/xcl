@@ -16,6 +16,7 @@
   TActionList = class(TComponent)
   private
     FActions: TList;
+    FAccelGroup: TAccelGroup;
     FOnChange: TNotifyEvent;
     FOnExecute: TActionEvent;
     FOnUpdate: TActionEvent;
@@ -38,6 +39,7 @@
     function ActionByName(const AActionName: String): TContainedAction;
     property Actions[Index: Integer]: TContainedAction read GetAction write SetAction; default;
     property ActionCount: Integer read GetActionCount;
+    property AccelGroup: TAccelGroup read FAccelGroup;
   published
     property OnChange: TNotifyEvent read FOnChange write FOnChange;
     property OnExecute: TActionEvent read FOnExecute write FOnExecute;
@@ -52,6 +54,9 @@ constructor TActionList.Create(AOwner: TComponent);
 begin
   inherited;
   FActions := TList.Create;
+  FAccelGroup := TAccelGroup.Create(nil);
+  if AOwner is TForm then
+    TForm(AOwner).AddAccelGroup(FAccelGroup);
 end;
 
 destructor TActionList.Destroy;
@@ -59,6 +64,9 @@ begin
   while FActions.Count > 0 do
     TContainedAction(FActions.Last).Free;
   FActions.Free;
+  if Owner is TForm then
+    TForm(Owner).RemoveAccelGroup(FAccelGroup);
+  FAccelGroup.Free;
   inherited;
 end;
 

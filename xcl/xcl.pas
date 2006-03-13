@@ -53,6 +53,9 @@ type
   TGList = class;
   TGStrings = class;
   {**************************}
+  TAccelGroup = class;
+  TAccelerator = class;
+  {**************************}
   TPixBuf = class;
   { ***      Action      *** }
   {} TActionList = class;

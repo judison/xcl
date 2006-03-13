@@ -13,11 +13,14 @@
 
   TCustomAction = class(TContainedAction)
   private
+    FAccelClosure: Pointer;
+    FAccelerator: String;
     FCaption: String;
     FStockID: String;
     FStockCaption: String;
     FSensitive: Boolean;
     FVisible: Boolean;
+    procedure SetAccelerator(const AValue: String);
     procedure SetCaption(const AValue: String);
     procedure SetStockID(const AValue: String);
     procedure SetSensitive(AValue: Boolean);
@@ -32,8 +35,9 @@
     function Execute: Boolean; override;
     function GetCaption: String;
   public
-    property Caption: string read FCaption write SetCaption stored IsCaptionStored;
-    property StockID: string read FStockID write SetStockID stored IsStockIDStored;
+    property Accelerator: String read FAccelerator write SetAccelerator;
+    property Caption: String read FCaption write SetCaption stored IsCaptionStored;
+    property StockID: String read FStockID write SetStockID stored IsStockIDStored;
     property Sensitive: Boolean read FSensitive write SetSensitive default True;
     property Visible: Boolean read FVisible write SetVisible default True;
   end;
@@ -56,6 +60,8 @@
 constructor TCustomAction.Create(AOwner: TComponent);
 begin
   inherited;
+  FAccelerator := '';
+  FAccelClosure := nil;
   FSensitive := True;
   FVisible := True;
   Application.AddAction(Self);
@@ -99,6 +105,38 @@ begin
     Result := FCaption
   else
     Result := FStockCaption
+end;
+
+procedure Hnd_TCustomAction_Execute(AAccelGroup: Pointer; Arg1: PGObject; AKey: guint; AMod: TGdkModifierType; Sender: TCustomAction); cdecl;
+begin
+  Sender.Execute;
+end;
+
+procedure TCustomAction.SetAccelerator(const AValue: String);
+var
+  LKey: guint;
+  LMod: TGdkModifierType;
+begin
+  if FAccelerator <> AValue then
+  begin
+    if Assigned(FAccelClosure) then
+    begin
+      gtk_accel_group_disconnect(ActionList.AccelGroup.Handle, FAccelClosure);
+      FAccelClosure := nil;
+    end;
+    //--
+    gtk_accelerator_parse(PChar(AValue), @LKey, @LMod);
+    if (LKey = 0) and (LMod = 0) then
+      FAccelerator := ''
+    else
+      FAccelerator := AValue;
+    //--
+    if (FAccelerator <> '') and Assigned(ActionList) then
+    begin
+      FAccelClosure := g_cclosure_new(G_CALLBACK(@Hnd_TCustomAction_Execute), Pointer(Self), nil);
+      gtk_accel_group_connect(ActionList.AccelGroup.Handle, LKey, LMod, GTK_ACCEL_VISIBLE, FAccelClosure);
+    end;
+  end;
 end;
 
 procedure TCustomAction.SetCaption(const AValue: String);
