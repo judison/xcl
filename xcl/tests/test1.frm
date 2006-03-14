@@ -110,7 +110,7 @@ object TTest1
                 Relief = rlfNone
                 object TImage
                   StockID = 'gtk-dialog-info'
-                  StockIconSize = iszDialog
+                  IconSize = iszDialog
                 end
               end
             end
