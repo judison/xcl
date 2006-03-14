@@ -21,8 +21,13 @@
     FClientNotifyList: TList;
     FFileName: String;
     FResource: String;
+    FIconName: String;
+    FIconSize: Integer;
     procedure SetFileName(AValue: String);
     procedure SetResource(AValue: String);
+    procedure SetIconName(AValue: String);
+    procedure SetIconSize(AValue: Integer);
+    procedure SetIconName(AName: String; ASize: Integer);
   protected
     procedure Changed;
   public
@@ -34,6 +39,8 @@
   published
     property FileName: String read FFileName write SetFileName;
     property Resource: String read FResource write SetResource;
+    property IconName: String read FIconName write SetIconName;
+    property IconSize: Integer read FIconSize write SetIconSize;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
@@ -90,6 +97,7 @@ begin
 
     FFileName := AValue;
     FResource := '';
+    FIconName := '';
 
     if FileExists(AValue) then
     begin
@@ -138,6 +146,7 @@ begin
 
     FResource := AValue;
     FFileName := '';
+    FIconName := '';
 
     try
       GetResource('PIXDATA', FResource, RData, RSize);
@@ -150,6 +159,43 @@ begin
 
     Changed;
   end;
+end;
+
+procedure TPixBuf.SetIconName(AValue: String);
+begin
+  if AValue <> FIconName then
+    SetIconName(AValue, FIconSize);
+end;
+
+procedure TPixBuf.SetIconSize(AValue: Integer);
+begin
+  if AValue <> FIconSize then
+    SetIconName(FIconName, AValue);
+end;
+
+procedure TPixBuf.SetIconName(AName: String; ASize: Integer);
+var
+  icon_theme: Pointer;
+begin
+  if Assigned(FGdkPixBuf) then
+  begin
+    g_object_unref(FGdkPixBuf);
+    FGdkPixBuf := nil;
+  end;
+
+  FIconName := AName;
+  FIconSize := ASize;
+  FResource := '';
+  FFileName := '';
+
+  if (FIconSize > 0) and (FIconName <> '') then
+  begin
+    icon_theme := gtk_icon_theme_get_default();
+    FGdkPixBuf := gtk_icon_theme_load_icon(icon_theme, PChar(FIconName), FIconSize, 0, nil);
+    // Don't ref count!
+  end;
+
+  Changed;
 end;
 
 {$ENDIF}

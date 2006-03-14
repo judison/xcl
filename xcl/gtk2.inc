@@ -22,7 +22,12 @@
 
 procedure g_set_application_name(application_name: pgchar); cdecl; external gliblib;
 
-// GtkAboutDialog (Since 2.6
+// GtkIconTheme (Since 2.4)
+
+function gtk_icon_theme_get_default(): pointer; cdecl; external gtklib;
+function gtk_icon_theme_load_icon(icon_theme: pointer; icon_name: pgchar; size: gint; flags: longint; error: ppgerror): pointer; cdecl; external gtklib;
+
+// GtkAboutDialog (Since 2.6)
 
 type
   PGtkAboutDialog = pointer;
