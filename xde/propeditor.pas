@@ -230,40 +230,43 @@ begin
     end;
   
     FComponent := AValue;
-    //==
-    PI := FComponent.ClassInfo;
-    PT := GetTypeData(PI);
-    GetMem(PP, PT^.PropCount * SizeOf(Pointer));
-    GetPropInfos(PI, PP);
-  
-    TopP := 0;
-  
-    for I := 0 to PT^.PropCount -1 do
-      case PP^[I]^.PropType^.Kind of
-        tkEnumeration : AddProp(PP^[I], TEnumPropEditor, False);
-        tkBool        : AddProp(PP^[I], TBooleanPropEditor, False);
-        tkSString,
-        tkLString,
-        tkAString,
-        tkWString     : AddProp(PP^[I], TStringPropEditor, False);
-        tkInteger     : AddProp(PP^[I], TIntegerPropEditor, False);
-        //tkInt64       : 
-        tkFloat       : AddProp(PP^[I], TFloatPropEditor, False);
-        //tkVariant     : 
-        tkClass,
-        tkObject      :
-        begin
-          O := GetObjectProp(FComponent, PP^[I]);
-          if (O = nil) or (O is TComponent) then
-            AddProp(PP^[I], TComponentPropEditor, False)
-          else
-            AddProp(PP^[I], TUnknowPropEditor, False); // Persistent
+
+    if Assigned(FComponent) then
+    begin
+      PI := FComponent.ClassInfo;
+      PT := GetTypeData(PI);
+      GetMem(PP, PT^.PropCount * SizeOf(Pointer));
+      GetPropInfos(PI, PP);
+    
+      TopP := 0;
+    
+      for I := 0 to PT^.PropCount -1 do
+        case PP^[I]^.PropType^.Kind of
+          tkEnumeration : AddProp(PP^[I], TEnumPropEditor, False);
+          tkBool        : AddProp(PP^[I], TBooleanPropEditor, False);
+          tkSString,
+          tkLString,
+          tkAString,
+          tkWString     : AddProp(PP^[I], TStringPropEditor, False);
+          tkInteger     : AddProp(PP^[I], TIntegerPropEditor, False);
+          //tkInt64       : 
+          tkFloat       : AddProp(PP^[I], TFloatPropEditor, False);
+          //tkVariant     : 
+          tkClass,
+          tkObject      :
+          begin
+            O := GetObjectProp(FComponent, PP^[I]);
+            if (O = nil) or (O is TComponent) then
+              AddProp(PP^[I], TComponentPropEditor, False)
+            else
+              AddProp(PP^[I], TUnknowPropEditor, False); // Persistent
+          end;
+          tkMethod      : AddProp(PP^[I], TUnknowPropEditor, True);
+        else
+          AddProp(PP^[I], TUnknowPropEditor, False);
         end;
-        tkMethod      : AddProp(PP^[I], TUnknowPropEditor, True);
-      else
-        AddProp(PP^[I], TUnknowPropEditor, False);
-      end;
-    Changed;
+      Changed;
+    end;
   finally
     PropTable.Show;
     EventTable.Show;

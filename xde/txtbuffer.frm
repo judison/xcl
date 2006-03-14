@@ -34,37 +34,39 @@ object TTxtBuffer
       OnUpdate = EditClearUpd
     end
   end
-  object TVBox
-    object TToolBar
-      ToolBarStyle = tbsIcons
-      object TToolButton
-        Action = actEditUndo
+  object MainBox: TVBox
+    object TextBox: TVBox
+      object TToolBar
+        ToolBarStyle = tbsIcons
+        object TToolButton
+          Action = actEditUndo
+        end
+        object TToolButton
+          Action = actEditRedo
+        end
+        object TSeparatorToolItem
+        end
+        object TToolButton
+          Action = actEditCut
+        end
+        object TToolButton
+          Action = actEditCopy
+        end
+        object TToolButton
+          Action = actEditPaste
+        end
+        object TToolButton
+          Action = actEditClear
+        end
+        object TSeparatorToolItem
+        end
       end
-      object TToolButton
-        Action = actEditRedo
-      end
-      object TSeparatorToolItem
-      end
-      object TToolButton
-        Action = actEditCut
-      end
-      object TToolButton
-        Action = actEditCopy
-      end
-      object TToolButton
-        Action = actEditPaste
-      end
-      object TToolButton
-        Action = actEditClear
-      end
-      object TSeparatorToolItem
-      end
-    end
-    object TScrolledWindow
-      ShadowType = stIn
-      object Edt: TSourceView
-        FontDesc = 'Courier 10'
-        TextBuffer = Buf
+      object TScrolledWindow
+        ShadowType = stIn
+        object Edt: TSourceView
+          FontDesc = 'Courier 10'
+          TextBuffer = Buf
+        end
       end
     end
   end

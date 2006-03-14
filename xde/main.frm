@@ -1,7 +1,8 @@
 object TMainForm
-  Title = 'XDE: XCL''s Development Environment'
+  Title = 'XDE'
   Width = 800
   Height = 600
+  OnShow = MainFormShow
   object LangMan: TSourceLanguagesManager
   end
   object PBLogo: TPixbuf
@@ -17,34 +18,31 @@ object TMainForm
     Website = 'http://xcl.sourceforge.net/'
     Logo = PBLogo
   end
-  object TAccelerator
-    AccelName = '<Alt>Left'
-    OnActivate = GoLeft
-  end
-  object TAccelerator
-    AccelName = '<Alt>Right'
-    OnActivate = GoRight
-  end
   object TActionList
     object actFileNew: TAction
+      Accelerator = '<Control>n'
       StockID = 'gtk-new'
       OnExecute = FileNew
     end
     object actFileOpen: TAction
+      Accelerator = '<Control>o'
       StockID = 'gtk-open'
       OnExecute = FileOpen
     end
     object actFileSave: TAction
+      Accelerator = '<Control>s'
       StockID = 'gtk-save'
       OnExecute = FileSave
       OnUpdate = FileSaveUpd
     end
     object actFileSaveAs: TAction
+      Accelerator = '<Control><Shift>s'
       StockID = 'gtk-save-as'
       OnExecute = FileSaveAs
       OnUpdate = FileSaveAsUpd
     end
     object actFileClose: TAction
+      Accelerator = '<Alt>q'
       StockID = 'gtk-close'
       OnExecute = FileClose
       OnUpdate = FileCloseUpd
@@ -52,6 +50,34 @@ object TMainForm
     object actFileQuit: TAction
       StockID = 'gtk-quit'
       OnExecute = FileQuit
+    end
+    object actProjectAdd: TAction
+      StockID = 'gtk-add'
+      Caption = '_Add File'
+    end
+    object actProjectRemove: TAction
+      StockID = 'gtk-remove'
+      Caption = '_Remove File'
+    end
+    object actGoLeft: TAction
+      Accelerator = '<Alt>Left'
+      Caption = 'Go Left'
+      OnExecute = GoLeft
+    end
+    object actGoRight: TAction
+      Accelerator = '<Alt>Right'
+      Caption = 'Go Right'
+      OnExecute = GoRight
+    end
+    object actViewToggleFormCode: TAction
+      Accelerator = 'F12'
+      Caption = '_Toggle Form/Code'
+      OnExecute = ToggleFormCode
+    end
+    object actViewObjectInspector: TAction
+      Accelerator = 'F11'
+      Caption = '_Object Inspector'
+      OnExecute = ShowObjectInspector
     end
     object actHelpAbout: TAction
       StockID = 'gtk-about'
@@ -86,6 +112,36 @@ object TMainForm
         end
       end
       object TMenuItem
+        Caption = '_Project'
+        object TMenuItem
+          Caption = 'Add _New...'
+          object TMenuItem
+            Caption = 'Form'
+          end
+          object TMenuItem
+            Caption = 'Unit'
+          end
+        end
+        object TMenuItem
+          Action = actProjectAdd
+        end
+        object TMenuItem
+          Action = actProjectRemove
+        end
+      end
+      object TMenuItem
+        Caption = '_View'
+        object TMenuItem
+          Caption = 'Project Source'
+        end
+        object TMenuItem
+          Action = actViewToggleFormCode
+        end
+        object TMenuItem
+          Action = actViewObjectInspector
+        end
+      end
+      object TMenuItem
         Caption = '_Options'
         object TMenuItem
           Caption = 'Compiler Options'
@@ -104,26 +160,163 @@ object TMainForm
         end
       end
     end
-    object TToolBar
-      ToolBarStyle = tbsIcons
-      object TToolButton
-        Action = actFileNew
+
+    object THBox
+      BoxExpand = False
+      object TVBox
+        BoxExpand = False
+        object THBox
+          object TToolItem
+            BoxExpand = False
+            Action = actFileNew
+          end
+          object TToolItem
+            BoxExpand = False
+            Action = actFileOpen
+          end
+          object TToolItem
+            BoxExpand = False
+            Action = actFileSave
+          end
+          object TToolItem
+            BoxExpand = False
+            Action = actFileSaveAs
+          end
+        end
+        object THBox
+          object TToolItem
+            BoxExpand = False
+            Action = actFileClose
+          end
+        end
       end
-      object TToolButton
-        Action = actFileOpen
-      end
-      object TToolButton
-        Action = actFileSave
-      end
-      object TSeparatorToolItem
-      end
-      object TToolButton
-        Action = actFileClose
-      end
-      object TSeparatorToolItem
+      object CompPalette: TComponentPalette
+        BoxExpand = True
+        OnClassSelected = PaletteClassSelected
       end
     end
-    object NB: TNotebook
+
+    object THPaned
+      object nbSide: TNotebook
+        object npProjMan: TNotebookPage
+          Caption = 'Project Manager'
+          object TVBox
+            object TToolBar
+              ToolBarStyle = tbsIcons
+              object TToolItem
+                object TButton
+                  Relief = rlfNone
+                  object TImage
+                    IconSize = iszMenu
+                    StockID = 'gtk-add'
+                  end
+                end
+              end
+              object TToolItem
+                object TButton
+                  Relief = rlfNone
+                  object TImage
+                    IconSize = iszMenu
+                    StockID = 'gtk-remove'
+                  end
+                end
+              end
+            end
+            object TScrolledWindow
+              ShadowType = stIn
+              HPolicy = sbpAutomatic
+              VPolicy = sbpAutomatic
+              HeightRequest = 200
+              BoxExpand = True
+              object ProjectTV: TTreeView
+                Columns = <            
+                  item
+                    Clickable = False
+                    FixedWidth = 1
+                    Sizing = tvcsAutosize
+                    Title = 'Project Tree'
+                  end>
+                HeadersVisible = False
+                SelectionMode = smBrowse
+              end
+            end
+          end
+        end
+        object npObjIns: TNotebookPage
+          Caption = 'Object Inspector'
+
+          object TVPaned
+            object TVBox
+              object TToolBar
+                ToolBarStyle = tbsIcons
+                object TToolItem
+                  Homogeneous = False
+                  object TButton
+                    Relief = rlfNone
+                    object TImage
+                      IconSize = iszMenu
+                      StockID = 'gtk-remove'
+                    end
+                  end
+                end
+              end
+              object TScrolledWindow
+                ShadowType = stIn
+                HPolicy = sbpAutomatic
+                VPolicy = sbpAutomatic
+                HeightRequest = 200
+                BoxExpand = True
+                object ComponentTV: TTreeView
+                  Columns = <            
+                    item
+                      Clickable = False
+                      FixedWidth = 1
+                      Sizing = tvcsAutosize
+                      Title = 'Component Tree'
+                    end>
+                  HeadersVisible = False
+                  SelectionMode = smBrowse
+                  OnSelectionChanged = CompChanged
+                end
+              end
+            end
+            object TNotebook
+              object TNotebookPage
+                Caption = 'Properties'
+                object TScrolledWindow
+                  HPolicy = sbpAutomatic
+                  VPolicy = sbpAutomatic
+                  object TViewPort
+                    ShadowType = stNone
+                    object PropTable: TTable
+                      NCols = 1
+                      NRows = 1
+                    end
+                  end
+                end
+              end
+              object TNotebookPage
+                Caption = 'Events'
+                object TScrolledWindow
+                  HPolicy = sbpAutomatic
+                  VPolicy = sbpAutomatic
+                  object TViewPort
+                    ShadowType = stNone
+                    object EventTable: TTable
+                      NCols = 1
+                      NRows = 1
+                    end
+                  end
+                end
+              end
+            end
+          end
+
+        end
+      end
+      object NB: TNotebook
+        OnSwitchPage = SwitchPage
+      end
     end
     object TStatusBar
       BoxExpand = False
