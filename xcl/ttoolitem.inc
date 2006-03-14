@@ -92,7 +92,7 @@ begin
   FImage := TImage.Create(Self);
   if ToolBarStyle <> tbsText then
     FImage.Parent := FBox;
-  FImage.StockIconSize := iszLargeToolBar;
+  FImage.IconSize := iszLargeToolBar;
   FImage.StockID := Action.StockID;
   //--
   FLabel := TLabel.Create(Self);

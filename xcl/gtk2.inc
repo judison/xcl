@@ -22,6 +22,10 @@
 
 procedure g_set_application_name(application_name: pgchar); cdecl; external gliblib;
 
+// GtkImage (Since 2.6)
+
+procedure gtk_image_set_from_icon_name(image: pointer; icon_name: pgchar; size: longint); cdecl; external gtklib;
+
 // GtkIconTheme (Since 2.4)
 
 function gtk_icon_theme_get_default(): pointer; cdecl; external gtklib;

@@ -48,7 +48,7 @@ begin
   FBox.Spacing := 4;
   FImage := TImage.Create(Self);
   FImage.Parent := FBox;
-  FImage.StockIconSize := iszMenu;
+  FImage.IconSize := iszMenu;
   FImage.BoxExpand := False;
   FImage.Visible := True;
   FLabel := TLabel.Create(Self);
