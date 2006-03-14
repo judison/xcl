@@ -31,6 +31,8 @@ type
     actEditCopy: TAction;
     actEditPaste: TAction;
     actEditClear: TAction;
+    MainBox: TVBox;
+    TextBox: TVBox;
     procedure EditUndo(Sender: TObject);
     procedure EditUndoUpd(Sender: TObject);
     procedure EditRedo(Sender: TObject);
