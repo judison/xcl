@@ -2,7 +2,8 @@ object TTest1
   Title = 'Teste Ola Mundo'
   OnShow = MyFormShow
   object PB: TPixBuf
-    FileName = '/home/abdullah/iss.png'
+    IconName = 'stock_bell'
+    IconSize = 32
   end
   object TActionList
     object actFileNew: TAction
