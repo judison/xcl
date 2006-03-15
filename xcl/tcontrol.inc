@@ -86,6 +86,7 @@
     //-- DoAction....
     procedure DoActionChanged(Sender: TObject); virtual;
     procedure DoActionSetCaption(AValue: String); virtual;
+    procedure DoActionSetTooltip(AValue: String); virtual;
     procedure DoActionSetSensitive(AValue: Boolean); virtual;
     procedure DoActionSetStockID(AValue: String); virtual;
     procedure DoActionSetVisible(AValue: Boolean); virtual;
@@ -377,6 +378,11 @@ end;
 
 procedure TControl.DoActionSetCaption(AValue: String);
 begin
+end;
+
+procedure TControl.DoActionSetTooltip(AValue: String);
+begin
+  Tooltip := AValue;
 end;
 
 procedure TControl.DoActionSetSensitive(AValue: Boolean);

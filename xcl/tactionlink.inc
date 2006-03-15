@@ -14,6 +14,7 @@
   TActionLink = class(TBasicActionLink)
   protected
     procedure SetCaption(AValue: String); virtual;
+    procedure SetTooltip(AValue: String); virtual;
     procedure SetStockID(AValue: String); virtual;
     procedure SetSensitive(AValue: Boolean); virtual;
     procedure SetVisible(AValue: Boolean); virtual;
@@ -26,6 +27,10 @@
 { TActionLink }
 
 procedure TActionLink.SetCaption(AValue: string);
+begin
+end;
+
+procedure TActionLink.SetTooltip(AValue: string);
 begin
 end;
 
