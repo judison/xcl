@@ -380,7 +380,10 @@ end;
 
 procedure TControl.SetToolTip(AValue: string);
 begin
-  gtk_tooltips_set_tip(Application.FToolTips, Handle, PChar(AValue), nil)
+  if AValue <> '' then
+    gtk_tooltips_set_tip(Application.FToolTips, Handle, PChar(AValue), nil)
+  else
+    gtk_tooltips_set_tip(Application.FToolTips, Handle, nil, nil)
 end;
 
 function TControl.GetSensitive: Boolean;
