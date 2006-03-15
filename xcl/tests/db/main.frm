@@ -10,7 +10,8 @@ object TMainForm
   end
   object TActionList
     object actFileQuit: TAction
-      StockID = 'gtk-quit'
+      Caption = '_Quit'
+      IconName = 'gtk-quit'
       OnExecute = FileQuit
     end
     object actDBFirst: TDataSetFirst

@@ -11,8 +11,9 @@
 *)
 {** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-  TToolItem = class(TCustomToolItem)
+  TToolItem = class(TCustomToolItem, IActionClient)
   private
+    FAction: TCustomAction;
     //--
     FBtn: TButton;
     FBox: TBox;
@@ -23,35 +24,63 @@
     procedure FBtnClicked(Sender: TObject);
   protected
     procedure AddControl(AControl: TControl); override;
-    procedure SetAction(AValue: TAction); override;
     procedure DestroyHandle; override;
-    procedure DoActionSetCaption(AValue: String); override;
-    procedure DoActionSetStockID(AValue: String); override;
+    //--
+    procedure SetAction(AValue: TCustomAction); virtual;
+    procedure DoActionChanged(Sender: TCustomAction); virtual;
   public
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     property SubLabel: TLabel read FLabel;
     property Image: TImage read FImage;
     property Button: TButton read FBtn;
   published
-    property Action;
+    property Action: TCustomAction read FAction write SetAction;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 { TToolItem }
 
-procedure TToolItem.SetAction(AValue: TAction);
+procedure TToolItem.Notification(AComponent: TComponent; Operation: TOperation);
 begin
-  if Action <> nil then
-    DestroyControls;
-
-  if Child <> nil then
-    raise Exception.Create('Cannot set Action in a TToolItem with a Child Control.')
-  else
-    inherited;
-
-  if Action <> nil then
+  if (AComponent = FAction) and (Operation = opRemove) then
   begin
-    CreateControls;
+    DestroyControls;
+    FAction := nil;
+  end;
+  inherited;
+end;
+
+
+procedure TToolItem.SetAction(AValue: TCustomAction);
+begin
+  if FAction <> AValue then
+  begin
+    if Assigned(FAction) then
+      DestroyControls;
+
+    if Assigned(Child) then
+      raise Exception.Create('Cannot set Action in a TToolItem with a Child Control.')
+    else
+    begin
+      if Assigned(FAction) then
+      begin
+        FAction.RemoveClient(Self);
+        FAction.RemoveFreeNotification(Self);
+      end;
+      FAction := AValue;
+      if Assigned(FAction) then
+      begin
+        FAction.AddClient(Self);
+        FAction.FreeNotification(Self);
+      end;
+    end;
+
+    if Assigned(FAction) then
+    begin
+      CreateControls;
+      DoActionChanged(FAction);
+    end;
   end;
 end;
 
@@ -71,7 +100,6 @@ end;
 
 // TODO: ToolBarStyle diferente e tudo o mais
 // levar em consideracao o IsImportant, Orientation e ToolBarStyle
-// TODO: Isso deve se tornar deprecated, usar TToolButton
 procedure TToolItem.CreateControls;
 begin
   if Parent is TToolBar then
@@ -80,7 +108,6 @@ begin
   FBtn := TButton.Create(Self);
   FBtn.Relief := rlfNone;
   FBtn.FocusOnClick := False;
-  FBtn.Sensitive := Action.Sensitive;
   FBtn.OnClicked := @FBtnClicked;
   //--
   if Orientation = orHorizontal then
@@ -93,13 +120,11 @@ begin
   if ToolBarStyle <> tbsText then
     FImage.Parent := FBox;
   FImage.IconSize := iszLargeToolBar;
-  FImage.StockID := Action.StockID;
   //--
   FLabel := TLabel.Create(Self);
   if ToolBarStyle <> tbsIcons then
     FLabel.Parent := FBox;
   FLabel.UseUnderline := False;
-  FLabel.Caption := Action.GetCaption;
   //--
   gtk_container_add(Handle, FBtn.Handle);
   gtk_widget_show_all(FBtn.Handle);
@@ -121,20 +146,22 @@ begin
   end;
 end;
 
-procedure TToolItem.DoActionSetCaption(AValue: String);
+procedure TToolItem.DoActionChanged(Sender: TCustomAction);
 begin
-  FLabel.Caption := AValue;
-end;
-
-procedure TToolItem.DoActionSetStockID(AValue: String);
-begin
-  FImage.StockID := AValue;
+  if Sender = FAction then
+  begin
+    FLabel.Caption := FAction.Caption;
+    FImage.IconName := FAction.IconName;
+    FBtn.ToolTip := FAction.ToolTip;
+    FBtn.Sensitive := FAction.Sensitive;
+    Visible := FAction.Visible;
+  end;
 end;
 
 procedure TToolItem.FBtnClicked(Sender: TObject);
 begin
-  if ActionLink <> nil then
-    ActionLink.Execute(Self);
+  if FAction <> nil then
+    FAction.Execute;
 end;
 
 {$ENDIF}

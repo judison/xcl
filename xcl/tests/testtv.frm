@@ -6,7 +6,8 @@ object TTestTV
   end
   object TActionList
     object actFileQuit: TAction
-      StockID = 'gtk-quit'
+      Caption = '_Quit'
+      IconName = 'gtk-quit'
       OnExecute = CloseFrm
     end
   end

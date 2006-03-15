@@ -19,8 +19,6 @@
     FOnHide: TNotifyEvent;
     FOnFocusIn: TNotifyEvent;
     FOnFocusOut: TNotifyEvent;
-    //** Action *************
-    FActionLink: TControlActionLink;
     //***********************
     function GetFontDesc: string;
     procedure SetFontDesc(AValue: string);
@@ -80,20 +78,7 @@
   protected
     // moved here....
     Handle: Pointer;
-    //** Action *******************************
-    procedure SetAction(AValue: TAction); virtual;
-    function GetAction: TAction; virtual;
-    //-- DoAction....
-    procedure DoActionChanged(Sender: TObject); virtual;
-    procedure DoActionSetCaption(AValue: String); virtual;
-    procedure DoActionSetTooltip(AValue: String); virtual;
-    procedure DoActionSetSensitive(AValue: Boolean); virtual;
-    procedure DoActionSetStockID(AValue: String); virtual;
-    procedure DoActionSetVisible(AValue: Boolean); virtual;
     // Properties
-    property ActionLink: TControlActionLink read FActionLink write FActionLink;
-    property Action: TAction read GetAction write SetAction;
-    //*****************************************
     procedure CreateHandle; virtual;
     procedure DestroyHandle; virtual;
     //
@@ -202,7 +187,6 @@ var
 constructor TControl.Create(AOwner: TComponent);
 begin
   inherited;
-  FActionLink := nil;
   Handle := nil;
   CreateHandle;
 
@@ -235,9 +219,6 @@ begin
     RemoveControl(Aux);
     Aux.Free;
   end;
-
-  if FActionLink <> nil then
-    FActionLink.Free;
 
   // g_object_unref(handle) ?
   DestroyHandle;
@@ -350,53 +331,6 @@ procedure TControl.SetName(const Value: TComponentName);
 begin
   inherited SetName(Value);
   gtk_widget_set_name(Handle, PChar(Name));
-end;
-
-//-----------------------------------------------------------------------
-
-procedure TControl.SetAction(AValue: TAction);
-begin
-  if FActionLink = nil then
-  begin
-    FActionLink := TControlActionLink.Create(Self);
-    FActionLink.OnChange := @DoActionChanged;
-  end;
-  FActionLink.Action := AValue;
-end;
-
-function TControl.GetAction: TAction;
-begin
-  if FActionLink <> nil then
-    Result := TAction(FActionLink.Action)
-  else
-    Result := nil;
-end;
-
-procedure TControl.DoActionChanged(Sender: TObject);
-begin
-end;
-
-procedure TControl.DoActionSetCaption(AValue: String);
-begin
-end;
-
-procedure TControl.DoActionSetTooltip(AValue: String);
-begin
-  Tooltip := AValue;
-end;
-
-procedure TControl.DoActionSetSensitive(AValue: Boolean);
-begin
-  Sensitive := AValue;
-end;
-
-procedure TControl.DoActionSetStockID(AValue: String);
-begin
-end;
-
-procedure TControl.DoActionSetVisible(AValue: Boolean);
-begin
-  Visible := AValue;
 end;
 
 //-----------------------------------------------------------------------

@@ -14,47 +14,58 @@ object TMainForm
   end
   object TActionList
     object actFileNew: TAction
-      StockID = 'gtk-new'
+      Caption = '_New'
+      IconName = 'gtk-new'
       OnExecute = FileNew
     end
     object actFileOpen: TAction
-      StockID = 'gtk-open'
+      Caption = '_Open'
+      IconName = 'gtk-open'
       OnExecute = FileOpen
     end
     object actFileSave: TAction
-      StockID = 'gtk-save'
+      Caption = '_Save'
+      IconName = 'gtk-save'
       OnExecute = FileSave
     end
     object actFileSaveAs: TAction
-      StockID = 'gtk-save-as'
+      Caption = 'Save _as...'
+      IconName = 'gtk-save-as'
       OnExecute = FileSaveAs
     end
     object actFileQuit: TAction
-      StockID = 'gtk-quit'
+      Caption = '_Quit'
+      IconName = 'gtk-quit'
       OnExecute = FileQuit
     end
     object actEditUndo: TAction
-      StockID = 'gtk-undo'
+      Caption = '_Undo'
+      IconName = 'gtk-undo-ltr'
       OnExecute = EditUndo
     end
     object actEditRedo: TAction
-      StockID = 'gtk-redo'
+      Caption = '_Redo'
+      IconName = 'gtk-redo-ltr'
       OnExecute = EditRedo
     end
     object actEditCut: TAction
-      StockID = 'gtk-cut'
+      Caption = 'C_ut'
+      IconName = 'gtk-cut'
       OnExecute = EditCut
     end
     object actEditCopy: TAction
-      StockID = 'gtk-copy'
+      Caption = '_Copy'
+      IconName = 'gtk-copy'
       OnExecute = EditCopy
     end
     object actEditPaste: TAction
-      StockID = 'gtk-paste'
+      Caption = '_Paste'
+      IconName = 'gtk-paste'
       OnExecute = EditPaste
     end
     object actEditDelete: TAction
-      StockID = 'gtk-delete'
+      Caption = '_Delete'
+      IconName = 'gtk-delete'
       OnExecute = EditDelete
     end
     object actCompileCompile: TAction
@@ -62,13 +73,15 @@ object TMainForm
     end
     object actCompileRun: TAction
       Caption = '_Run'
-      StockID = 'gtk-execute'
+      IconName = 'gtk-execute'
     end
     object actCompilePreferences: TAction
-      StockID = 'gtk-preferences'
+      Caption = '_Preferences'
+      IconName = 'gtk-preferences'
     end
     object actHelpAbout: TAction
-      StockID = 'gtk-about'
+      Caption = '_About...'
+      IconName = 'gtk-about'
     end
   end
   object TVBox

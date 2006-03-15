@@ -32,7 +32,7 @@
     function GetControlCount: Integer; override;
     procedure ShowCtrls; override;
     //--
-    procedure DoActivate(var Msg: TGtkSig); message 'GTK:activate';
+    procedure DoActivate(var Msg: TGtkSig); message 'GTK:activate'; virtual;
   public
     procedure Activate;
     procedure Select;
@@ -143,9 +143,7 @@ end;
 
 procedure TCustomMenuItem.DoActivate(var Msg: TGtkSig);
 begin
-  if ActionLink <> nil then
-    ActionLink.Execute(Self)
-  else if Assigned(FOnClick) then
+  if Assigned(FOnClick) then
     FOnClick(Self);
 end;
 
