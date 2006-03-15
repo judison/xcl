@@ -16,12 +16,14 @@
     FAccelClosure: Pointer;
     FAccelerator: String;
     FCaption: String;
+    FTooltip: String;
     FStockID: String;
     FStockCaption: String;
     FSensitive: Boolean;
     FVisible: Boolean;
     procedure SetAccelerator(const AValue: String);
     procedure SetCaption(const AValue: String);
+    procedure SetTooltip(const AValue: String);
     procedure SetStockID(const AValue: String);
     procedure SetSensitive(AValue: Boolean);
     procedure SetVisible(AValue: Boolean);
@@ -37,6 +39,7 @@
   public
     property Accelerator: String read FAccelerator write SetAccelerator;
     property Caption: String read FCaption write SetCaption stored IsCaptionStored;
+    property Tooltip: String read FTooltip write SetTooltip;
     property StockID: String read FStockID write SetStockID stored IsStockIDStored;
     property Sensitive: Boolean read FSensitive write SetSensitive default True;
     property Visible: Boolean read FVisible write SetVisible default True;
@@ -150,6 +153,22 @@ begin
       if TObject(FClients.List^[I]) is TActionLink then
         TActionLink(FClients.List^[I]).SetCaption(AValue);
     FCaption := AValue;
+    Change;
+  end;
+end;
+
+procedure TCustomAction.SetTooltip(const AValue: String);
+var
+  I: Integer;
+begin
+  if AValue <> FTooltip then
+  begin
+    for I := 0 to FClients.Count - 1 do
+      if TObject(FClients.List^[I]) is TActionLink then
+        TActionLink(FClients.List^[I]).SetTooltip(AValue);
+
+    FTooltip := AValue;
+
     Change;
   end;
 end;

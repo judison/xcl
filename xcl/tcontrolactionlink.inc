@@ -18,6 +18,7 @@
     procedure AssignClient(AClient: TObject); override;
     //--
     procedure SetCaption(AValue: String); override;
+    procedure SetTooltip(AValue: String); override;
     procedure SetSensitive(AValue: Boolean); override;
     procedure SetStockID(AValue: String); override;
     procedure SetVisible(AValue: Boolean); override;
@@ -35,6 +36,11 @@ end;
 procedure TControlActionLink.SetCaption(AValue: string);
 begin
   FControl.DoActionSetCaption(AValue);
+end;
+
+procedure TControlActionLink.SetTooltip(AValue: string);
+begin
+  FControl.DoActionSetTooltip(AValue);
 end;
 
 procedure TControlActionLink.SetSensitive(AValue: Boolean);
