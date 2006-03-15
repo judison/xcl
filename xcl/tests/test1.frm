@@ -7,20 +7,25 @@ object TTest1
   end
   object TActionList
     object actFileNew: TAction
-      StockID = 'gtk-new'
+      Caption = '_New'
+      IconName = 'gtk-new'
     end
     object actFileOpen: TAction
-      StockID = 'gtk-open'
+      Caption = '_Open'
+      IconName = 'gtk-open'
       OnExecute = OpenClicked
     end
     object actFileSave: TAction
-      StockID = 'gtk-save'
+      Caption = '_Save'
+      IconName = 'gtk-save'
     end
     object actFileSaveAs: TAction
-      StockID = 'gtk-save-as'
+      Caption = 'Save _as...'
+      IconName = 'gtk-save-as'
     end
     object actFileQuit: TAction
-      StockID = 'gtk-quit'
+      Caption = '_Quit'
+      IconName = 'gtk-quit'
       OnExecute = CloseFrm
     end
   end

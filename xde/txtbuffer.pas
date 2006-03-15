@@ -30,7 +30,7 @@ type
     actEditCut: TAction;
     actEditCopy: TAction;
     actEditPaste: TAction;
-    actEditClear: TAction;
+    actEditDelete: TAction;
     MainBox: TVBox;
     TextBox: TVBox;
     procedure EditUndo(Sender: TObject);
@@ -43,8 +43,8 @@ type
     procedure EditCopyUpd(Sender: TObject);
     procedure EditPaste(Sender: TObject);
     procedure EditPasteUpd(Sender: TObject);
-    procedure EditClear(Sender: TObject);
-    procedure EditClearUpd(Sender: TObject);
+    procedure EditDelete(Sender: TObject);
+    procedure EditDeleteUpd(Sender: TObject);
     procedure BufChanged(Sender: TObject);
   private
   protected
@@ -170,14 +170,14 @@ begin
   actEditPaste.Sensitive := True; // How to know?? see TClipboard
 end;
 
-procedure TTxtBuffer.EditClear(Sender: TObject);
+procedure TTxtBuffer.EditDelete(Sender: TObject);
 begin
   Buf.DeleteSelection(True, True);
 end;
 
-procedure TTxtBuffer.EditClearUpd(Sender: TObject);
+procedure TTxtBuffer.EditDeleteUpd(Sender: TObject);
 begin
-  actEditClear.Sensitive := Buf.SelText <> '';
+  actEditDelete.Sensitive := Buf.SelText <> '';
 end;
 
 end.

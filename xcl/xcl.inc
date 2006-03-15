@@ -16,10 +16,7 @@
 {$I tgstrings.inc}
 //--------------------- Actions / ActionLists / ActionLinks
 {$I tactionlist.inc}
-{$I tcontainedaction.inc}
 {$I tcustomaction.inc}
-{$I tactionlink.inc}
-{$I tcontrolactionlink.inc}
 //--------------------- Interfaces
 {$I idesigner.inc}
 //--------------------- Non Visual

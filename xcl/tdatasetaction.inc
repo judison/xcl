@@ -11,24 +11,24 @@
 *)
 {** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-  TDataSetAction = class(TCustomAction)
+  TDataSetAction = class(TAction) // TCustom?
   private
     FDefaultCaption: String;
-    FDefaultStockID: String;
+    FDefaultIconName: String;
     //==
     FDataSource: TDataSource;
     procedure SetDataSource(AValue: TDataSource);
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     function IsCaptionStored: Boolean; override;
-    function IsStockIDStored: Boolean; override;
+    function IsIconNameStored: Boolean; override;
   public
     constructor Create(AOwner: TComponent); override;
   published
     property DataSource: TDataSource read FDataSource write SetDataSource;
     //--
     property Caption;
-    property StockID;
+    property IconName;
     //property Sensitive;
     property Visible;
     //--
@@ -37,73 +37,85 @@
   end;
 
   TDataSetFirst = Class(TDataSetAction)
+  protected
+    procedure DoUpdate; override;
+    procedure DoExecute; override;
   public
     constructor Create(AOwner: TComponent); override;
-    function Update: Boolean; override;
-    function Execute: Boolean; override;
   end;
 
   TDataSetLast = Class(TDataSetAction)
+  protected
+    procedure DoUpdate; override;
+    procedure DoExecute; override;
   public
     constructor Create(AOwner: TComponent); override;
-    function Update: Boolean; override;
-    function Execute: Boolean; override;
   end;
 
   TDataSetNext = Class(TDataSetAction)
+  protected
+    procedure DoUpdate; override;
+    procedure DoExecute; override;
   public
     constructor Create(AOwner: TComponent); override;
-    function Update: Boolean; override;
-    function Execute: Boolean; override;
   end;
 
   TDataSetPrior = Class(TDataSetAction)
+  protected
+    procedure DoUpdate; override;
+    procedure DoExecute; override;
   public
     constructor Create(AOwner: TComponent); override;
-    function Update: Boolean; override;
-    function Execute: Boolean; override;
   end;
 
   TDataSetRefresh = Class(TDataSetAction)
+  protected
+    procedure DoUpdate; override;
+    procedure DoExecute; override;
   public
     constructor Create(AOwner: TComponent); override;
-    function Update: Boolean; override;
-    function Execute: Boolean; override;
   end;
 
   TDataSetCancel = Class(TDataSetAction)
+  protected
+    procedure DoUpdate; override;
+    procedure DoExecute; override;
   public
     constructor Create(AOwner: TComponent); override;
-    function Update: Boolean; override;
-    function Execute: Boolean; override;
   end;
 
   TDataSetDelete = Class(TDataSetAction)
   public
+  protected
+    procedure DoUpdate; override;
+    procedure DoExecute; override;
+  public
     constructor Create(AOwner: TComponent); override;
-    function Update: Boolean; override;
-    function Execute: Boolean; override;
   end;
 
   TDataSetEdit = Class(TDataSetAction)
+  protected
+    procedure DoUpdate; override;
+    procedure DoExecute; override;
   public
     constructor Create(AOwner: TComponent); override;
-    function Update: Boolean; override;
-    function Execute: Boolean; override;
   end;
 
   TDataSetInsert = Class(TDataSetAction)
   public
+  protected
+    procedure DoUpdate; override;
+    procedure DoExecute; override;
+  public
     constructor Create(AOwner: TComponent); override;
-    function Update: Boolean; override;
-    function Execute: Boolean; override;
   end;
 
   TDataSetPost = Class(TDataSetAction)
+  protected
+    procedure DoUpdate; override;
+    procedure DoExecute; override;
   public
     constructor Create(AOwner: TComponent); override;
-    function Update: Boolean; override;
-    function Execute: Boolean; override;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
@@ -114,7 +126,7 @@ constructor TDataSetAction.Create(AOwner: TComponent);
 begin
   inherited;
   Caption := FDefaultCaption;
-  StockID := FDefaultStockID;
+  IconName := FDefaultIconName;
 end;
 
 procedure TDataSetAction.SetDataSource(AValue: TDataSource);
@@ -139,9 +151,9 @@ begin
   Result := Caption <> FDefaultCaption;
 end;
 
-function TDataSetAction.IsStockIDStored: Boolean;
+function TDataSetAction.IsIconNameStored: Boolean;
 begin
-  Result := StockID <> FDefaultStockID;
+  Result := IconName <> FDefaultIconName;
 end;
 
 { TDataSetFirst }
@@ -149,21 +161,21 @@ end;
 constructor TDataSetFirst.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'First';
-  FDefaultStockID := 'gtk-goto-first';
+  FDefaultIconName := 'gtk-goto-first-ltr';
   inherited;
 end;
 
-function TDataSetFirst.Update: Boolean;
+procedure TDataSetFirst.DoUpdate;
 begin
   Sensitive := (DataSource <> nil) and (DataSource.DataSet <> nil) and (DataSource.DataSet.State = dsBrowse) and (not DataSource.DataSet.BOF);
-  Result := inherited;
+  inherited;
 end;
 
-function TDataSetFirst.Execute: Boolean;
+procedure TDataSetFirst.DoExecute;
 begin
   if (DataSource <> nil) and (DataSource.DataSet <> nil) then
     DataSource.DataSet.First;
-  Result := inherited;
+  inherited;
 end;
 
 { TDataSetLast }
@@ -171,21 +183,21 @@ end;
 constructor TDataSetLast.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'Last';
-  FDefaultStockID := 'gtk-goto-last';
+  FDefaultIconName := 'gtk-goto-last-ltr';
   inherited;
 end;
 
-function TDataSetLast.Update: Boolean;
+procedure TDataSetLast.DoUpdate;
 begin
   Sensitive := (DataSource <> nil) and (DataSource.DataSet <> nil) and (DataSource.DataSet.State = dsBrowse) and (not DataSource.DataSet.EOF);
-  Result := inherited;
+  inherited;
 end;
 
-function TDataSetLast.Execute: Boolean;
+procedure TDataSetLast.DoExecute;
 begin
   if (DataSource <> nil) and (DataSource.DataSet <> nil) then
     DataSource.DataSet.Last;
-  Result := inherited;
+  inherited;
 end;
 
 { TDataSetNext }
@@ -193,21 +205,21 @@ end;
 constructor TDataSetNext.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'Next';
-  FDefaultStockID := 'gtk-go-forward';
+  FDefaultIconName := 'gtk-go-forward-ltr';
   inherited;
 end;
 
-function TDataSetNext.Update: Boolean;
+procedure TDataSetNext.DoUpdate;
 begin
   Sensitive := (DataSource <> nil) and (DataSource.DataSet <> nil) and (DataSource.DataSet.State = dsBrowse) and (not DataSource.DataSet.EOF);
-  Result := inherited;
+  inherited;
 end;
 
-function TDataSetNext.Execute: Boolean;
+procedure TDataSetNext.DoExecute;
 begin
   if (DataSource <> nil) and (DataSource.DataSet <> nil) then
     DataSource.DataSet.Next;
-  Result := inherited;
+  inherited;
 end;
 
 { TDataSetPrior }
@@ -215,21 +227,21 @@ end;
 constructor TDataSetPrior.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'Prior';
-  FDefaultStockID := 'gtk-go-back';
+  FDefaultIconName := 'gtk-go-back-ltr';
   inherited;
 end;
 
-function TDataSetPrior.Update: Boolean;
+procedure TDataSetPrior.DoUpdate;
 begin
   Sensitive := (DataSource <> nil) and (DataSource.DataSet <> nil) and (DataSource.DataSet.State = dsBrowse) and (not DataSource.DataSet.BOF);
-  Result := inherited;
+  inherited;
 end;
 
-function TDataSetPrior.Execute: Boolean;
+procedure TDataSetPrior.DoExecute;
 begin
   if (DataSource <> nil) and (DataSource.DataSet <> nil) then
     DataSource.DataSet.Prior;
-  Result := inherited;
+  inherited;
 end;
 
 { TDataSetRefresh }
@@ -237,21 +249,21 @@ end;
 constructor TDataSetRefresh.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'Refresh';
-  FDefaultStockID := 'gtk-refresh';
+  FDefaultIconName := 'gtk-refresh';
   inherited;
 end;
 
-function TDataSetRefresh.Update: Boolean;
+procedure TDataSetRefresh.DoUpdate;
 begin
   Sensitive := (DataSource <> nil) and (DataSource.DataSet <> nil);
-  Result := inherited;
+  inherited;
 end;
 
-function TDataSetRefresh.Execute: Boolean;
+procedure TDataSetRefresh.DoExecute;
 begin
   if (DataSource <> nil) and (DataSource.DataSet <> nil) then
     DataSource.DataSet.Refresh;
-  Result := inherited;
+  inherited;
 end;
 
 { TDataSetCancel }
@@ -259,21 +271,21 @@ end;
 constructor TDataSetCancel.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'Cancel';
-  FDefaultStockID := 'gtk-cancel';
+  FDefaultIconName := 'gtk-cancel';
   inherited;
 end;
 
-function TDataSetCancel.Update: Boolean;
+procedure TDataSetCancel.DoUpdate;
 begin
   Sensitive := (DataSource <> nil) and (DataSource.DataSet <> nil) and (DataSource.DataSet.State in dsEditModes);
-  Result := inherited;
+  inherited;
 end;
 
-function TDataSetCancel.Execute: Boolean;
+procedure TDataSetCancel.DoExecute;
 begin
   if (DataSource <> nil) and (DataSource.DataSet <> nil) then
     DataSource.DataSet.Cancel;
-  Result := inherited;
+  inherited;
 end;
 
 { TDataSetDelete }
@@ -281,21 +293,21 @@ end;
 constructor TDataSetDelete.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'Delete';
-  FDefaultStockID := 'gtk-delete';
+  FDefaultIconName := 'gtk-delete';
   inherited;
 end;
 
-function TDataSetDelete.Update: Boolean;
+procedure TDataSetDelete.DoUpdate;
 begin
   Sensitive := (DataSource <> nil) and (DataSource.DataSet <> nil) and (DataSource.DataSet.State = dsBrowse);
-  Result := inherited;
+  inherited;
 end;
 
-function TDataSetDelete.Execute: Boolean;
+procedure TDataSetDelete.DoExecute;
 begin
   if (DataSource <> nil) and (DataSource.DataSet <> nil) then
     DataSource.DataSet.Delete;
-  Result := inherited;
+  inherited;
 end;
 
 { TDataSetEdit }
@@ -303,21 +315,21 @@ end;
 constructor TDataSetEdit.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'Edit';
-  FDefaultStockID := 'gtk-edit';
+  FDefaultIconName := 'gtk-edit';
   inherited;
 end;
 
-function TDataSetEdit.Update: Boolean;
+procedure TDataSetEdit.DoUpdate;
 begin
   Sensitive := (DataSource <> nil) and (DataSource.DataSet <> nil) and (DataSource.DataSet.State = dsBrowse);
-  Result := inherited;
+  inherited;
 end;
 
-function TDataSetEdit.Execute: Boolean;
+procedure TDataSetEdit.DoExecute;
 begin
   if (DataSource <> nil) and (DataSource.DataSet <> nil) then
     DataSource.DataSet.Edit;
-  Result := inherited;
+  inherited;
 end;
 
 { TDataSetInsert }
@@ -325,21 +337,21 @@ end;
 constructor TDataSetInsert.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'Insert';
-  FDefaultStockID := 'gtk-new';
+  FDefaultIconName := 'gtk-new';
   inherited;
 end;
 
-function TDataSetInsert.Update: Boolean;
+procedure TDataSetInsert.DoUpdate;
 begin
   Sensitive := (DataSource <> nil) and (DataSource.DataSet <> nil) and (DataSource.DataSet.State = dsBrowse);
-  Result := inherited;
+  inherited;
 end;
 
-function TDataSetInsert.Execute: Boolean;
+procedure TDataSetInsert.DoExecute;
 begin
   if (DataSource <> nil) and (DataSource.DataSet <> nil) then
     DataSource.DataSet.Insert;
-  Result := inherited;
+  inherited;
 end;
 
 { TDataSetPost }
@@ -347,21 +359,21 @@ end;
 constructor TDataSetPost.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'Post';
-  FDefaultStockID := 'gtk-apply';
+  FDefaultIconName := 'gtk-apply';
   inherited;
 end;
 
-function TDataSetPost.Update: Boolean;
+procedure TDataSetPost.DoUpdate;
 begin
   Sensitive := (DataSource <> nil) and (DataSource.DataSet <> nil) and (DataSource.DataSet.State in dsEditModes);
-  Result := inherited;
+  inherited;
 end;
 
-function TDataSetPost.Execute: Boolean;
+procedure TDataSetPost.DoExecute;
 begin
   if (DataSource <> nil) and (DataSource.DataSet <> nil) then
     DataSource.DataSet.Post;
-  Result := inherited;
+  inherited;
 end;
 
 {$ENDIF}

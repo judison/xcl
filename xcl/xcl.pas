@@ -59,11 +59,8 @@ type
   TPixBuf = class;
   { ***      Action      *** }
   {} TActionList = class;
-  {} TContainedAction = class;
-  {  \-} TCustomAction = class;
-  {      \-} TAction = class;
-  {} TActionLink = class;
-  {  \-} TControlActionLink = class;
+  {} TCustomAction = class;
+  {  \-} TAction = class;
   { *** Dialog Hierarchy *** }
   {} TDialog = class;
   {  |-} TAboutDialog = class;

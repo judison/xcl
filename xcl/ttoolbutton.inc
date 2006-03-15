@@ -27,13 +27,8 @@
     procedure ConnectSignals; override;
     //--
     procedure DoClicked(var Msg: TGtkSig); message 'GTK:clicked';
-    //--
-    procedure SetAction(AValue: TAction); override;
-    procedure DoActionSetCaption(AValue: String); override;
-    procedure DoActionSetStockID(AValue: String); override;
   public
   published
-    property Action;
     property Caption: String read GetCaption write SetCaption stored IsCaptionStored;
     property UseUnderline: Boolean read GetUseUnderline write SetUseUnderline default False;
     property StockId: String read GetStockId write SetStockId stored IsStockIDStored;
@@ -58,42 +53,18 @@ end;
 
 procedure TToolButton.DoClicked(var Msg: TGtkSig);
 begin
-  if Action <> nil then
-    ActionLink.Execute(Self);
-  //--
   if Assigned(FOnClicked) then
     FOnClicked(Self);
 end;
 
-procedure TToolButton.SetAction(AValue: TAction);
-begin
-  inherited;
-  if Action <> nil then
-  begin
-    DoActionSetStockID(Action.StockID);
-    if Action.Caption <> '' then
-      DoActionSetCaption(Action.Caption);
-  end;
-end;
-
-procedure TToolButton.DoActionSetCaption(AValue: String);
-begin
-  Caption := AValue;
-end;
-
-procedure TToolButton.DoActionSetStockID(AValue: String);
-begin
-  StockID := AValue;
-end;
-
 function TToolButton.IsCaptionStored: Boolean;
 begin
-  Result := ((Action = nil) and (Caption <> '')) or ((Action <> nil) and (Action.Caption <> Caption));
+  Result := Caption <> '';
 end;
 
 function TToolButton.IsStockIDStored: Boolean;
 begin
-  Result := ((Action = nil) and (StockID <> '')) or ((Action <> nil) and (Action.StockID <> StockID));
+  Result := StockID <> '';
 end;
 
 procedure TToolButton.SetCaption(AValue: String);

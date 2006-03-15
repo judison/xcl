@@ -11,8 +11,10 @@
 *)
 {** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-  TMenuItem = class(TCustomMenuItem)
+  TMenuItem = class(TCustomMenuItem, IActionClient)
   private
+    FAction: TCustomAction;
+    //--
     FBox: THBox;
     FImage: TImage;
     FLabel: TLabel;
@@ -22,22 +24,34 @@
     function GetCaption: String;
     function IsCaptionStored: Boolean;
   protected
+    procedure SetAction(AValue: TCustomAction); virtual;
+    procedure DoActionChanged(Sender: TCustomAction); virtual;
+    //--
     procedure CreateHandle; override;
     procedure DestroyHandle; override;
     procedure SetParent(ANewParent: TControl); override;
-    procedure SetAction(AValue: TAction); override;
-    procedure DoActionSetCaption(AValue: String); override;
-    procedure DoActionSetStockID(AValue: String); override;
-    //---
+    //--
+    procedure DoActivate(var Msg: TGtkSig); message 'GTK:activate'; override;
   public
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   published
-    property Action;
+    property Action: TCustomAction read FAction write SetAction;
     property Caption: String read GetCaption write SetCaption stored IsCaptionStored;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 { TMenuItem }
+
+procedure TMenuItem.Notification(AComponent: TComponent; Operation: TOperation);
+begin
+  if (AComponent = FAction) and (Operation = opRemove) then
+  begin
+    FAction := nil;
+  end;
+  inherited;
+end;
+
 
 procedure TMenuItem.CreateHandle;
 begin
@@ -94,21 +108,48 @@ begin
   end;
 end;
 
-procedure TMenuItem.SetAction(AValue: TAction);
+procedure TMenuItem.SetAction(AValue: TCustomAction);
 begin
-  inherited SetAction(AValue);
-  SetCaption(Action.GetCaption);
-  FImage.StockID := Action.StockID;
+  if Assigned(FAction) then
+  begin
+    FAction.RemoveClient(Self);
+    FAction.RemoveFreeNotification(Self);
+  end;
+  FAction := AValue;
+  if Assigned(FAction) then
+  begin
+    FAction.AddClient(Self);
+    FAction.FreeNotification(Self);
+  end;
+
+  if Assigned(FAction) then
+  begin
+    SetCaption(FAction.Caption);
+    FImage.IconName := FAction.IconName;
+    ToolTip := FAction.ToolTip;
+    Sensitive := FAction.Sensitive;
+    Visible := FAction.Visible;
+  end;
 end;
 
-procedure TMenuItem.DoActionSetCaption(AValue: String); 
+procedure TMenuItem.DoActionChanged(Sender: TCustomAction);
 begin
-  SetCaption(AValue);
+  if Sender = FAction then
+  begin
+    SetCaption(FAction.Caption);
+    FImage.IconName := FAction.IconName;
+    ToolTip := FAction.ToolTip;
+    Sensitive := FAction.Sensitive;
+    Visible := FAction.Visible;
+  end;
 end;
 
-procedure TMenuItem.DoActionSetStockID(AValue: String);
+procedure TMenuItem.DoActivate(var Msg: TGtkSig);
 begin
-  FImage.StockID := AValue;
+  if Assigned(FAction) then
+    FAction.Execute
+  else
+    inherited;
 end;
 
 function TMenuItem.GetCaption: string;
@@ -123,7 +164,7 @@ end;
 
 function TMenuItem.IsCaptionStored: Boolean;
 begin
-  Result := (Caption <> '') and (Action = nil);
+  Result := (Caption <> '') and (FAction = nil);
 end;
 
 {$ENDIF}

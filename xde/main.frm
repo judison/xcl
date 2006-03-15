@@ -21,43 +21,49 @@ object TMainForm
   object TActionList
     object actFileNew: TAction
       Accelerator = '<Control>n'
-      StockID = 'gtk-new'
+      Caption = '_New...'
+      IconName = 'gtk-new'
       OnExecute = FileNew
     end
     object actFileOpen: TAction
       Accelerator = '<Control>o'
-      StockID = 'gtk-open'
+      Caption = '_Open'
+      IconName = 'gtk-open'
       OnExecute = FileOpen
     end
     object actFileSave: TAction
       Accelerator = '<Control>s'
-      StockID = 'gtk-save'
+      Caption = '_Save'
+      IconName = 'gtk-save'
       OnExecute = FileSave
       OnUpdate = FileSaveUpd
     end
     object actFileSaveAs: TAction
       Accelerator = '<Control><Shift>s'
-      StockID = 'gtk-save-as'
+      Caption = 'Save _as...'
+      IconName = 'gtk-save-as'
       OnExecute = FileSaveAs
       OnUpdate = FileSaveAsUpd
     end
     object actFileClose: TAction
       Accelerator = '<Alt>q'
-      StockID = 'gtk-close'
+      Caption = '_Close'
+      IconName = 'gtk-close'
       OnExecute = FileClose
       OnUpdate = FileCloseUpd
     end
     object actFileQuit: TAction
-      StockID = 'gtk-quit'
+      Caption = '_Quit'
+      IconName = 'gtk-quit'
       OnExecute = FileQuit
     end
     object actProjectAdd: TAction
-      StockID = 'gtk-add'
       Caption = '_Add File'
+      IconName = 'gtk-add'
     end
     object actProjectRemove: TAction
-      StockID = 'gtk-remove'
       Caption = '_Remove File'
+      IconName = 'gtk-remove'
     end
     object actGoLeft: TAction
       Accelerator = '<Alt>Left'
@@ -80,7 +86,8 @@ object TMainForm
       OnExecute = ShowObjectInspector
     end
     object actHelpAbout: TAction
-      StockID = 'gtk-about'
+      Caption = '_About...'
+      IconName = 'gtk-about'
       OnExecute = HelpAbout
     end
   end
@@ -207,8 +214,8 @@ object TMainForm
                 object TButton
                   Relief = rlfNone
                   object TImage
+                    IconName = 'gtk-add'
                     IconSize = iszMenu
-                    StockID = 'gtk-add'
                   end
                 end
               end
@@ -216,8 +223,8 @@ object TMainForm
                 object TButton
                   Relief = rlfNone
                   object TImage
+                    IconName = 'gtk-remove'
                     IconSize = iszMenu
-                    StockID = 'gtk-remove'
                   end
                 end
               end
@@ -244,7 +251,6 @@ object TMainForm
         end
         object npObjIns: TNotebookPage
           Caption = 'Object Inspector'
-
           object TVPaned
             object TVBox
               object TToolBar
@@ -254,8 +260,8 @@ object TMainForm
                   object TButton
                     Relief = rlfNone
                     object TImage
+                      IconName = 'gtk-remove'
                       IconSize = iszMenu
-                      StockID = 'gtk-remove'
                     end
                   end
                 end

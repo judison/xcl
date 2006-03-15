@@ -11,39 +11,28 @@
 *)
 {** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-  TActionEvent = procedure(Action: TBasicAction; var Handled: Boolean) of object;
-
   TActionList = class(TComponent)
   private
     FActions: TList;
     FAccelGroup: TAccelGroup;
-    FOnChange: TNotifyEvent;
-    FOnExecute: TActionEvent;
-    FOnUpdate: TActionEvent;
-    function GetAction(Index: Integer): TContainedAction;
+    function GetAction(Index: Integer): TCustomAction;
     function GetActionCount: Integer;
-    procedure SetAction(Index: Integer; Value: TContainedAction);
+    procedure SetAction(Index: Integer; Value: TCustomAction);
   protected
-    procedure AddAction(AAction: TContainedAction); virtual;
-    procedure RemoveAction(AAction: TContainedAction); virtual;
-    procedure Change; virtual;
+    procedure AddAction(AAction: TCustomAction); virtual;
+    procedure RemoveAction(AAction: TCustomAction); virtual;
     procedure GetChildren(Proc: TGetChildProc; Root: TComponent); override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure SetChildOrder(AComponent: TComponent; AOrder: Integer); override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    function ExecuteAction(AAction: TBasicAction): Boolean; override;
-    function UpdateAction(AAction: TBasicAction): Boolean; override;
     function IndexOfName(const AActionName: String): Integer;
-    function ActionByName(const AActionName: String): TContainedAction;
-    property Actions[Index: Integer]: TContainedAction read GetAction write SetAction; default;
+    function ActionByName(const AActionName: String): TCustomAction;
+    property Actions[Index: Integer]: TCustomAction read GetAction write SetAction; default;
     property ActionCount: Integer read GetActionCount;
     property AccelGroup: TAccelGroup read FAccelGroup;
   published
-    property OnChange: TNotifyEvent read FOnChange write FOnChange;
-    property OnExecute: TActionEvent read FOnExecute write FOnExecute;
-    property OnUpdate: TActionEvent read FOnUpdate write FOnUpdate;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
@@ -62,7 +51,7 @@ end;
 destructor TActionList.Destroy;
 begin
   while FActions.Count > 0 do
-    TContainedAction(FActions.Last).Free;
+    TCustomAction(FActions.Last).Free;
   FActions.Free;
   if Owner is TForm then
     TForm(Owner).RemoveAccelGroup(FAccelGroup);
@@ -86,12 +75,12 @@ end;
 procedure TActionList.SetChildOrder(AComponent: TComponent; AOrder: Integer);
 begin
   if FActions.IndexOf(AComponent) >= 0 then
-    TContainedAction(AComponent).Index := AOrder;
+    TCustomAction(AComponent).Index := AOrder;
 end;
 
-function TActionList.GetAction(Index: Integer): TContainedAction;
+function TActionList.GetAction(Index: Integer): TCustomAction;
 begin
-  Result := TContainedAction(FActions[Index]);
+  Result := TCustomAction(FActions[Index]);
 end;
 
 function TActionList.GetActionCount: Integer;
@@ -99,54 +88,30 @@ begin
   Result := FActions.Count;
 end;
 
-procedure TActionList.SetAction(Index: Integer; Value: TContainedAction);
+procedure TActionList.SetAction(Index: Integer; Value: TCustomAction);
 begin
-  TContainedAction(FActions[Index]).Assign(Value);
+  TCustomAction(FActions[Index]).Assign(Value);
 end;
 
 procedure TActionList.Notification(AComponent: TComponent; Operation: TOperation);
 begin
   inherited;
   if Operation = opRemove then
-    if (AComponent is TContainedAction) then
-      RemoveAction(TContainedAction(AComponent));
+    if (AComponent is TCustomAction) then
+      RemoveAction(TCustomAction(AComponent));
 end;
 
-procedure TActionList.AddAction(AAction: TContainedAction);
+procedure TActionList.AddAction(AAction: TCustomAction);
 begin
   FActions.Add(AAction);
   AAction.FActionList := Self;
   AAction.FreeNotification(Self);
 end;
 
-procedure TActionList.RemoveAction(AAction: TContainedAction);
+procedure TActionList.RemoveAction(AAction: TCustomAction);
 begin
   if FActions.Remove(AAction) >= 0 then
     AAction.FActionList := nil;
-end;
-
-procedure TActionList.Change;
-var
-  I: Integer;
-begin
-  if Assigned(FOnChange) then
-    FOnChange(Self);
-  for I := 0 to FActions.Count - 1 do
-    TContainedAction(FActions.List^[I]).Change;
-end;
-
-function TActionList.ExecuteAction(AAction: TBasicAction): Boolean;
-begin
-  Result := False;
-  if Assigned(FOnExecute) then
-    FOnExecute(AAction, Result);
-end;
-
-function TActionList.UpdateAction(AAction: TBasicAction): Boolean;
-begin
-  Result := False;
-  if Assigned(FOnUpdate) then
-    FOnUpdate(AAction, Result);
 end;
 
 function TActionList.IndexOfName(const AActionName: String): Integer;
@@ -156,7 +121,7 @@ begin
     Dec(Result);
 end;
 
-function TActionList.ActionByName(const AActionName: String): TContainedAction;
+function TActionList.ActionByName(const AActionName: String): TCustomAction;
 var
   I: Integer;
 begin

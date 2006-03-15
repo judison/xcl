@@ -4,59 +4,65 @@ object TTxtBuffer
   end
   object TActionList
     object actEditUndo: TAction
-      StockID = 'gtk-undo'
+      Caption = '_Undo'
+      IconName = 'gtk-undo-ltr'
       OnExecute = EditUndo
       OnUpdate = EditUndoUpd
     end
     object actEditRedo: TAction
-      StockID = 'gtk-redo'
+      Caption = '_Redo'
+      IconName = 'gtk-redo-ltr'
       OnExecute = EditRedo
       OnUpdate = EditRedoUpd
     end
     object actEditCut: TAction
-      StockID = 'gtk-cut'
+      Caption = 'C_ut'
+      IconName = 'gtk-cut'
       OnExecute = EditCut
       OnUpdate = EditCutUpd
     end
     object actEditCopy: TAction
-      StockID = 'gtk-copy'
+      Caption = '_Copy'
+      IconName = 'gtk-copy'
       OnExecute = EditCopy
       OnUpdate = EditCopyUpd
     end
     object actEditPaste: TAction
-      StockID = 'gtk-paste'
+      Caption = '_Paste'
+      IconName = 'gtk-paste'
       OnExecute = EditPaste
       OnUpdate = EditPasteUpd
     end
-    object actEditClear: TAction
-      StockID = 'gtk-clear'
-      OnExecute = EditClear
-      OnUpdate = EditClearUpd
+    object actEditDelete: TAction
+      Caption = '_Delete'
+      IconName = 'gtk-delete'
+      OnExecute = EditDelete
+      OnUpdate = EditDeleteUpd
     end
   end
   object MainBox: TVBox
     object TextBox: TVBox
       object TToolBar
         ToolBarStyle = tbsIcons
-        object TToolButton
+        object TToolItem
           Action = actEditUndo
         end
-        object TToolButton
+        object TToolItem
           Action = actEditRedo
         end
         object TSeparatorToolItem
         end
-        object TToolButton
+        object TToolItem
           Action = actEditCut
         end
-        object TToolButton
+        object TToolItem
           Action = actEditCopy
         end
-        object TToolButton
+        object TToolItem
           Action = actEditPaste
         end
-        object TToolButton
-          Action = actEditClear
+        object TToolItem
+          Action = actEditDelete
         end
         object TSeparatorToolItem
         end
