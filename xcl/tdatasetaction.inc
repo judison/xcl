@@ -161,7 +161,7 @@ end;
 constructor TDataSetFirst.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'First';
-  FDefaultIconName := 'gtk-goto-first-ltr';
+  FDefaultIconName := 'gtk-goto-first';
   inherited;
 end;
 
@@ -183,7 +183,7 @@ end;
 constructor TDataSetLast.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'Last';
-  FDefaultIconName := 'gtk-goto-last-ltr';
+  FDefaultIconName := 'gtk-goto-last';
   inherited;
 end;
 
@@ -205,7 +205,7 @@ end;
 constructor TDataSetNext.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'Next';
-  FDefaultIconName := 'gtk-go-forward-ltr';
+  FDefaultIconName := 'gtk-go-forward';
   inherited;
 end;
 
@@ -227,7 +227,7 @@ end;
 constructor TDataSetPrior.Create(AOwner: TComponent);
 begin
   FDefaultCaption := 'Prior';
-  FDefaultIconName := 'gtk-go-back-ltr';
+  FDefaultIconName := 'gtk-go-back';
   inherited;
 end;
 

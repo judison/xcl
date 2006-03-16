@@ -40,12 +40,12 @@ object TMainForm
     end
     object actEditUndo: TAction
       Caption = '_Undo'
-      IconName = 'gtk-undo-ltr'
+      IconName = 'gtk-undo'
       OnExecute = EditUndo
     end
     object actEditRedo: TAction
       Caption = '_Redo'
-      IconName = 'gtk-redo-ltr'
+      IconName = 'gtk-redo'
       OnExecute = EditRedo
     end
     object actEditCut: TAction

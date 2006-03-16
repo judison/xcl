@@ -188,6 +188,8 @@ begin
   FResource := '';
   FFileName := '';
 
+
+  // We need a way to get stock icon when IconName starts with 'gtk-'
   if (FIconSize > 0) and (FIconName <> '') then
   begin
     icon_theme := gtk_icon_theme_get_default();
