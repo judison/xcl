@@ -17,6 +17,7 @@ unit regcomps;
 
 {$IFNDEF WIN32}
   {$DEFINE USE_PQ_CONN}
+  {$DEFINE USE_GTK_SPELL}
 {$ENDIF}
 
 interface
@@ -47,8 +48,8 @@ uses
 //  mysqldb4,
   sqldb, ibconnection, {$IFDEF USE_PQ_CONN}pqconnection,{$ENDIF} mysql4conn,
   XCLDB,
-  sdfdata,
-  gtkspell;
+  sdfdata
+  {$IFDEF USE_GTK_SPELL}, gtkspell{$ENDIF};
 
 destructor TComponentPage.Destroy;
 begin
@@ -130,7 +131,9 @@ begin
   //Mysql4_Register;
   
   sdfdata.Register;
+  {$IFDEF USE_GTK_SPELL}
   gtkspell.Register;
+  {$ENDIF}
 end;
 
 initialization

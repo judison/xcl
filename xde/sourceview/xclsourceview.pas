@@ -16,9 +16,11 @@ unit XCLSourceView;
 {$H+}
 {$MODE ObjFpc}
 
-// If you don't have gtksourceview undefine this
-{$DEFINE HAS_GTK_SOURCE_VIEW}
-
+// If you don't have gtksourceview add a line
+// "#DEFINE DISABLE_GTK_SOURCE_VIEW" in your fpc.cfg
+{$IFNDEF DISABLE_GTK_SOURCE_VIEW}
+  {$DEFINE HAS_GTK_SOURCE_VIEW}
+{$ENDIF}
 interface
 
 uses Classes, SysUtils, xcl;
