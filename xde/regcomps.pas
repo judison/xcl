@@ -47,7 +47,8 @@ uses
 //  mysqldb4,
   sqldb, ibconnection, {$IFDEF USE_PQ_CONN}pqconnection,{$ENDIF} mysql4conn,
   XCLDB,
-  sdfdata;
+  sdfdata,
+  gtkspell;
 
 destructor TComponentPage.Destroy;
 begin
@@ -129,6 +130,7 @@ begin
   //Mysql4_Register;
   
   sdfdata.Register;
+  gtkspell.Register;
 end;
 
 initialization

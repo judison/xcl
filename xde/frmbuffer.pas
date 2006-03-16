@@ -126,6 +126,10 @@ begin
     for I := 0 to TControl(C).ControlCount -1 do
       AddTree(TControl(C).Controls[I], It);
 
+  if C is TActionList then
+    for I := 0 to TActionList(C).ActionCount -1 do
+      AddTree(TActionList(C).Actions[I], It);
+
   Result := It;
 end;
 
