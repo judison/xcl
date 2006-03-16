@@ -5,13 +5,13 @@ object TTxtBuffer
   object TActionList
     object actEditUndo: TAction
       Caption = '_Undo'
-      IconName = 'gtk-undo-ltr'
+      IconName = 'gtk-undo'
       OnExecute = EditUndo
       OnUpdate = EditUndoUpd
     end
     object actEditRedo: TAction
       Caption = '_Redo'
-      IconName = 'gtk-redo-ltr'
+      IconName = 'gtk-redo'
       OnExecute = EditRedo
       OnUpdate = EditRedoUpd
     end

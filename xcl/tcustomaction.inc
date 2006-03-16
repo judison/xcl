@@ -65,6 +65,8 @@
     procedure Execute;
     procedure Update;
     //--
+    function GetAccelLabel: String;
+    //--
     function GetParentComponent: TComponent; override;
     function HasParent: Boolean; override;
     property ActionList: TActionList read FActionList write SetActionList;
@@ -273,6 +275,18 @@ end;
 procedure Hnd_TCustomAction_Execute(AAccelGroup: Pointer; Arg1: PGObject; AKey: guint; AMod: TGdkModifierType; Sender: TCustomAction); cdecl;
 begin
   Sender.Execute;
+end;
+
+function TCustomAction.GetAccelLabel: String;
+var
+  LKey: guint;
+  LMod: TGdkModifierType;
+begin
+  gtk_accelerator_parse(PChar(FAccelerator), @LKey, @LMod);
+  if (LKey = 0) and (LMod = 0) then
+    Result := ''
+  else
+    Result := gtk_accelerator_get_label(LKey, LMod);
 end;
 
 procedure TCustomAction.SetAccelerator(const AValue: String);

@@ -22,6 +22,10 @@
 
 procedure g_set_application_name(application_name: pgchar); cdecl; external gliblib;
 
+// GtkAccelerator
+
+function gtk_accelerator_get_label(accelerator_key: guint; accelerator_mods: longint): PGChar; cdecl; external gtklib;
+
 // GtkImage (Since 2.6)
 
 procedure gtk_image_set_from_icon_name(image: pointer; icon_name: pgchar; size: longint); cdecl; external gtklib;

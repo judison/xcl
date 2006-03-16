@@ -65,7 +65,10 @@ begin
   if FPixbuf <> nil then
     gtk_image_set_from_pixbuf(Handle, FPixbuf.GetGdkPixbuf)
   else if (FIconName <> '') and (FIconSize <> iszInvalid) then
-    gtk_image_set_from_icon_name(Handle, PChar(FIconName), Ord(FIconSize))
+    if Copy(FIconName, 1, 4) = 'gtk-' then
+      gtk_image_set_from_stock(Handle, PChar(FIconName), Ord(FIconSize))
+    else
+      gtk_image_set_from_icon_name(Handle, PChar(FIconName), Ord(FIconSize))
   else if (FStockID <> '') and (FIconSize <> iszInvalid) then
     gtk_image_set_from_stock(Handle, PChar(FStockID), Ord(FIconSize))
   else if (FResource <> '') and (FResPB <> nil) then

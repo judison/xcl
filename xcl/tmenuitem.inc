@@ -18,7 +18,9 @@
     FBox: THBox;
     FImage: TImage;
     FLabel: TLabel;
-    FSizeGroup: Pointer;
+    FAccel: TLabel;
+    FIconSizeGroup: Pointer;
+    FLabelSizeGroup: Pointer;
     //---
     procedure SetCaption(AValue: string);
     function GetCaption: String;
@@ -55,21 +57,31 @@ end;
 
 procedure TMenuItem.CreateHandle;
 begin
-  FSizeGroup := gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
+  FIconSizeGroup := gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
+  FLabelSizeGroup := gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
 
   Handle := gtk_menu_item_new;
-  FBox := THBox.Create(Self);
-  FBox.Spacing := 4;
-  FImage := TImage.Create(Self);
-  FImage.Parent := FBox;
-  FImage.IconSize := iszMenu;
-  FImage.BoxExpand := False;
-  FImage.Visible := True;
-  FLabel := TLabel.Create(Self);
-  gtk_misc_set_alignment(FLabel.Handle, 0, 0);
-  FLabel.Parent := FBox;
-  FLabel.UseUnderline := True;
-  gtk_container_add(Handle, FBox.Handle);
+
+    FBox := THBox.Create(Self);
+    FBox.Spacing := 4;
+
+      FImage := TImage.Create(Self);
+      FImage.Parent := FBox;
+      FImage.IconSize := iszMenu;
+      FImage.BoxExpand := False;
+      FImage.Visible := True;
+    
+      FLabel := TLabel.Create(Self);
+      gtk_misc_set_alignment(FLabel.Handle, 0, 0);
+      FLabel.Parent := FBox;
+      FLabel.UseUnderline := True;
+    
+      FAccel := TLabel.Create(Self);
+      gtk_misc_set_alignment(FAccel.Handle, 1, 0);
+      FAccel.Parent := FBox;
+      FAccel.UseUnderline := True;
+
+    gtk_container_add(Handle, FBox.Handle);
   inherited;
 end;
 
@@ -77,9 +89,13 @@ procedure TMenuItem.DestroyHandle;
 begin
   FBox.RemoveControl(FLabel);
   FLabel.Free;
+  FAccel.Free;
 
   if Parent is TMenuItem then
-    gtk_size_group_remove_widget(TMenuItem(Parent).FSizeGroup, FImage.Handle);
+  begin
+    gtk_size_group_remove_widget(TMenuItem(Parent).FIconSizeGroup, FImage.Handle);
+    gtk_size_group_remove_widget(TMenuItem(Parent).FLabelSizeGroup, FLabel.Handle);
+  end;
 
   FBox.RemoveControl(FImage);
   FImage.Free;
@@ -92,14 +108,16 @@ procedure TMenuItem.SetParent(ANewParent: TControl);
 begin
   if Parent is TMenuItem then
   begin
-    gtk_size_group_remove_widget(TMenuItem(Parent).FSizeGroup, FImage.Handle);
+    gtk_size_group_remove_widget(TMenuItem(Parent).FIconSizeGroup, FImage.Handle);
+    gtk_size_group_remove_widget(TMenuItem(Parent).FLabelSizeGroup, FLabel.Handle);
   end;
 
   inherited;
 
   if Parent is TMenuItem then
   begin
-    gtk_size_group_add_widget(TMenuItem(Parent).FSizeGroup, FImage.Handle);
+    gtk_size_group_add_widget(TMenuItem(Parent).FIconSizeGroup, FImage.Handle);
+    gtk_size_group_add_widget(TMenuItem(Parent).FLabelSizeGroup, FLabel.Handle);
     FImage.Visible := True;
   end
   else
@@ -124,9 +142,10 @@ begin
 
   if Assigned(FAction) then
   begin
+    FAccel.Caption := FAction.GetAccelLabel;
     SetCaption(FAction.Caption);
     FImage.IconName := FAction.IconName;
-    ToolTip := FAction.ToolTip;
+    //ToolTip := FAction.ToolTip;
     Sensitive := FAction.Sensitive;
     Visible := FAction.Visible;
   end;
@@ -136,9 +155,10 @@ procedure TMenuItem.DoActionChanged(Sender: TCustomAction);
 begin
   if Sender = FAction then
   begin
+    FAccel.Caption := FAction.GetAccelLabel;
     SetCaption(FAction.Caption);
     FImage.IconName := FAction.IconName;
-    ToolTip := FAction.ToolTip;
+    //ToolTip := FAction.ToolTip;
     Sensitive := FAction.Sensitive;
     Visible := FAction.Visible;
   end;
