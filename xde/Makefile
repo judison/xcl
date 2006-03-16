@@ -3,7 +3,7 @@ XRC_PATH=$(XCL_PATH)/tools
 
 XRC=$(XRC_PATH)/xrc
 
-OPT=-Fu$(XCL_PATH) -Fu./sourceview -Fu./icons
+OPT=-Fu$(XCL_PATH) -Fu$(XCL_PATH)/extra  -Fu./sourceview -Fu./icons
 FPC=ppc386
 
 PAS_FILES =	buffer.pas \
