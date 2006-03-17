@@ -51,8 +51,8 @@ function gtk_about_dialog_get_comments(about:PGtkAboutDialog):Pgchar;cdecl;exter
 procedure gtk_about_dialog_set_comments(about:PGtkAboutDialog; comments:Pgchar);cdecl;external gtklib;
 function gtk_about_dialog_get_license(about:PGtkAboutDialog):Pgchar;cdecl;external gtklib;
 procedure gtk_about_dialog_set_license(about:PGtkAboutDialog; license:Pgchar);cdecl;external gtklib;
-function gtk_about_dialog_get_wrap_license(about:PGtkAboutDialog):gboolean;cdecl;external gtklib;
-procedure gtk_about_dialog_set_wrap_license(about:PGtkAboutDialog; wrap_license:gboolean);cdecl;external gtklib;
+//function gtk_about_dialog_get_wrap_license(about:PGtkAboutDialog):gboolean;cdecl;external gtklib;
+//procedure gtk_about_dialog_set_wrap_license(about:PGtkAboutDialog; wrap_license:gboolean);cdecl;external gtklib;
 function gtk_about_dialog_get_website(about:PGtkAboutDialog):Pgchar;cdecl;external gtklib;
 procedure gtk_about_dialog_set_website(about:PGtkAboutDialog; website:Pgchar);cdecl;external gtklib;
 function gtk_about_dialog_get_website_label(about:PGtkAboutDialog):Pgchar;cdecl;external gtklib;
