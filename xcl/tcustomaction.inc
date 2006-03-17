@@ -310,7 +310,13 @@ begin
     //--
     if (FAccelerator <> '') and Assigned(ActionList) then
     begin
-      FAccelClosure := g_cclosure_new(G_CALLBACK(@Hnd_TCustomAction_Execute), Pointer(Self), nil);
+
+      //FAccelClosure := g_cclosure_new(G_CALLBACK(@Hnd_TCustomAction_Execute), Pointer(Self), nil);
+
+      FAccelClosure := g_closure_new_simple(SizeOf(TGCClosure), Pointer(Self));
+      PGCClosure(FAccelClosure)^.callback := @Hnd_TCustomAction_Execute;
+
+
       gtk_accel_group_connect(ActionList.AccelGroup.Handle, LKey, LMod, GTK_ACCEL_VISIBLE, FAccelClosure);
     end;
   end;
