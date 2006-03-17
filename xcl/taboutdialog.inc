@@ -24,8 +24,8 @@
     procedure SetComments(AValue: String);
     function GetLicense: String;
     procedure SetLicense(AValue: String);
-    function GetWrapLicense: Boolean;
-    procedure SetWrapLicense(AValue: Boolean);
+//    function GetWrapLicense: Boolean;
+//    procedure SetWrapLicense(AValue: Boolean);
     function GetWebsite: String;
     procedure SetWebsite(AValue: String);
     function GetWebsiteLabel: String;
@@ -43,7 +43,7 @@
     property Copyright: String read GetCopyright write SetCopyright;
     property Comments: String read GetComments write SetComments;
     property License: String read GetLicense write SetLicense;
-    property WrapLicense: Boolean read GetWrapLicense write SetWrapLicense;
+//    property WrapLicense: Boolean read GetWrapLicense write SetWrapLicense;
     property Website: String read GetWebsite write SetWebsite;
     property WebsiteLabel: String read GetWebsiteLabel write SetWebsiteLabel;
     property Logo: TPixbuf read FLogo write SetLogo;
@@ -131,7 +131,7 @@ procedure TAboutDialog.SetLicense(AValue: String);
 begin
   gtk_about_dialog_set_license(Handle, PChar(AValue));
 end;
-
+{
 function TAboutDialog.GetWrapLicense: Boolean;
 begin
   Result := gtk_about_dialog_get_wrap_license(Handle);
@@ -141,7 +141,7 @@ procedure TAboutDialog.SetWrapLicense(AValue: Boolean);
 begin
   gtk_about_dialog_set_wrap_license(Handle, AValue);
 end;
-
+}
 function TAboutDialog.GetWebsite: String;
 begin
   Result := gtk_about_dialog_get_website(Handle);
