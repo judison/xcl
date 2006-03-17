@@ -216,7 +216,7 @@ begin
     try
       SL := TStringList.Create;
       SL.LoadFromStream(S);
-      AboutDlg.WrapLicense := True;
+      //AboutDlg.WrapLicense := True;
       AboutDlg.License := SL.Text;
       SL.Free;
     finally
