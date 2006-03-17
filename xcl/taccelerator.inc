@@ -139,7 +139,11 @@ begin
 
   if (FAccelName <> '') and (FCurrAG <> nil) then
   begin
-    closure := g_cclosure_new(G_CALLBACK(@Hnd_TAccelerator_Activate), Pointer(Self), nil);
+    //closure := g_cclosure_new(G_CALLBACK(@Hnd_TAccelerator_Activate), Pointer(Self), nil);
+
+    closure := g_closure_new_simple(SizeOf(TGCClosure), Pointer(Self));
+    PGCClosure(closure)^.callback := @Hnd_TAccelerator_Activate;
+
     gtk_accelerator_parse(PChar(FAccelName), @LKey, @LMod);
     gtk_accel_group_connect(FCurrAG.Handle, LKey, LMod, GTK_ACCEL_VISIBLE, Closure)
   end;
