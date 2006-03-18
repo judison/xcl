@@ -17,6 +17,9 @@
     procedure CreateHandle; override;
   public
   published
+    property Caption;
+    property IconName;
+    property UseUnderline;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
