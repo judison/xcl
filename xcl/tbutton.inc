@@ -16,8 +16,9 @@
   protected
   public
   published
+    property Action;
     property Caption;
-    property UseStock;
+    property IconName;
     property UseUnderline;
   end;
 

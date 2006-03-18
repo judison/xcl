@@ -18,22 +18,22 @@
     function GetYPad: Integer;
     procedure SetXPad(AValue: Integer);
     procedure SetYPad(AValue: Integer);
-    function GetXAlign: Real;
-    function GetYAlign: Real;
-    procedure SetXAlign(AValue: Real);
-    procedure SetYAlign(AValue: Real);
+    function GetXAlign: Single;
+    function GetYAlign: Single;
+    procedure SetXAlign(AValue: Single);
+    procedure SetYAlign(AValue: Single);
     function IsXAlignStored: Boolean;
     function IsYAlignStored: Boolean;
   public
     procedure GetPadding(var AXPad, AYPad: Integer);
     procedure SetPadding(AXPad, AYPad: Integer);
-    procedure GetAlignment(var AXAlign, AYAlign: Real);
-    procedure SetAlignment(AXAlign, AYAlign: Real);
+    procedure GetAlignment(var AXAlign, AYAlign: Single);
+    procedure SetAlignment(AXAlign, AYAlign: Single);
   published
     property XPad: Integer read GetXPad write SetXPad default 0;
     property YPad: Integer read GetYPad write SetYPad default 0;
-//    property XAlign: Real read GetXAlign write SetXAlign stored IsXAlignStored;
-//    property YAlign: Real read GetYAlign write SetYAlign stored IsYAlignStored;
+    property XAlign: Single read GetXAlign write SetXAlign stored IsXAlignStored;
+    property YAlign: Single read GetYAlign write SetYAlign stored IsYAlignStored;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
@@ -74,35 +74,35 @@ begin
   SetPadding(LX, AValue);
 end;
 
-function TMiscControl.GetXAlign: Real;
+function TMiscControl.GetXAlign: Single;
 var
-  Dummy: Real;
+  Dummy: Single;
 begin
   {$WARNINGS OFF}
   GetAlignment(Result, Dummy);
   {$WARNINGS ON}
 end;
 
-function TMiscControl.GetYAlign: Real;
+function TMiscControl.GetYAlign: Single;
 var
-  Dummy: Real;
+  Dummy: Single;
 begin
   {$WARNINGS OFF}
   GetAlignment(Dummy, Result);
   {$WARNINGS ON}
 end;
 
-procedure TMiscControl.SetXAlign(AValue: Real);
+procedure TMiscControl.SetXAlign(AValue: Single);
 var
-  LX, LY: Real;
+  LX, LY: Single;
 begin
   GetAlignment(LX, LY);
   SetAlignment(AValue, LY);
 end;
 
-procedure TMiscControl.SetYAlign(AValue: Real);
+procedure TMiscControl.SetYAlign(AValue: Single);
 var
-  LX, LY: Real;
+  LX, LY: Single;
 begin
   GetAlignment(LX, LY);
   SetAlignment(LX, AValue);
@@ -128,12 +128,12 @@ begin
   gtk_misc_set_padding(Handle, AXPad, AYPad);
 end;
 
-procedure TMiscControl.GetAlignment(var AXAlign, AYAlign: Real);
+procedure TMiscControl.GetAlignment(var AXAlign, AYAlign: Single);
 begin
   gtk_misc_get_alignment(Handle, @AXAlign, @AYAlign);
 end;
 
-procedure TMiscControl.SetAlignment(AXAlign, AYAlign: Real);
+procedure TMiscControl.SetAlignment(AXAlign, AYAlign: Single);
 begin
   gtk_misc_set_alignment(Handle, AXAlign, AYAlign);
 end;

@@ -34,6 +34,7 @@
 {$I timage.inc}
 {$I tcontainercontrol.inc}
 {$I tbincontrol.inc}
+{$I talignment.inc}
 {$I tform.inc}
 {$I tframe.inc}
 {$I tcustombutton.inc}

@@ -23,14 +23,14 @@ object FrmEditorOpts: TFrmEditorOpts
       BoxExpand = False
       Spacing = 8
       object TButton
-        Caption = 'gtk-cancel'
-        UseStock = True
+        Caption = '_Cancel'
+        IconName = 'gtk-cancel'
         OnClicked = BtnCancelClicked
         BoxExpand = True
       end
       object TButton
-        Caption = 'gtk-ok'
-        UseStock = True
+        Caption = '_OK'
+        IconName = 'gtk-ok'
         OnClicked = BtnOKClicked
         BoxExpand = True
       end
