@@ -11,7 +11,7 @@
 *)
 {** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-  TCustomToggleButton = class(TButton)
+  TCustomToggleButton = class(TCustomButton)
   private
     FOnToggled: TNotifyEvent;
     function GetActive: Boolean;
@@ -40,6 +40,9 @@
   protected
   public
   published
+    property Caption;
+    property IconName;
+    property UseUnderline;
     property DrawIndicator;
   end;
 

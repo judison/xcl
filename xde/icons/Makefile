@@ -8,7 +8,6 @@ FPC=ppc386
 
 #	selector.xpm \
 #	taccellabel.xpm \
-#	talignment.xpm \
 #	taspectframe.xpm \
 #	tcheckmenuitem.xpm \
 #	tclock.xpm \
@@ -46,6 +45,7 @@ FPC=ppc386
 
 ICON_FILES = unknown.xpm \
 	tarrow.xpm \
+	talignment.xpm \
 	tbutton.xpm \
 	tcalendar.xpm \
 	tcheckbutton.xpm \

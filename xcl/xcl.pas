@@ -209,7 +209,7 @@ uses
 
 procedure Register;
 begin
-  RegisterComponents('Containers', [THBox, TVBox, TTable, THPaned, TVPaned, THButtonBox, TVButtonBox, TFrame, TExpander, THandleBox, TScrolledWindow, TViewPort, TFixed]);
+  RegisterComponents('Containers', [THBox, TVBox, TTable, THPaned, TVPaned, THButtonBox, TVButtonBox, TFrame, TAlignment, TExpander, THandleBox, TScrolledWindow, TViewPort, TFixed]);
   RegisterComponents('Standard', [TLabel, TButton, TToggleButton, TEntry, TSpinButton, TTextView, TCheckButton, TRadioButton, TComboBox, TComboBoxEntry, TImage]);
   RegisterComponents('Additional', [THSeparator, TVSeparator, THScrollbar, TVScrollBar, THScale, TVScale, TProgressBar, TStatusBar, TArrow]);
   RegisterComponents('Extra', [TCalendar, TColorButton, TColorSelection, TFileChooserWidget]);
@@ -232,6 +232,7 @@ initialization
   RegisterClass(TArrow);                //OK
   RegisterClass(TLabel);                //OK
   RegisterClass(TImage);                //OK
+  RegisterClass(TAlignment);            //OK
   RegisterClass(TForm);
   RegisterClass(TFrame);                //OK
   RegisterClass(TButton);               //OK
