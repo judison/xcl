@@ -74,6 +74,7 @@ type
   {  |   \-} TImage = class;
   {  |-} TContainerControl = class;
   {  |   |-} TBinControl = class;
+  {  |   |   |-} TAlignment = class;
   {  |   |   |-} TForm = class;
   {  |   |   |-} TFrame = class;
   {  |   |   |-} TCustomButton = class;

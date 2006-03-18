@@ -51,7 +51,6 @@ begin
   inherited;
 end;
 
-
 procedure TToolItem.SetAction(AValue: TCustomAction);
 begin
   if FAction <> AValue then

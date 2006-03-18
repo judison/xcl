@@ -77,6 +77,7 @@ object TTest1
             Spacing = 4
             object TLabel
               Caption = '_Label, com 2 Linhas'#10'Alinhadas aki'
+              XAlign = 1
               FocusControl = Entry1
               Justify = jsRight
               UseUnderline = True
@@ -204,17 +205,17 @@ object TTest1
           BorderWidth = 4
           BoxExpand = False
           object TButton
-            Caption = 'gtk-ok'
-            UseStock = True
+            Caption = '_OK'
+            IconName = 'gtk-ok'
             ToolTip = 'Botao OK Hhduahua'
           end
           object TButton
-            Caption = 'gtk-cancel'
-            UseStock = True
+            Caption = '_Cancel'
+            IconName = 'gtk-cancel'
           end
           object TButton
-            Caption = 'gtk-help'
-            UseStock = True
+            Caption = '_Help'
+            IconName = 'gtk-help'
           end
         end
       end

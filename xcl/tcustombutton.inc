@@ -11,33 +11,50 @@
 *)
 {** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-  TCustomButton = class(TBinControl)
+  TCustomButton = class(TBinControl, IActionClient)
   private
+    FAction: TCustomAction;
+    //--
+    FAlignment: TAlignment;
+    FBox: TBox;
+    FImage: TImage;
+    FLabel: TLabel;
+    //--
+    FCaption: String;
+    FIconName: String;
+    //--
     FOnClicked: TNotifyEvent;
-    function GetCaption: string;
     function GetFocusOnClick: Boolean;
     function GetRelief: TRelief;
-    function GetUseStock: Boolean;
     function GetUseUnderline: Boolean;
     procedure SetCaption(AValue: string);
+    procedure SetIconName(AValue: string);
     procedure SetFocusOnClick(AValue: Boolean);
     procedure SetRelief(AValue: TRelief);
-    procedure SetUseStock(AValue: Boolean);
     procedure SetUseUnderline(AValue: Boolean);
   protected
     procedure CreateHandle; override;
     procedure DestroyHandle; override;
     procedure ConnectSignals; override;
     //--
+    procedure CreateControls;
+    procedure DestroyControls;
+    procedure UpdateControls;
+    //--
     procedure AddControl(AControl: TControl); override;
     procedure RemoveControl(AControl: TControl); override;
     //--
+    procedure SetAction(AValue: TCustomAction); virtual;
+    procedure DoActionChanged(Sender: TCustomAction); virtual;
+    //--
     procedure DoClicked(var Msg: TGtkSig); message 'GTK:clicked';
     // Not published yet
-    property Caption: string read GetCaption write SetCaption;
-    property UseStock: Boolean read GetUseStock write SetUseStock default False;
-    property UseUnderline: Boolean read GetUseUnderline write SetUseUnderline default False;
+    property Action: TCustomAction read FAction write SetAction;
+    property Caption: string read FCaption write SetCaption;
+    property IconName: string read FIconName write SetIconName;
+    property UseUnderline: Boolean read GetUseUnderline write SetUseUnderline default True;
   public
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   published
     property FocusOnClick: Boolean read GetFocusOnClick write SetFocusOnClick default True;
     property Relief: TRelief read GetRelief write SetRelief default rlfNormal;
@@ -45,10 +62,49 @@
     property OnClicked: TNotifyEvent read FOnClicked write FOnClicked;
   end;
 
-
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 { TCustomButton }
+
+procedure TCustomButton.Notification(AComponent: TComponent; Operation: TOperation);
+begin
+  if (AComponent = FAction) and (Operation = opRemove) then
+  begin
+    FAction := nil;
+    UpdateControls;
+  end;
+  inherited;
+end;
+
+procedure TCustomButton.SetAction(AValue: TCustomAction);
+begin
+  if FAction <> AValue then
+  begin
+    if Assigned(Child) then
+      raise Exception.Create('Cannot set Action in a TCustomButton with a Child Control.')
+    else
+    begin
+      if Assigned(FAction) then
+      begin
+        FAction.RemoveClient(Self);
+        FAction.RemoveFreeNotification(Self);
+      end;
+      FAction := AValue;
+      if Assigned(FAction) then
+      begin
+        FAction.AddClient(Self);
+        FAction.FreeNotification(Self);
+      end;
+    end;
+
+    if Assigned(FAction) then
+    begin
+      if not Assigned(FAlignment) then
+        CreateControls;
+      DoActionChanged(FAction);
+    end;
+  end;
+end;
 
 procedure TCustomButton.CreateHandle;
 begin
@@ -57,22 +113,102 @@ end;
 
 procedure TCustomButton.DestroyHandle;
 begin
+  DestroyControls;
   inherited;
+end;
+
+procedure TCustomButton.CreateControls;
+begin
+  FAlignment := TAlignment.Create(Self);
+  FAlignment.XScale := False;
+  FAlignment.YScale := False;
+
+  FBox := THBox.Create(Self);
+  FBox.Parent := FAlignment;
+  FBox.Spacing := 4;
+  //--
+  FImage := TImage.Create(Self);
+  FImage.Parent := FBox;
+  FImage.IconSize := iszButton;
+  //--
+  FLabel := TLabel.Create(Self);
+  FLabel.Parent := FBox;
+  FLabel.UseUnderline := True;
+  //--
+  gtk_container_add(Handle, FAlignment.Handle);
+  gtk_widget_show_all(FAlignment.Handle);
+  //--
+  UpdateControls;
+end;
+
+procedure TCustomButton.DestroyControls;
+begin
+  if Assigned(FBox) then
+  begin
+    try FBox.RemoveControl(FLabel); except end;
+    FLabel.Free;
+    FLabel := nil;
+    try FBox.RemoveControl(FImage); except end;
+    FImage.Free;
+    FImage := nil;
+
+    try FAlignment.RemoveControl(FBox); except end;
+    FBox.Free;
+    FBox := nil;
+
+    gtk_container_remove(Handle, FAlignment.Handle);
+    FAlignment.Free;
+    FAlignment := nil;
+  end;
+end;
+
+procedure TCustomButton.UpdateControls;
+begin
+  if Assigned(FAlignment) then
+  begin
+    if Assigned(FAction) then
+    begin
+      FImage.IconName := FAction.IconName;
+      FLabel.Caption := FAction.Caption;
+    end
+    else
+    begin
+      FImage.IconName := FIconName;
+      FLabel.Caption := FCaption;
+    end;
+    FImage.Visible := FImage.IconName <> '';
+    FLabel.Visible := FLabel.Caption <> '';
+  end;
 end;
 
 procedure TCustomButton.AddControl(AControl: TControl);
 begin
-  inherited;
+  if Assigned(FAction) then
+    raise Exception.Create('Cannot insert a Child Control in a TCustomButton with Action set.')
+  else
+  begin
+    DestroyControls;
+    inherited;
+  end;
 end;
 
 procedure TCustomButton.RemoveControl(AControl: TControl);
 begin
   inherited;
+  if (FCaption <> '') or (FIconName <> '') then
+    CreateControls;
 end;
 
-function TCustomButton.GetCaption: string;
+procedure TCustomButton.DoActionChanged(Sender: TCustomAction);
 begin
-  Result := gtk_button_get_label(Handle);
+  if Sender = FAction then
+  begin
+    UpdateControls;
+    //--
+    ToolTip := FAction.ToolTip;
+    Sensitive := FAction.Sensitive;
+    Visible := FAction.Visible;
+  end;
 end;
 
 function TCustomButton.GetFocusOnClick: Boolean;
@@ -85,19 +221,40 @@ begin
   Result := TRelief(gtk_button_get_relief(Handle));
 end;
 
-function TCustomButton.GetUseStock: Boolean;
-begin
-  Result := gtk_button_get_use_stock(Handle);
-end;
-
 function TCustomButton.GetUseUnderline: Boolean;
 begin
-  Result := gtk_button_get_use_underline(Handle);
+  if Assigned(FLabel) then
+    Result := FLabel.UseUnderline
+  else
+    Result := True;
 end;
 
 procedure TCustomButton.SetCaption(AValue: string);
 begin
-  gtk_button_set_label(Handle, PChar(AValue));
+  if FCaption <> AValue then
+  begin
+    FCaption := AValue;
+
+    if not Assigned(FAction) then
+      if Assigned(FAlignment) then
+        UpdateControls
+      else if ControlCount = 0 then
+        CreateControls;
+  end;
+end;
+
+procedure TCustomButton.SetIconName(AValue: string);
+begin
+  if FIconName <> AValue then
+  begin
+    FIconName := AValue;
+
+    if not Assigned(FAction) then
+      if Assigned(FAlignment) then
+        UpdateControls
+      else if ControlCount = 0 then
+        CreateControls;
+  end;
 end;
 
 procedure TCustomButton.SetFocusOnClick(AValue: Boolean);
@@ -110,14 +267,10 @@ begin
   gtk_button_set_relief(Handle, Ord(AValue));
 end;
 
-procedure TCustomButton.SetUseStock(AValue: Boolean);
-begin
-  gtk_button_set_use_stock(Handle, AValue);
-end;
-
 procedure TCustomButton.SetUseUnderline(AValue: Boolean);
 begin
-  gtk_button_set_use_underline(Handle, AValue);
+  if Assigned(FLabel) then
+    FLabel.UseUnderline := AValue;
 end;
 
 procedure TCustomButton.ConnectSignals;
@@ -128,9 +281,10 @@ end;
 
 procedure TCustomButton.DoClicked(var Msg: TGtkSig);
 begin
-  if Assigned(FOnClicked) then
+  if Assigned(FAction) then
+    FAction.Execute
+  else if Assigned(FOnClicked) then
     FOnClicked(Self);
 end;
-
 
 {$ENDIF}
