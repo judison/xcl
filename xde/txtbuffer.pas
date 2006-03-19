@@ -118,6 +118,7 @@ end;
 
 procedure TTxtBuffer.BufChanged(Sender: TObject);
 begin
+  Modified := Buf.Modified;
 end;
 
 procedure TTxtBuffer.EditUndo(Sender: TObject);

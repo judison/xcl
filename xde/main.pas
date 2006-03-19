@@ -38,9 +38,12 @@ type
     CompPalette: TComponentPalette;
     ProjectTV: TTreeView;
     ComponentTV: TTreeView;
+    FileBrowserTV: TTreeView;
+    FileBrowserTS: TTreeStore;
     PropTable: TTable;
     EventTable: TTable;
     nbSide: TNotebook;
+    npFileBrowser: TNotebookPage;
     npProjMan: TNotebookPage;
     npObjIns: TNotebookPage;
     procedure FileOpen(Sender: TObject);
@@ -63,10 +66,13 @@ type
     procedure PaletteClassSelected(Sender: TObject; AClass: TComponentClass);
     procedure RemoveComp(Sender: TObject);
     procedure SwitchPage(Sender: TObject; NewPage: Integer);
+    procedure FileBrowserTVRowActivated(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn);
     procedure MainFormShow(Sender: TObject);
   private
     function CurrentBuffer: TBuffer;
     function AddTree(C: TComponent; P: TTreeIter): TTreeIter;
+    //--
+    procedure UpdateFileBrowser;
   protected
     procedure DoCloseQuery(CanClose: Boolean); override;
   public
@@ -78,6 +84,8 @@ type
     //--
     procedure SelectComp(C: TComponent);
     procedure SelectForm(B: TBuffer);
+    //--
+    procedure DoFileOpen(AFileName: String);
   end;
 
 var
@@ -93,6 +101,7 @@ constructor TMainForm.Create(AOwner: TComponent);
 begin
   inherited;
   Project := TProject.Create;
+  UpdateFileBrowser;
 end;
 
 function TMainForm.CurrentBuffer: TBuffer;
@@ -124,27 +133,34 @@ begin
 end;
 
 procedure TMainForm.FileOpen(Sender: TObject);
-var
-  B: TBuffer;
-  ext: String;
 begin
   FS.FileAction := fcaOpen;
   FS.Title := 'Open...';
   if FS.Execute = -3 then
-  begin
-    ext := LowerCase(ExtractFileExt(FS.FileName));
-    if (ext = '.pas') or (ext = '.pp') or (ext = '.inc') or (ext = '.dpr') or (ext = '.p') then
-      B := TPasBuffer.Create(Self)
-    else if (ext = '.frm') then
-      B := TFrmBuffer.Create(Self)
-    else
-      B := TTxtBuffer.Create(Self);
-    B.Parent := NB;
-    B.Open(FS.FileName);
-    NB.CurrentPage := NB.PageNum(B);
-    if not Assigned(MyForm) then
-      SelectForm(B); // this only on first opened file, others will "SwitchPage"
-  end;
+    DoFileOpen(FS.FileName);
+end;
+
+procedure TMainForm.DoFileOpen(AFileName: String);
+var
+  B: TBuffer;
+  ext: String;
+begin
+  if FileExists(ChangeFileExt(AFileName, '.frm')) then
+    AFileName := ChangeFileExt(AFileName, '.frm');
+
+  ext := LowerCase(ExtractFileExt(AFileName));
+
+  if (ext = '.pas') or (ext = '.pp') or (ext = '.inc') or (ext = '.dpr') or (ext = '.p') then
+    B := TPasBuffer.Create(Self)
+  else if (ext = '.frm') then
+    B := TFrmBuffer.Create(Self)
+  else
+    B := TTxtBuffer.Create(Self);
+  B.Parent := NB;
+  B.Open(AFileName);
+  NB.CurrentPage := NB.PageNum(B);
+  if not Assigned(MyForm) then
+    SelectForm(B); // this only on first opened file, others will "SwitchPage"
 end;
 
 procedure TMainForm.MainFormShow(Sender: TObject);
@@ -261,6 +277,68 @@ end;
 procedure TMainForm.GoRight(Sender: TObject);
 begin
   NB.NextPage;
+end;
+
+procedure TMainForm.UpdateFileBrowser;
+var
+  Info : TSearchRec;
+  Ext: String;
+  It: TTreeIter;
+  DSL: TStringList;
+  FSL: TStringList;
+  I: Integer;
+begin
+  FileBrowserTS.Clear;
+
+  DSL := TStringList.Create;
+  FSL := TStringList.Create;
+  try
+  
+    if FindFirst ('*', faAnyFile, Info) = 0 then
+    repeat
+      Ext := LowerCase(ExtractFileExt(Info.Name));
+      if (Ext = '.pas') or (Ext = '.pp') or (Ext = '.inc') or (Ext = '.frm') then
+        FSL.Add(Info.Name)
+      else if ((Info.Attr and faDirectory) = faDirectory) and (Info.Name <> '.') then
+        DSL.Add(Info.Name + '/');
+    until FindNext(Info) <> 0;
+    FindClose(Info);
+
+    DSL.Sort;
+    FSL.Sort;
+
+    for I := 0 to DSL.Count -1 do
+    begin
+      FileBrowserTS.Append(It);
+      FileBrowserTS.SetStringValue(It, 0, DSL[I]);
+    end;
+
+    for I := 0 to FSL.Count -1 do
+    begin
+      FileBrowserTS.Append(It);
+      FileBrowserTS.SetStringValue(It, 0, FSL[I]);
+    end;
+
+  finally
+    DSL.Free;
+    FSL.Free;
+  end;
+end;
+
+procedure TMainForm.FileBrowserTVRowActivated(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn);
+var
+  FN: String;
+begin
+  FN := FileBrowserTS.GetStringValue(Iter, 0);
+  if FN[Length(FN)] = '/' then
+  begin
+    ChDir(FN);
+    UpdateFileBrowser;
+  end
+  else
+  begin
+    DoFileOpen(FN);
+  end;
 end;
 
 procedure TMainForm.CompChanged(Sender: TObject);
