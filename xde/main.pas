@@ -62,6 +62,8 @@ type
     procedure GoRight(Sender: TObject);
     procedure ToggleFormCode(Sender: TObject);
     procedure ShowObjectInspector(Sender: TObject);
+    procedure ShowProjectManager(Sender: TObject);
+    procedure ShowFileBrowser(Sender: TObject);
     procedure CompChanged(Sender: TObject);
     procedure PaletteClassSelected(Sender: TObject; AClass: TComponentClass);
     procedure RemoveComp(Sender: TObject);
@@ -519,5 +521,16 @@ procedure TMainForm.ShowObjectInspector(Sender: TObject);
 begin
   nbSide.CurrentPage := nbSide.PageNum(npObjIns);
 end;
+
+procedure TMainForm.ShowProjectManager(Sender: TObject);
+begin
+  nbSide.CurrentPage := nbSide.PageNum(npProjMan);
+end;
+
+procedure TMainForm.ShowFileBrowser(Sender: TObject);
+begin
+  nbSide.CurrentPage := nbSide.PageNum(npFileBrowser);
+end;
+
 
 end.
