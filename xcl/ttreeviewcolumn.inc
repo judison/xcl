@@ -144,8 +144,13 @@ begin
   //==
   FTreeView := TTreeViewColumns(ACollection).FOwner;
   CreateHandle;
+
   gtk_tree_view_append_column(FTreeView.Handle, Handle);
   g_object_ref(Handle);
+
+  //-- Set Data TObject
+  if Handle <> nil then
+    g_object_set_qdata(Handle, QTObject, Self);
 end;
 
 destructor TTreeViewColumn.Destroy;
