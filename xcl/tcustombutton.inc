@@ -27,6 +27,8 @@
     procedure SetFocusOnClick(AValue: Boolean);
     procedure SetRelief(AValue: TRelief);
     procedure SetUseUnderline(AValue: Boolean);
+    function GetIconSize: TIconSize;
+    procedure SetIconSize(AValue: TIconSize);
   protected
     FAlignment: TAlignment;
     FBox: TBox;
@@ -55,6 +57,8 @@
     property UseUnderline: Boolean read GetUseUnderline write SetUseUnderline default True;
   public
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+    //--
+    property IconSize: TIconSize read GetIconSize write SetIconSize;
   published
     property FocusOnClick: Boolean read GetFocusOnClick write SetFocusOnClick default True;
     property Relief: TRelief read GetRelief write SetRelief default rlfNormal;
@@ -209,6 +213,20 @@ begin
     Sensitive := FAction.Sensitive;
     Visible := FAction.Visible;
   end;
+end;
+
+function TCustomButton.GetIconSize: TIconSize;
+begin
+  if Assigned(FImage) then
+    Result := FImage.IconSize
+  else
+    Result := iszButton;
+end;
+
+procedure TCustomButton.SetIconSize(AValue: TIconSize);
+begin
+  if Assigned(FImage) then
+    FImage.IconSize := AValue;
 end;
 
 function TCustomButton.GetFocusOnClick: Boolean;
