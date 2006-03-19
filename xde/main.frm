@@ -88,6 +88,16 @@ object TMainForm
       Caption = '_Object Inspector'
       OnExecute = ShowObjectInspector
     end
+    object actViewProjectManager: TAction
+      Accelerator = '<Control>F11'
+      Caption = '_Project Manager'
+      OnExecute = ShowProjectManager
+    end
+    object actViewFileBrowser: TAction
+      Accelerator = '<Shift>F11'
+      Caption = '_File Browser'
+      OnExecute = ShowFileBrowser
+    end
     object actHelpAbout: TAction
       Caption = '_About...'
       IconName = 'gtk-about'
@@ -150,6 +160,12 @@ object TMainForm
         object TMenuItem
           Action = actViewObjectInspector
         end
+        object TMenuItem
+          Action = actViewProjectManager
+        end
+        object TMenuItem
+          Action = actViewFileBrowser
+        end
       end
       object TMenuItem
         Caption = '_Options'
@@ -207,7 +223,7 @@ object TMainForm
     object THPaned
       object nbSide: TNotebook
         object npFileBrowser: TNotebookPage
-          Caption = 'File Browser'
+          Caption = 'Browser'
           object TScrolledWindow
             ShadowType = stIn
             HPolicy = sbpAutomatic
