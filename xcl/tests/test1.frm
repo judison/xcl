@@ -143,6 +143,7 @@ object TTest1
         end
         object TNotebook
           object TNotebookPage
+            IconName = 'gtk-new'
             Caption = 'TextView'
             object TVBox
               object TToolBar
