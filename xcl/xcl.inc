@@ -40,6 +40,7 @@
 {$I tcustombutton.inc}
 {$I tcolorbutton.inc}
 {$I tbutton.inc}
+{$I tcustomtogglebutton.inc}
 {$I ttogglebutton.inc}
 {$I tcheckbutton.inc}
 {$I tradiobutton.inc}
