@@ -79,11 +79,11 @@ type
   {  |   |   |-} TFrame = class;
   {  |   |   |-} TCustomButton = class;
   {  |   |   |   |-} TColorButton = class;
-  {  |   |   |   \-} TButton = class;
-  {  |   |   |       \-} TCustomToggleButton = class;
-  {  |   |   |           |-} TToggleButton = class;
-  {  |   |   |           \-} TCheckButton = class;
-  {  |   |   |               \-} TRadioButton = class;
+  {  |   |   |   |-} TButton = class;
+  {  |   |   |   \-} TCustomToggleButton = class;
+  {  |   |   |       |-} TToggleButton = class;
+  {  |   |   |       \-} TCheckButton = class;
+  {  |   |   |           \-} TRadioButton = class;
   {  |   |   |-} TScrolledWindow = class;
   {  |   |   |-} TNotebookPage = class;
   {  |   |   |-} THandleBox = class;

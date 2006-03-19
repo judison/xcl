@@ -15,6 +15,7 @@
   private
   protected
     procedure CreateHandle; override;
+    procedure CreateControls; override;
   public
   published
     property Caption;
@@ -29,6 +30,13 @@
 procedure TCheckButton.CreateHandle;
 begin
   Handle := gtk_check_button_new;
+end;
+
+procedure TCheckButton.CreateControls;
+begin
+  inherited;
+  if Assigned(FImage) then
+    FImage.IconSize := iszMenu;
 end;
 
 {$ENDIF}

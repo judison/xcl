@@ -15,11 +15,6 @@
   private
     FAction: TCustomAction;
     //--
-    FAlignment: TAlignment;
-    FBox: TBox;
-    FImage: TImage;
-    FLabel: TLabel;
-    //--
     FCaption: String;
     FIconName: String;
     //--
@@ -33,13 +28,18 @@
     procedure SetRelief(AValue: TRelief);
     procedure SetUseUnderline(AValue: Boolean);
   protected
+    FAlignment: TAlignment;
+    FBox: TBox;
+    FImage: TImage;
+    FLabel: TLabel;
+    //--
     procedure CreateHandle; override;
     procedure DestroyHandle; override;
     procedure ConnectSignals; override;
     //--
-    procedure CreateControls;
-    procedure DestroyControls;
-    procedure UpdateControls;
+    procedure CreateControls; virtual;
+    procedure DestroyControls; virtual;
+    procedure UpdateControls; virtual;
     //--
     procedure AddControl(AControl: TControl); override;
     procedure RemoveControl(AControl: TControl); override;
