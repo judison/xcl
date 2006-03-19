@@ -16,6 +16,7 @@
     FModel: TTreeModel;
     FColumns: TTreeViewColumns;
     FOnSelectionChanged: TNotifyEvent;
+    FOnRowActivated: TRowActivatedEvent;
     procedure SetColumns(AValue: TTreeViewColumns);
     function GetHeadersVisible: Boolean;
     procedure SetHeadersVisible(AValue: Boolean);
@@ -32,6 +33,7 @@
     procedure DestroyHandle; override;
     procedure ConnectSignals; override;
     procedure DoChanged(var Msg: TGtkSig); message 'GTK:changed';
+    procedure DoRowActivated(var Msg: TGtkSig); message 'GTK:row-activated';
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -51,6 +53,7 @@
     property SelectionMode: TSelectionMode read GetSelectionMode write SetSelectionMode;
     property Model: TTreeModel read FModel write SetModel;
     property OnSelectionChanged: TNotifyEvent read FOnSelectionChanged write FOnSelectionChanged;
+    property OnRowActivated: TRowActivatedEvent read FOnRowActivated write FOnRowActivated;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
@@ -88,6 +91,7 @@ procedure TTreeView.ConnectSignals;
 begin
   inherited;
   XCL.ConnectGtkSignal(FSelection, 'changed');
+  XCL.ConnectGtkSignal(Handle, 'row-activated');
 end;
 
 procedure TTreeView.Notification(AComponent: TComponent; Operation: TOperation);
@@ -197,5 +201,22 @@ begin
     FOnSelectionChanged(Self);
 end;
 
+// P1: path: PGtkTreePath
+// P2: column: PGtkTreeViewColumn
+procedure TTreeView.DoRowActivated(var Msg: TGtkSig);
+var
+  Iter: TTreeIter;
+  Column: TObject;
+begin
+  if Assigned(FModel) and Assigned(FOnRowActivated) then
+    if gtk_tree_model_get_iter(FModel.Handle, @Iter, Msg.P1) then
+    begin
+      Column := ObjectByHandle(Msg.P2);
+      if Column is TTreeViewColumn then
+        FOnRowActivated(Self, Iter, TTreeViewColumn(Column))
+      else
+        FOnRowActivated(Self, Iter, nil);
+    end;
+end;
 
 {$ENDIF}

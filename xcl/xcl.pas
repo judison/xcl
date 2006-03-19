@@ -146,6 +146,7 @@ type
 
   { *** Events *** }
   TSwitchPageEvent = procedure(Sender: TObject; NewPage: Integer) of object;
+  TRowActivatedEvent = procedure(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn) of object;
 
   { *** Enumerations *** }
   TResizeMode = (rmParent, rmQueue, rmImmediate);

@@ -45,7 +45,7 @@ procedure Dispatch_GtkSig(Handle: Pointer; Signal: ShortString; P1, P2: Pointer;
 var
   Msg: TGtkSig;
 begin
-  Msg.Signal := Signal;
+  Msg.Signal := 'GTK:'+Signal;
   Msg.P1 := P1;
   Msg.P2 := P2;
   Msg.I1 := I1;
@@ -60,12 +60,17 @@ end;
 
 procedure Hnd_GTK_Generic(Handle: Pointer; Signal: PChar); cdecl;
 begin
-  Dispatch_GtkSig(Handle, 'GTK:'+Signal, nil, nil, 0, 0);
+  Dispatch_GtkSig(Handle, Signal, nil, nil, 0, 0);
 end;
 
 procedure Hnd_GtkNotebook_Switch_Page(Handle: Pointer; page: pointer; page_num: guint; Signal: PChar); cdecl;
 begin
-  Dispatch_GtkSig(Handle, 'GTK:'+Signal, page, nil, page_num, 0);
+  Dispatch_GtkSig(Handle, Signal, page, nil, page_num, 0);
+end;
+
+procedure Hnd_GtkTreeView_Row_Activated(Handle: Pointer; path: pointer; column: pointer; Signal: PChar); cdecl;
+begin
+  Dispatch_GtkSig(Handle, Signal, path, column, 0, 0);
 end;
 
 type
@@ -75,7 +80,7 @@ type
   end;
 
 const
-  GTKSignalHandlers_Count = 45;
+  GTKSignalHandlers_Count = 46;
   GTKSignalHandlers: array[0..GTKSignalHandlers_Count-1] of TSignalHandler = (
     //** GtkWidget Events ****************************************************
     (Signal: 'button-press-event';          Handler: @Hnd_GTK_GenericEvent),
@@ -153,7 +158,9 @@ const
     //** GtkEditable *********************************************************
     (Signal: 'changed';                     Handler: @Hnd_GTK_Generic),
     //** GtkNotebook *********************************************************
-    (Signal: 'switch-page';                 Handler: @Hnd_GtkNotebook_Switch_Page)
+    (Signal: 'switch-page';                 Handler: @Hnd_GtkNotebook_Switch_Page),
+    //** GtkTreeView *********************************************************
+    (Signal: 'row-activated';               Handler: @Hnd_GtkTreeView_Row_Activated)
   );
 
 function GtkSignalHandler(S: ShortString): Pointer;
