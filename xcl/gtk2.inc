@@ -99,6 +99,22 @@ function  gtk_color_button_get_use_alpha(color_button: pointer): gboolean; cdecl
 procedure gtk_color_button_set_title(color_button: pointer; title: pgchar); cdecl; external gtklib;
 function  gtk_color_button_get_title(color_button: pointer): pgchar; cdecl; external gtklib;
 
+// GtkFontButton (Since 2.4)
+
+function gtk_font_button_new: pointer; cdecl; external gtklib;
+function gtk_font_button_get_title(font_button: pointer): Pgchar; cdecl; external gtklib;
+procedure gtk_font_button_set_title(font_button: pointer; title: Pgchar); cdecl; external gtklib;
+function gtk_font_button_get_use_font(font_button: pointer): gboolean; cdecl; external gtklib;
+procedure gtk_font_button_set_use_font(font_button: pointer; use_font: gboolean); cdecl; external gtklib;
+function gtk_font_button_get_use_size(font_button: pointer): gboolean; cdecl; external gtklib;
+procedure gtk_font_button_set_use_size(font_button: pointer; use_size: gboolean); cdecl; external gtklib;
+function gtk_font_button_get_font_name(font_button: pointer): Pgchar; cdecl; external gtklib;
+function gtk_font_button_set_font_name(font_button: pointer; fontname: Pgchar): gboolean; cdecl; external gtklib;
+function gtk_font_button_get_show_style(font_button: pointer): gboolean; cdecl; external gtklib;
+procedure gtk_font_button_set_show_style(font_button: pointer; show_style: gboolean); cdecl; external gtklib;
+function gtk_font_button_get_show_size(font_button: pointer): gboolean; cdecl; external gtklib;
+procedure gtk_font_button_set_show_size(font_button: pointer; show_size: gboolean); cdecl; external gtklib;
+
 // GtkMisc (Wrong declaration)
 procedure gtk_misc_get_padding(misc:PGtkMisc; xpad: Pgint; ypad: Pgint); cdecl; external gtklib;
 procedure gtk_misc_get_alignment(misc:PGtkMisc; xalign:Pgfloat; yalign:Pgfloat); cdecl; external gtklib;

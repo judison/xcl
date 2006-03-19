@@ -79,6 +79,7 @@ type
   {  |   |   |-} TFrame = class;
   {  |   |   |-} TCustomButton = class;
   {  |   |   |   |-} TColorButton = class;
+  {  |   |   |   |-} TFontButton = class;
   {  |   |   |   |-} TButton = class;
   {  |   |   |   \-} TCustomToggleButton = class;
   {  |   |   |       |-} TToggleButton = class;
@@ -212,7 +213,7 @@ begin
   RegisterComponents('Containers', [THBox, TVBox, TTable, THPaned, TVPaned, THButtonBox, TVButtonBox, TFrame, TAlignment, TExpander, THandleBox, TScrolledWindow, TViewPort, TFixed]);
   RegisterComponents('Standard', [TLabel, TButton, TToggleButton, TEntry, TSpinButton, TTextView, TCheckButton, TRadioButton, TComboBox, TComboBoxEntry, TImage]);
   RegisterComponents('Additional', [THSeparator, TVSeparator, THScrollbar, TVScrollBar, THScale, TVScale, TProgressBar, TStatusBar, TArrow]);
-  RegisterComponents('Extra', [TCalendar, TColorButton, TColorSelection, TFileChooserWidget]);
+  RegisterComponents('Extra', [TCalendar, TColorButton, TFontButton, TColorSelection, TFileChooserWidget]);
 end;
 
 initialization
@@ -237,6 +238,7 @@ initialization
   RegisterClass(TFrame);                //OK
   RegisterClass(TButton);               //OK
   RegisterClass(TColorButton);          //OK
+  RegisterClass(TFontButton);           //OK
   RegisterClass(TToggleButton);         //OK
   RegisterClass(TCheckButton);          //OK
   RegisterClass(TRadioButton);          //OK

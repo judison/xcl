@@ -89,6 +89,12 @@ object TTest1
             object TCheckButton
               Caption = 'Sim ou Nao?'
             end
+            object THBox
+              object TFontButton
+              end
+              object TColorButton
+              end
+            end
             object TComboBox
               Model = CM
             end

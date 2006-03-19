@@ -19,7 +19,6 @@ FPC=ppc386
 #	teventbox.xpm \
 #	tfilechooserdialog.xpm \
 #	tfileseldialog.xpm \
-#	tfontbutton.xpm \
 #	tfontsel.xpm \
 #	tfontseldialog.xpm \
 #	thruler.xpm \
@@ -62,6 +61,7 @@ ICON_FILES = unknown.xpm \
 	tfilechooserwidget.xpm \
 	tfixed.xpm \
 	tfixedformatdataset.xpm \
+	tfontbutton.xpm \
 	tframe.xpm \
 	thandlebox.xpm \
 	thbox.xpm \
