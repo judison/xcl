@@ -39,6 +39,7 @@
 {$I tframe.inc}
 {$I tcustombutton.inc}
 {$I tcolorbutton.inc}
+{$I tfontbutton.inc}
 {$I tbutton.inc}
 {$I tcustomtogglebutton.inc}
 {$I ttogglebutton.inc}
