@@ -18,6 +18,9 @@ object TMainForm
     Website = 'http://xcl.sourceforge.net/'
     Logo = PBLogo
   end
+  object FileBrowserTS: TTreeStore
+    Structure = 'S'
+  end
   object TActionList
     object actFileNew: TAction
       Accelerator = '<Control>n'
@@ -167,7 +170,6 @@ object TMainForm
         end
       end
     end
-
     object THBox
       BoxExpand = False
       object TVBox
@@ -202,9 +204,30 @@ object TMainForm
         OnClassSelected = PaletteClassSelected
       end
     end
-
     object THPaned
       object nbSide: TNotebook
+        object npFileBrowser: TNotebookPage
+          Caption = 'File Browser'
+          object TScrolledWindow
+            ShadowType = stIn
+            HPolicy = sbpAutomatic
+            VPolicy = sbpAutomatic
+            HeightRequest = 200
+            object FileBrowserTV: TTreeView
+              Columns = <            
+                item
+                  Clickable = False
+                  FixedWidth = 1
+                  Sizing = tvcsAutosize
+                  Title = 'File Tree'
+                end>
+              Model = FileBrowserTS
+              HeadersVisible = False
+              SelectionMode = smBrowse
+              OnRowActivated = FileBrowserTVRowActivated
+            end
+          end
+        end
         object npProjMan: TNotebookPage
           Caption = 'Project Manager'
           object TVBox
@@ -317,10 +340,10 @@ object TMainForm
               end
             end
           end
-
         end
       end
       object NB: TNotebook
+        Scrollable = True
         OnSwitchPage = SwitchPage
       end
     end
