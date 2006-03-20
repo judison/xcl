@@ -17,6 +17,8 @@
     procedure SetCaption(AValue: String);
     function GetIconName: String;
     procedure SetIconName(AValue: String);
+    function GetUseUnderline: Boolean;
+    procedure SetUseUnderline(AValue: Boolean);
   protected
     FBox: TBox;
     FImage: TImage;
@@ -32,6 +34,7 @@
   published
     property Caption: String read GetCaption write SetCaption;
     property IconName: string read GetIconName write SetIconName;
+    property UseUnderline: Boolean read GetUseUnderline write SetUseUnderline default True;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
@@ -121,5 +124,16 @@ begin
   FImage.IconName := AValue;
   FImage.Visible := FImage.IconName <> '';
 end;
+
+function TNotebookPage.GetUseUnderline: Boolean;
+begin
+  Result := FLabel.UseUnderline;
+end;
+
+procedure TNotebookPage.SetUseUnderline(AValue: Boolean);
+begin
+  FLabel.UseUnderline := AValue;
+end;
+
 
 {$ENDIF}

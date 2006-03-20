@@ -161,7 +161,8 @@ var
 begin
   if InSE then
   begin
-    WriteLn('Aha!');
+    //WriteLn('Aha!');
+    //It comes here, sometimes...
     exit;
   end;
   InSE := True;
