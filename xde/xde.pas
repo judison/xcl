@@ -14,6 +14,9 @@ program xde;
 
 {$H+}
 {$MODE ObjFpc}
+{$IFDEF WIN32}
+  {$APPTYPE GUI}
+{$ENDIF}
 
 uses classes,
      xcl,

@@ -28,34 +28,41 @@
 function Hnd_GTK_GenericEvent(Handle: Pointer; Event: Pointer; Signal: PChar): gboolean; cdecl;
 var
   Msg: TGtkSigEvent;
+  O: TObject;
 begin
   Msg.Signal := 'GTK:'+Signal;
   Msg.Event := Event;
   Msg.Stop := False;
-  try
-    ControlByHandle(Handle).DispatchStr(Msg);
-  except
-    on E: Exception do
-      Application.ShowException(E);
-  end;
+  O := ObjectByHandle(Handle);
+  if O <> nil then
+    try
+      O.DispatchStr(Msg);
+    except
+      on E: Exception do
+        Application.ShowException(E);
+    end;
   Result := Msg.Stop;
 end;
 
 procedure Dispatch_GtkSig(Handle: Pointer; Signal: ShortString; P1, P2: Pointer; I1, I2: Integer);
 var
   Msg: TGtkSig;
+  O: TObject;
 begin
   Msg.Signal := 'GTK:'+Signal;
   Msg.P1 := P1;
   Msg.P2 := P2;
   Msg.I1 := I1;
   Msg.I2 := I2;
-  try
-    ControlByHandle(Handle).DispatchStr(Msg);
-  except
-    on E: Exception do
-      Application.ShowException(E);
-  end;
+  O := ObjectByHandle(Handle);
+  if O <> nil then
+    try
+      O.DispatchStr(Msg);
+    except
+      on E: Exception do
+        Application.ShowException(E);
+    end
+  else WriteLn('Aha');
 end;
 
 procedure Hnd_GTK_Generic(Handle: Pointer; Signal: PChar); cdecl;

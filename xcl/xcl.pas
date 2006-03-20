@@ -173,6 +173,7 @@ type
   TCanvasFill = (flSolid, flTiled, flStippled, fsOpaqueStippled);
   TWrapMode = (wmNone, wmChar, wmWord, wmWordChar);
   TEllipsizeMode = (emNone, emStart, emMiddle, emEnd);
+  TMessageType = (mtInfo, mtWarning, mtQuestion, mtError);
 
   {*** Sets ***}
   TAttachOptions = set of TAttachOption;

@@ -37,7 +37,7 @@
     //
     procedure AddAction(AAction: TCustomAction);
     procedure RemoveAction(AAction: TCustomAction);
-
+    //--
     property Colormap: TColormap read FColormap;
     property CurrentLocale: string read FCurrentLocale;
     property MainForm: TForm read FMainForm write FMainForm;
@@ -85,12 +85,12 @@ begin
   FActionList.Remove(AAction);
 end;
 
-procedure TApplication.ProcessMessages;
+procedure TApplication.ProcessMessages; 
 begin
   ProcessMessages(False);
 end;
 
-procedure TApplication.ProcessMessages(ABlock: Boolean);
+procedure TApplication.ProcessMessages(ABlock: Boolean); 
 var
   I: Integer;
 begin
@@ -117,7 +117,12 @@ procedure TApplication.DoRun;
 begin
   // Show MainForm
   if FMainForm <> nil then
-    FMainForm.Show;
+    try
+      FMainForm.Show;
+    except
+      on E: Exception do
+        ShowException(E);
+    end;
 
   while (not Terminated) do
     ProcessMessages(True); // Block
@@ -145,14 +150,42 @@ begin
   g_object_ref(FToolTips);
 end;
 
+var
+  InSE: Boolean = False;
+
 procedure TApplication.ShowException(E: Exception);
+var
+  Dlg: Pointer;
+  Msg: String;
+  Frm: Pointer;
 begin
-//  inherited;
-  WriteLn('***************');
-  WriteLn('** EXCEPTION **');
-  WriteLn('***************');
-  WriteLn(E.Message);
-  WriteLn('***************');
+  if InSE then
+  begin
+    WriteLn('Aha!');
+    exit;
+  end;
+  InSE := True;
+
+  Dlg := nil;
+  if Assigned(FMainForm) then
+    Frm := FMainForm.Handle
+  else
+    Frm := nil;
+
+  ProcessMessages(False);
+  Msg := Format('Exception (%s):'#10'%s', [E.ClassName, E.Message]);
+  Dlg := gtk_message_dialog_new(Frm, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, PChar(Msg));
+  if Assigned(Dlg) then
+  begin
+    gtk_dialog_run(Dlg);
+    gtk_widget_destroy(Dlg);
+  end
+  else
+  begin
+    WriteLn(Msg);
+    WriteLn('***************');
+  end;
+  InSE := False;
 end;
 
 procedure TApplication.CreateForm(AClass: TFormClass; var Ref);
