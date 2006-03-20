@@ -520,16 +520,19 @@ end;
 procedure TMainForm.ShowObjectInspector(Sender: TObject);
 begin
   nbSide.CurrentPage := nbSide.PageNum(npObjIns);
+  ComponentTV.GrabFocus;
 end;
 
 procedure TMainForm.ShowProjectManager(Sender: TObject);
 begin
   nbSide.CurrentPage := nbSide.PageNum(npProjMan);
+  ProjectTV.GrabFocus;
 end;
 
 procedure TMainForm.ShowFileBrowser(Sender: TObject);
 begin
   nbSide.CurrentPage := nbSide.PageNum(npFileBrowser);
+  FileBrowserTV.GrabFocus;
 end;
 
 

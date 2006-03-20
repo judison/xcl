@@ -32,7 +32,7 @@ type
     // Non Visual
     procedure UpdateCaption;
   protected
-    FCloseBtn: TButton;
+//    FCloseBtn: TButton;
     procedure CreateControls; override;
     procedure DestroyControls; override;
   public
@@ -60,21 +60,27 @@ end;
 procedure TBuffer.CreateControls;
 begin
   inherited;
-//  FCloseBtn := TButton.Create(Self);
-//  FCloseBtn.IconName := 'gtk-close';
-//  FCloseBtn.IconSize := iszMenu;
-//  FCloseBtn.Relief := rlfNone;
-//  FCloseBtn.Parent := FBox;
+{
+  FCloseBtn := TButton.Create(Self);
+  FCloseBtn.IconName := 'gtk-close';
+  FCloseBtn.IconSize := iszMenu;
+  FCloseBtn.Relief := rlfNone;
+  FCloseBtn.WidthRequest := 16;
+  FCloseBtn.HeightRequest := 16;
+  FCloseBtn.Parent := FBox;
+}
 end;
 
 procedure TBuffer.DestroyControls;
 begin
+{
   if Assigned(FCloseBtn) then
   begin
-//    try FBox.RemoveControl(FCloseBtn); except end;
-//    FCloseBtn.Free;
-//    FCloseBtn := nil;
+    try FBox.RemoveControl(FCloseBtn); except end;
+    FCloseBtn.Free;
+    FCloseBtn := nil;
   end;
+}
   inherited;
 end;
 
