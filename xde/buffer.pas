@@ -32,7 +32,7 @@ type
     // Non Visual
     procedure UpdateCaption;
   protected
-//    FCloseBtn: TButton;
+    FCloseBtn: TButton;
     procedure CreateControls; override;
     procedure DestroyControls; override;
   public
@@ -55,32 +55,34 @@ implementation
 constructor TBuffer.Create(AOwner: TComponent);
 begin
   inherited;
+  UseUnderline := False;
+  FLabel.UseMarkup := True;
 end;
 
 procedure TBuffer.CreateControls;
 begin
   inherited;
-{
+
   FCloseBtn := TButton.Create(Self);
   FCloseBtn.IconName := 'gtk-close';
   FCloseBtn.IconSize := iszMenu;
   FCloseBtn.Relief := rlfNone;
   FCloseBtn.WidthRequest := 16;
-  FCloseBtn.HeightRequest := 16;
+  FCloseBtn.HeightRequest := 18;
   FCloseBtn.Parent := FBox;
-}
+
 end;
 
 procedure TBuffer.DestroyControls;
 begin
-{
+
   if Assigned(FCloseBtn) then
   begin
     try FBox.RemoveControl(FCloseBtn); except end;
     FCloseBtn.Free;
     FCloseBtn := nil;
   end;
-}
+
   inherited;
 end;
 
@@ -131,9 +133,15 @@ var
 begin
   lC := ExtractFileName(FFileName);
   if FModified then
-    Caption := lC + '*'
+  begin
+    IconName := 'gtk-edit';
+    Caption := '<i>'+lC+'</i>'
+  end
   else
+  begin
+    IconName := 'gtk-file';
     Caption := lC;
+  end;
 end;
 
 end.
