@@ -17,11 +17,9 @@
     FResPB: TPixbuf;
     FPixbuf: TPixbuf;
     FIconSize: TIconSize;
-    FStockID: String;
     FIconName: String;
     procedure SetIconName(AValue: String);
     procedure SetIconSize(AValue: TIconSize);
-    procedure SetStockID(AValue: String);
     procedure SetPixbuf(AValue: TPixbuf);
     procedure SetResource(AValue: String);
   protected
@@ -38,7 +36,6 @@
     //--
     property IconSize: TIconSize read FIconSize write SetIconSize default iszInvalid;
     property IconName: String read FIconName write SetIconName;
-    property StockID: String read FStockID write SetStockID;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
@@ -69,8 +66,6 @@ begin
       gtk_image_set_from_stock(Handle, PChar(FIconName), Ord(FIconSize))
     else
       gtk_image_set_from_icon_name(Handle, PChar(FIconName), Ord(FIconSize))
-  else if (FStockID <> '') and (FIconSize <> iszInvalid) then
-    gtk_image_set_from_stock(Handle, PChar(FStockID), Ord(FIconSize))
   else if (FResource <> '') and (FResPB <> nil) then
     gtk_image_set_from_pixbuf(Handle, FResPB.GetGdkPixbuf)
   else
@@ -79,9 +74,6 @@ end;
 
 procedure TImage.ClearSourceProps;
 begin
-  //== StockID
-  FStockID := '';
-
   //== Pixbuf
   if Assigned(FPixbuf) then
   begin
@@ -131,16 +123,6 @@ begin
     FIconSize := AValue;
     if (FIconName <> '') or (FStockID <> '') then
       ChangeImage;
-  end;
-end;
-
-procedure TImage.SetStockID(AValue: String);
-begin
-  if FStockID <> AValue then
-  begin
-    ClearSourceProps;
-    FStockID := AValue;
-    ChangeImage;
   end;
 end;
 
