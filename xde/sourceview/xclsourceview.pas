@@ -30,9 +30,10 @@ type
 
   TSourceLanguagesManager = class(TComponent)
   private
-    Handle: Pointer;
   protected
   public
+    Handle: Pointer;
+    //--
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     function GetLanguageFromMime(AMime: String): TSourceLanguage;
@@ -41,17 +42,20 @@ type
 
   TSourceLanguage = class
   private
-    Handle: Pointer;
   protected
   public
+    Handle: Pointer;
+    //--
     constructor Create(AHandle: Pointer);
   end;
 
   TSourceBuffer = class(TTextBuffer)
   private
     UMHandle: Pointer;
+    FLanguage: TSourceLanguage;
     procedure SetHighlight(AValue: Boolean);
     function GetHighlight: Boolean;
+
   protected
     procedure CreateHandle; override;
   public
@@ -63,6 +67,8 @@ type
     procedure Redo;
     procedure BeginNotUndoableAction;
     procedure EndNotUndoableAction;
+    //--
+    property Language: TSourceLanguage read FLanguage write SetLanguage;
   published
     property Highlight: Boolean read GetHighlight write SetHighlight;
   end;
@@ -213,8 +219,12 @@ end;
 
 procedure TSourceBuffer.SetLanguage(ALang: TSourceLanguage);
 begin
+  FLanguage := ALang;
 {$IFDEF HAS_GTK_SOURCE_VIEW}
-  gtk_source_buffer_set_language(Handle, ALang.Handle);
+  if Assigned(FLanguage) then
+    gtk_source_buffer_set_language(Handle, ALang.Handle)
+  else
+    gtk_source_buffer_set_language(Handle, nil);
 {$ENDIF}
 end;
 
