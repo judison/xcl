@@ -47,6 +47,7 @@ type
     Handle: Pointer;
     //--
     constructor Create(AHandle: Pointer);
+    procedure SetTagStyle(ATagID: String; AForeground, ABackground: String; ABold, AItalic: Boolean);
   end;
 
   TSourceBuffer = class(TTextBuffer)
@@ -111,7 +112,7 @@ type
 implementation
 
 {$IFDEF HAS_GTK_SOURCE_VIEW}
-uses glib2, gtksourceview;
+uses glib2, gdk2, gtksourceview;
 {$ENDIF}
 
 { TSourceLanguage }
@@ -120,6 +121,34 @@ constructor TSourceLanguage.Create(AHandle: Pointer);
 begin
   Handle := AHandle;
 end;
+
+procedure TSourceLanguage.SetTagStyle(ATagID: String; AForeground, ABackground: String; ABold, AItalic: Boolean);
+{$IFDEF HAS_GTK_SOURCE_VIEW}
+var
+  ts: PGtkSourceTagStyle;
+begin
+  ts := gtk_source_tag_style_new();
+
+  gdk_color_parse(PChar(AForeground), @ts^.foreground);
+  ts^.mask := Ord(GTK_SOURCE_TAG_STYLE_USE_FOREGROUND);
+
+  if ABackground <> '' then
+  begin
+    gdk_color_parse(PChar(ABackground), @ts^.background);
+    ts^.mask := ts^.mask or Ord(GTK_SOURCE_TAG_STYLE_USE_BACKGROUND);
+  end;
+  
+  ts^.italic := AItalic;
+  ts^.bold := ABold;
+  ts^.is_default := True;
+  gtk_source_language_set_tag_style(Handle, PChar(ATagID), ts);
+  gtk_source_tag_style_free(ts);
+end;
+{$ELSE}
+begin
+end;
+{$ENDIF}
+
 
 { TSourceLanguagesManager }
 
