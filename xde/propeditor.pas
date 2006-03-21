@@ -204,6 +204,7 @@ var
     end;
   end;
 begin
+  //----
   PropTable.Hide;
   EventTable.Hide;
   try
@@ -214,32 +215,26 @@ begin
       C.Parent := nil;
       C.Free;
     end;
-  
     while PropTable.ControlCount > 0 do
     begin
       C := PropTable.Controls[0];
       C.Parent := nil;
       C.Free;
     end;
-  
     while EventTable.ControlCount > 0 do
     begin
       C := EventTable.Controls[0];
       C.Parent := nil;
       C.Free;
     end;
-  
     FComponent := AValue;
-
     if Assigned(FComponent) then
     begin
       PI := FComponent.ClassInfo;
       PT := GetTypeData(PI);
       GetMem(PP, PT^.PropCount * SizeOf(Pointer));
       GetPropInfos(PI, PP);
-    
       TopP := 0;
-    
       for I := 0 to PT^.PropCount -1 do
         case PP^[I]^.PropType^.Kind of
           tkEnumeration : AddProp(PP^[I], TEnumPropEditor, False);

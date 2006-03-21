@@ -102,8 +102,14 @@ uses compiler_opts, editor_opts, TxtBuffer, PasBuffer, FrmBuffer, frm_NewFile;
 constructor TMainForm.Create(AOwner: TComponent);
 begin
   inherited;
+
+  CompEd := TComponentEditor.Create(Self);
+  CompEd.PropTable := PropTable;
+  CompEd.EventTable := EventTable;
+
   Project := TProject.Create;
   UpdateFileBrowser;
+  Icon := PBLogo;
 end;
 
 function TMainForm.CurrentBuffer: TBuffer;
@@ -129,8 +135,8 @@ begin
   end;
   if Assigned(B) then
   begin
-    B.Parent := NB;
     B.New;
+    B.Parent := NB;
   end;
 end;
 
@@ -158,11 +164,13 @@ begin
     B := TFrmBuffer.Create(Self)
   else
     B := TTxtBuffer.Create(Self);
-  B.Parent := NB;
   B.Open(AFileName);
+  B.Parent := NB;
   NB.CurrentPage := NB.PageNum(B);
-  if not Assigned(MyForm) then
-    SelectForm(B); // this only on first opened file, others will "SwitchPage"
+// You don't need this, Changing current page to the only one, does not call OnSwitchPage,
+// but when you add the first page, its called.
+//  if not Assigned(MyForm) then
+//    SelectForm(B); 
 end;
 
 procedure TMainForm.MainFormShow(Sender: TObject);
@@ -352,13 +360,6 @@ begin
   begin
     C := TComponent(ComponentTV.Model.GetPointerValue(It, 1));
 
-    if not Assigned(CompEd) then
-    begin
-      CompEd := TComponentEditor.Create(Self);
-      CompEd.PropTable := PropTable;
-      CompEd.EventTable := EventTable;
-    end;
-
     CompEd.Component := C;
   end;
 end;
@@ -390,7 +391,7 @@ var
   C: TComponent;
   It: TTreeIter;
 begin
-  if Assigned(CompEd) and Assigned(CompEd.Component) then
+  if Assigned(CompEd.Component) then
   begin
     C := AClass.Create(MyForm);
     try
@@ -442,13 +443,6 @@ begin
     ComponentTV.ExpandTo(It);
     ComponentTV.SelectIter(It);
 
-    if not Assigned(CompEd) then
-    begin
-      CompEd := TComponentEditor.Create(Self);
-      CompEd.PropTable := PropTable;
-      CompEd.EventTable := EventTable;
-    end;
-
     CompEd.Component := C;
   end;
 end;
@@ -482,7 +476,7 @@ procedure TMainForm.SelectForm(B: TBuffer);
 var
   FB: TFrmBuffer;
 begin
-  if B is TFrmBuffer then
+  if Assigned(B) and (B is TFrmBuffer) then
   begin
     FB := TFrmBuffer(B);
     MyForm := FB.MyForm;

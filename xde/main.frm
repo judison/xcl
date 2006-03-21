@@ -224,6 +224,7 @@ object TMainForm
       object nbSide: TNotebook
         object npFileBrowser: TNotebookPage
           Caption = 'Browser'
+          IconName = 'gtk-directory'
           object TScrolledWindow
             ShadowType = stIn
             HPolicy = sbpAutomatic
