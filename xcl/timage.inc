@@ -121,7 +121,7 @@ begin
   if FIconSize <> AValue then
   begin
     FIconSize := AValue;
-    if (FIconName <> '') or (FStockID <> '') then
+    if (FIconName <> '') then
       ChangeImage;
   end;
 end;

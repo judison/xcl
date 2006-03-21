@@ -60,9 +60,17 @@ begin
   begin
     if FControlList = nil then
       FControlList := TComponentList.Create(False);
-    //
-    InternalAddControl(AControl);
+    //------------------------------------------------------------------
+    // This is to simulate the effect of FControlList.Add(Acontrol)
+    // after InternalAddControl... if an exception is raised, remove it.
     FControlList.Add(AControl);
+    try
+      InternalAddControl(AControl);
+    except
+      FControlList.Remove(AControl);
+      raise;
+    end;
+    //-----------------------
     AControl.FParent := Self;
     AControl.FreeNotification(Self);
   end;
@@ -72,8 +80,17 @@ procedure TContainerControl.RemoveControl(AControl: TControl);
 begin
   if AControl.Parent = Self then
   begin
-    InternalRemoveControl(AControl);
+    //------------------------------------------------------------------
+    // This is to simulate the effect of FControlList.Remove(Acontrol)
+    // after InternalRemoveControl... if an exception is raised, add it.
     FControlList.Remove(AControl);
+    try
+      InternalRemoveControl(AControl);
+    except
+      FControlList.Add(AControl);
+      raise;
+    end;
+    //-----------------------
     AControl.FParent := nil;
     //
     if FControlList.Count = 0 then
