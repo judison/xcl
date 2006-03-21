@@ -68,7 +68,7 @@ begin
   FCloseBtn.IconSize := iszMenu;
   FCloseBtn.Relief := rlfNone;
   FCloseBtn.WidthRequest := 16;
-  FCloseBtn.HeightRequest := 18;
+  FCloseBtn.HeightRequest := 16;
   FCloseBtn.Parent := FBox;
 
 end;
