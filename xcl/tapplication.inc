@@ -150,15 +150,16 @@ begin
   g_object_ref(FToolTips);
 end;
 
-var
-  InSE: Boolean = False;
+//var
+//  InSE: Boolean = False;
 
 procedure TApplication.ShowException(E: Exception);
-var
-  Dlg: Pointer;
-  Msg: String;
-  Frm: Pointer;
+//var
+//  Dlg: Pointer;
+//  Msg: String;
+//  Frm: Pointer;
 begin
+{
   if InSE then
   begin
     //WriteLn('Aha!');
@@ -174,6 +175,7 @@ begin
     Frm := nil;
 
   ProcessMessages(False);
+
   Msg := Format('Exception (%s):'#10'%s', [E.ClassName, E.Message]);
   Dlg := gtk_message_dialog_new(Frm, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, PChar(Msg));
   if Assigned(Dlg) then
@@ -182,11 +184,12 @@ begin
     gtk_widget_destroy(Dlg);
   end
   else
-  begin
-    WriteLn(Msg);
-    WriteLn('***************');
-  end;
-  InSE := False;
+  begin}
+    WriteLn('Exception (',E.ClassName,'):');
+    WriteLn(E.Message);
+    WriteLn('*************************');
+{  end;
+  InSE := False;}
 end;
 
 procedure TApplication.CreateForm(AClass: TFormClass; var Ref);

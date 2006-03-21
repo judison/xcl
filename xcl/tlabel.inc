@@ -15,7 +15,6 @@
   private
     FCaption: String;
     FFocusControl: TControl;
-    function GetCaption: string;
     function GetJustify: TJustification;
     function GetLineWrap: Boolean;
     function GetSelectable: Boolean;
@@ -35,7 +34,7 @@
   public
     constructor Create(AOwner: TComponent); override;
   published
-    property Caption: string read GetCaption write SetCaption;
+    property Caption: string read FCaption write SetCaption;
     property FocusControl: TControl read FFocusControl write SetFocusControl;
     property Justify: TJustification read GetJustify write SetJustify default jsLeft;
     property LineWrap: Boolean read GetLineWrap write SetLineWrap default False;
@@ -53,16 +52,12 @@ constructor TLabel.Create(AOwner: TComponent);
 begin
   inherited;
   FFocusControl := nil;
+  FCaption := '';
 end;
 
 procedure TLabel.CreateHandle;
 begin
   Handle := gtk_label_new('');
-end;
-
-function TLabel.GetCaption: string;
-begin
-  Result := gtk_label_get_label(Handle);
 end;
 
 function TLabel.GetJustify: TJustification;
@@ -92,10 +87,11 @@ end;
 
 procedure TLabel.SetCaption(AValue: string);
 begin
-  FCaption := AValue;
-  if not UseUnderline then
-    AValue := StringReplace(FCaption, '_', '', [rfReplaceAll]);
-  gtk_label_set_label(Handle, PChar(AValue));
+  if FCaption <> AValue then
+  begin
+    FCaption := AValue;
+    gtk_label_set_label(Handle, PChar(AValue));
+  end;
 end;
 
 procedure TLabel.SetFocusControl(AValue: TControl);
@@ -133,8 +129,6 @@ end;
 procedure TLabel.SetUseUnderline(AValue: Boolean);
 begin
   gtk_label_set_use_underline(Handle, AValue);
-  if AValue and (Pos('_', FCaption) <> 0) then
-    gtk_label_set_label(Handle, PChar(FCaption));
 end;
 
 function TLabel.GetEllipsize: TEllipsizeMode;
