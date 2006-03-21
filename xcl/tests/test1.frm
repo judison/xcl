@@ -121,7 +121,7 @@ object TTest1
                 OnClicked = Btn2Click
                 Relief = rlfNone
                 object TImage
-                  StockID = 'gtk-dialog-info'
+                  IconName = 'gtk-dialog-info'
                   IconSize = iszDialog
                 end
               end
