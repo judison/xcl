@@ -19,7 +19,7 @@ unit main;
 interface
 
 uses Classes, SysUtils, xcl, Buffer, xclsourceview, componentpalette,
-  propeditor, designform, uproject;
+  propeditor, designform, xpr;
 
 type
   TMainForm = class(TForm)
@@ -37,6 +37,7 @@ type
     FS: TFileChooserDialog;
     CompPalette: TComponentPalette;
     ProjectTV: TTreeView;
+    ProjectTS: TTreeStore;
     ComponentTV: TTreeView;
     FileBrowserTV: TTreeView;
     FileBrowserTS: TTreeStore;
@@ -75,12 +76,13 @@ type
     function AddTree(C: TComponent; P: TTreeIter): TTreeIter;
     //--
     procedure UpdateFileBrowser;
+    procedure UpdateProjectManager;
   protected
     procedure DoCloseQuery(CanClose: Boolean); override;
   public
     CompEd: TComponentEditor;
     MyForm: TDesignForm;
-    Project: TProject;
+    Project: TXPRProject;
     //--
     constructor Create(AOwner: TComponent); override;
     //--
@@ -107,7 +109,7 @@ begin
   CompEd.PropTable := PropTable;
   CompEd.EventTable := EventTable;
 
-  Project := TProject.Create;
+  Project := TXPRProject.Create;
   UpdateFileBrowser;
   Icon := PBLogo;
 end;
@@ -158,7 +160,14 @@ begin
 
   ext := LowerCase(ExtractFileExt(AFileName));
 
-  if (ext = '.pas') or (ext = '.pp') or (ext = '.inc') or (ext = '.dpr') or (ext = '.p') then
+
+  if (ext = '.xpr') then
+  begin
+    Project.Load(AFileName);
+    UpdateProjectManager;
+    exit;
+  end
+  else if (ext = '.pas') or (ext = '.pp') or (ext = '.inc') or (ext = '.dpr') or (ext = '.p') then
     B := TPasBuffer.Create(Self)
   else if (ext = '.frm') then
     B := TFrmBuffer.Create(Self)
@@ -348,6 +357,45 @@ begin
   else
   begin
     DoFileOpen(FN);
+  end;
+end;
+
+procedure TMainForm.UpdateProjectManager;
+var
+  It, P, PP: TTreeIter;
+  I: Integer;
+begin
+  ProjectTS.Clear;
+  if Project.Name <> '' then
+  begin
+    ProjectTS.Append(PP);
+    ProjectTS.SetStringValue(PP, 0, Project.Name);
+    ProjectTS.SetPointerValue(PP, 1, Project);
+
+    for I := 0 to Project.Sources.UnitCount -1 do
+    begin
+      ProjectTS.Append(It, PP);
+      ProjectTS.SetStringValue(It, 0, Project.Sources.Units[I].Name);
+      ProjectTS.SetPointerValue(It, 1, Project.Sources.Units[I]);
+    end;
+
+    for I := 0 to Project.Sources.IncludeCount -1 do
+    begin
+      ProjectTS.Append(It, PP);
+      ProjectTS.SetStringValue(It, 0, Project.Sources.Includes[I].FileName);
+      ProjectTS.SetPointerValue(It, 1, Project.Sources.Includes[I]);
+    end;
+
+    ProjectTS.Append(P, PP);
+    ProjectTS.SetStringValue(P, 0, 'Resources');
+    ProjectTS.SetPointerValue(P, 1, Project.Sources.Units[I]);
+
+    for I := 0 to Project.Resources.Count -1 do
+    begin
+      ProjectTS.Append(It, P);
+      ProjectTS.SetStringValue(It, 0, Project.Resources[I].RType + ' \ ' + Project.Resources[I].RName);
+      ProjectTS.SetPointerValue(It, 1, Project.Resources[I]);
+    end;
   end;
 end;
 
