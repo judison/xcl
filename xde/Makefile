@@ -20,6 +20,7 @@ PAS_FILES =	buffer.pas \
 		propeditor.pas \
                 componentpalette.pas \
                 regcomps.pas \
+		xpr.pas \
 		xde.pas
 
 

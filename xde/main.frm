@@ -21,6 +21,9 @@ object TMainForm
   object FileBrowserTS: TTreeStore
     Structure = 'S'
   end
+  object ProjectTS: TTreeStore
+    Structure = 'SP'
+  end
   object TActionList
     object actFileNew: TAction
       Accelerator = '<Control>n'
@@ -285,6 +288,7 @@ object TMainForm
                   end>
                 HeadersVisible = False
                 SelectionMode = smBrowse
+                Model = ProjectTS
               end
             end
           end
