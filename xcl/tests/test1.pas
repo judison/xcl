@@ -37,6 +37,7 @@ type
     procedure Entry1Changed(Sender: TObject);
     procedure OpenClicked(Sender: TObject);
   public
+    procedure DoAha(var Msg: TXCLMsg); message 'aha';
     constructor Create(AOwner: TComponent); override;
   end;
 
@@ -73,8 +74,14 @@ begin
   WriteLn('Entry1.Changed: ', Entry1.Text);
 end;
 
+procedure TTest1.DoAha(var Msg: TXCLMsg);
+begin
+  WriteLn('Aha, o sistema de mensagem do XCL funciona!!!!');
+end;
+
 procedure TTest1.CalChanged(Sender: TObject);
 begin
+  SendMessage('aha');
   WriteLn('Cal.Changed: ', DateToStr(Cal.Date));
 end;
 

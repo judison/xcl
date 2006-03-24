@@ -23,7 +23,53 @@
     Stop: Boolean;
   end;
 
+  TXCLMsg = record
+    Name: ShortString;
+    UID: LongWord;
+    Int: array[0..3] of Integer;
+    Ptr: array[0..3] of Pointer;
+    Str: array[0..3] of String;
+  end;
+
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
+
+var
+  XCLMsgs: TList;
+  XCLMsgLastID: LongWord = 0;
+
+type
+  PXCLMsg = ^TXCLMsg;
+
+function AddXCLMsg(const AMsg: TXCLMsg): LongWord;
+var
+  M: PXCLMsg;
+begin
+  Inc(XCLMsgLastID);
+  New(M);
+  M^ := AMsg;
+  M^.UID := XCLMsgLastID;
+  XCLMsgs.Add(M);
+  Result := XCLMsgLastID;
+end;
+
+procedure GetXCLMsg(AUID: LongWord; var AMsg: TXCLMsg);
+var
+  I: Integer;
+  M: PXCLMsg;
+begin
+  AMsg.UID := 0;
+  for I := 0 to XCLMsgs.Count -1 do
+    if PXCLMsg(XCLMsgs[I])^.UID = AUID then
+    begin
+      M := PXCLMsg(XCLMsgs[I]);
+      AMsg := M^;
+      Dispose(M);
+      XCLMsgs.Delete(I);
+      exit;
+    end;
+end;
+
+//===================================
 
 function Hnd_GTK_GenericEvent(Handle: Pointer; Event: Pointer; Signal: PChar): gboolean; cdecl;
 var
@@ -42,6 +88,34 @@ begin
         Application.ShowException(E);
     end;
   Result := Msg.Stop;
+end;
+
+function Hnd_GTK_ClientEvent(Handle: Pointer; Event: PGdkEventClient; Signal: PChar): gboolean; cdecl;
+var
+  UID: LongWord;
+  Msg: TXCLMsg;
+  O: TObject;
+begin
+  //TODO: save this _XCL_MESSAGE in var XCL_MESSAGE: TGdkAtom
+  if Event^.message_type = gdk_atom_intern('_XCL_MESSAGE', False) then
+  begin
+    UID := Event^.data.L[0];
+    GetXCLMsg(UID, Msg);
+    if Msg.UID = UID then
+    begin
+      O := ObjectByHandle(Handle);
+      if O <> nil then
+        try
+          O.DispatchStr(Msg);
+        except
+          on E: Exception do
+            Application.ShowException(E);
+        end;
+    end;
+    Result := True;  // Sure?
+  end
+  else
+    Result := Hnd_GTK_GenericEvent(Handle, Event, Signal);
 end;
 
 procedure Dispatch_GtkSig(Handle: Pointer; Signal: ShortString; P1, P2: Pointer; I1, I2: Integer);
@@ -92,7 +166,7 @@ const
     //** GtkWidget Events ****************************************************
     (Signal: 'button-press-event';          Handler: @Hnd_GTK_GenericEvent),
     (Signal: 'button-release-event';        Handler: @Hnd_GTK_GenericEvent),
-    (Signal: 'client-event';                Handler: @Hnd_GTK_GenericEvent),
+    (Signal: 'client-event';                Handler: @Hnd_GTK_ClientEvent),
     (Signal: 'configure-event';             Handler: @Hnd_GTK_GenericEvent),
     (Signal: 'delete-event';                Handler: @Hnd_GTK_GenericEvent),
     (Signal: 'destroy-event';               Handler: @Hnd_GTK_GenericEvent),
