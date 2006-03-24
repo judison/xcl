@@ -158,23 +158,6 @@ object TTest1
                 end
                 object TSeparatorToolItem
                 end
-                object TToolButton
-                  StockId = 'gtk-undo'
-                end
-                object TToolButton
-                  StockId = 'gtk-redo'
-                end
-                object TToolButton
-                  StockId = 'gtk-cut'
-                end
-                object TToolButton
-                  StockId = 'gtk-copy'
-                end
-                object TToolButton
-                  StockId = 'gtk-paste'
-                end
-                object TSeparatorToolItem
-                end
                 object TToolItem
                   object TEntry
                     Text = 'URL'

@@ -53,7 +53,7 @@
 {$I tviewport.inc}
 {$I tcustomtoolitem.inc}
 {$I ttoolitem.inc}
-{$I ttoolbutton.inc}
+{I ttoolbutton.inc XCL Deprecated (use TToolItem)}
 {$I tseparatortoolitem.inc}
 {$I tpaned.inc}
 {$I tfixed.inc}
