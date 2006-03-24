@@ -80,6 +80,7 @@ begin
   FImage.Parent := FBox;
   FImage.IconSize := iszMenu;
   FImage.Visible := False;
+  FImage.BoxExpand := False;
   //--
   FLabel := TLabel.Create(Self);
   FLabel.Parent := FBox;

@@ -119,9 +119,9 @@ begin
   if ToolBarStyle <> tbsText then
     FImage.Parent := FBox;
   if SmallIcons then
-    FImage.IconSize := iszLargeToolBar
+    FImage.IconSize := iszSmallToolBar
   else
-    FImage.IconSize := iszSmallToolBar;
+    FImage.IconSize := iszLargeToolBar;
   //--
   FLabel := TLabel.Create(Self);
   if ToolBarStyle <> tbsIcons then
