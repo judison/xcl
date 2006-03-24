@@ -291,7 +291,11 @@ initialization
   Application := TApplication.Create(nil);
   Clipboard := nil; // Created in Application.Initialize
   Primary := nil;   // Created in Application.Initialize
+  //==============
+  XCLMsgs := TList.Create;
 finalization
+  XCLMsgs.Free;
+  //==============
   Primary.Free;
   Clipboard.Free;
   Application.Free;

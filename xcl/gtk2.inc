@@ -24,6 +24,10 @@ procedure g_set_application_name(application_name: pgchar); cdecl; external glib
 
 function g_closure_new_simple(sizeof_closure:guint; data:gpointer):PGClosure; cdecl; external gobjectlib;
 
+// GDK
+
+function gdk_event_new(_type: TGdkEventType): PGdkEvent;  cdecl; external gdklib;
+
 // GtkAccelerator
 
 function gtk_accelerator_get_label(accelerator_key: guint; accelerator_mods: longint): PGChar; cdecl; external gtklib;

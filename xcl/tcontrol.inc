@@ -126,6 +126,9 @@
     procedure Show; virtual;
     procedure Hide; virtual;
     //==
+    procedure SendMessage(var AMsg: TXCLMsg); inline;
+    procedure SendMessage(AName: String);
+    //==
     function DesignShowProp(AName: ShortString): Boolean; virtual;
     // Properties
     property Controls[index: Integer]: TControl read GetControlByIndex;
@@ -265,6 +268,27 @@ begin
     Result := TForm(C)
   else
     Result := nil;
+end;
+
+procedure TControl.SendMessage(var AMsg: TXCLMsg); inline;
+var
+  Ev: PGdkEventClient;
+begin
+  Ev := PGdkEventClient(gdk_event_new(GDK_CLIENT_EVENT));
+  Ev^.window := PGtkWidget(Handle)^.window;
+  Ev^.message_type := gdk_atom_intern('_XCL_MESSAGE', False);
+  Ev^.data_format := 32;
+  Ev^.data.l[0] := AddXCLMsg(AMsg);
+  gdk_event_put(PGdkEvent(Ev));
+  gdk_event_free(PGdkEvent(Ev));
+end;
+
+procedure TControl.SendMessage(AName: String);
+var
+  Msg: TXCLMsg;
+begin
+  Msg.Name := AName;
+  SendMessage(Msg);
 end;
 
 procedure TControl.GrabFocus;
@@ -425,6 +449,7 @@ begin
   ConnectGtkSignal('hide');
   ConnectGtkSignal('focus-in-event');
   ConnectGtkSignal('focus-out-event');
+  ConnectGtkSignal('client-event');
 end;
 
 function TControl.IsFixedXYStored: Boolean;
