@@ -10,7 +10,7 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
 
-unit buffer;
+unit Buffer;
 
 {$H+}
 {$IFDEF FPC}
@@ -31,6 +31,8 @@ type
     procedure SetModified(AValue: Boolean);
     // Non Visual
     procedure UpdateCaption;
+    //--
+    procedure CloseBtnClicked(Sender: TObject);
   protected
     FCloseBtn: TButton;
     procedure CreateControls; override;
@@ -69,8 +71,9 @@ begin
   FCloseBtn.Relief := rlfNone;
   FCloseBtn.WidthRequest := 16;
   FCloseBtn.HeightRequest := 16;
+  FCloseBtn.OnClicked := @CloseBtnClicked;
   FCloseBtn.Parent := FBox;
-
+  FCloseBtn.BoxExpand := False;
 end;
 
 procedure TBuffer.DestroyControls;
@@ -125,6 +128,11 @@ begin
     FModified := AValue;
     UpdateCaption;
   end;
+end;
+
+procedure TBuffer.CloseBtnClicked(Sender: TObject);
+begin
+  Free;
 end;
 
 procedure TBuffer.UpdateCaption;

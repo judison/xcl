@@ -10,7 +10,7 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
 
-unit pasbuffer;
+unit PasBuffer;
 
 {$H+}
 {$IFDEF FPC}

@@ -232,6 +232,7 @@ initialization
   RegisterClass(TAccelGroup);
   RegisterClass(TAccelerator);
 //-------------------- Visuais
+  RegisterClass(TAboutDialog);
   RegisterClass(TArrow);                //OK
   RegisterClass(TLabel);                //OK
   RegisterClass(TImage);                //OK

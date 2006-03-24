@@ -3,10 +3,11 @@
   <options>
   </options>
   <sources>
-    <unit name="buffer" file="buffer.pas"/>
-    <unit name="txtbuffer" file="txtbuffer.pas" form="txtbuffer.frm"/>
-    <unit name="pasbuffer" file="pasbuffer.pas"/>
-    <unit name="frmbuffer" file="frmbuffer.pas" form="frmbuffer.frm"/>
+    <unit name="Buffer" file="buffer.pas"/>
+    <unit name="BufferList" file="bufferlist.pas"/>
+    <unit name="TxtBuffer" file="txtbuffer.pas" form="txtbuffer.frm"/>
+    <unit name="PasBuffer" file="pasbuffer.pas"/>
+    <unit name="FrmBuffer" file="frmbuffer.pas" form="frmbuffer.frm"/>
     <unit name="compiler_opts" file="compiler_opts.pas" form="compiler_opts.frm"/>
     <unit name="editor_opts" file="editor_opts.pas" form="editor_opts.frm"/>
     <unit name="frm_newfile" file="frm_newfile.pas" form="frm_newfile.frm"/>
@@ -14,10 +15,11 @@
     <unit name="dbg" file="dbg.pas"/>
     <unit name="jitform" file="jitform.pas"/>
     <unit name="jitforms" file="jitforms.pas"/>
-    <unit name="propeditor" file="propeditor.pas"/>
+    <unit name="PropEditor" file="propeditor.pas"/>
     <unit name="componentpalette" file="componentpalette.pas"/>
     <unit name="regcomps" file="regcomps.pas"/>
     <unit name="xpr" file="xpr.pas"/>
+    <unit name="Compiler" file="compiler.pas"/>
   </sources>
   <resources file="resources.pp">
     <resource type="STR" name="license" file="license.str"/>

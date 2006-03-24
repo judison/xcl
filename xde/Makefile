@@ -7,6 +7,7 @@ OPT=-Fu$(XCL_PATH) -Fu$(XCL_PATH)/extra  -Fu./sourceview -Fu./icons
 FPC=ppc386
 
 PAS_FILES =	buffer.pas \
+		bufferlist.pas \
 		txtbuffer.pas \
                 pasbuffer.pas \
                 frmbuffer.pas \

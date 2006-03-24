@@ -10,7 +10,7 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
 
-unit frmbuffer;
+unit FrmBuffer;
 
 {$H+}
 {$IFDEF FPC}

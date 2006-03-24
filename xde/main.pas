@@ -18,24 +18,28 @@ unit main;
 
 interface
 
-uses Classes, SysUtils, xcl, Buffer, xclsourceview, componentpalette,
+uses Classes, SysUtils, xcl, Buffer, BufferList, xclsourceview, componentpalette,
   propeditor, designform, xpr;
 
 type
   TMainForm = class(TForm)
-    LangMan: TSourceLanguagesManager;
+    fcdOpen: TFileChooserDialog;
+    fcdOpenProject: TFileChooserDialog;
+    fcdSaveAs: TFileChooserDialog;
     actFileNew: TAction;
     actFileOpen: TAction;
+    actFileOpenProject: TAction;
     actFileSave: TAction;
     actFileSaveAs: TAction;
+    actFileSaveAll: TAction;
     actFileClose: TAction;
+    actFileCloseAll: TAction;
     actFileQuit: TAction;
+    TopToolBox: THBox;
     AboutDlg: TAboutDialog;
     MenuBar: TMenuBar;
     PBLogo: TPixbuf;
     NB: TNoteBook;
-    FS: TFileChooserDialog;
-    CompPalette: TComponentPalette;
     ProjectTV: TTreeView;
     ProjectTS: TTreeStore;
     ComponentTV: TTreeView;
@@ -48,13 +52,18 @@ type
     npProjMan: TNotebookPage;
     npObjIns: TNotebookPage;
     procedure FileOpen(Sender: TObject);
+    procedure FileOpenProject(Sender: TObject);
     procedure FileNew(Sender: TObject);
     procedure FileSave(Sender: TObject);
     procedure FileSaveUpd(Sender: TObject);
     procedure FileSaveAs(Sender: TObject);
     procedure FileSaveAsUpd(Sender: TObject);
+    procedure FileSaveAll(Sender: TObject);
+    procedure FileSaveAllUpd(Sender: TObject);
     procedure FileClose(Sender: TObject);
     procedure FileCloseUpd(Sender: TObject);
+    procedure FileCloseAll(Sender: TObject);
+    procedure FileCloseAllUpd(Sender: TObject);
     procedure FileQuit(Sender: TObject);
     procedure HelpAbout(Sender: TObject);
     procedure ShowCompilerOptions(Sender: TObject);
@@ -66,12 +75,14 @@ type
     procedure ShowProjectManager(Sender: TObject);
     procedure ShowFileBrowser(Sender: TObject);
     procedure CompChanged(Sender: TObject);
-    procedure PaletteClassSelected(Sender: TObject; AClass: TComponentClass);
     procedure RemoveComp(Sender: TObject);
     procedure SwitchPage(Sender: TObject; NewPage: Integer);
     procedure FileBrowserTVRowActivated(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn);
     procedure MainFormShow(Sender: TObject);
+    procedure ProjectTVRowActivated(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn);
   private
+    procedure PaletteClassSelected(Sender: TObject; AClass: TComponentClass);
+    //
     function CurrentBuffer: TBuffer;
     function AddTree(C: TComponent; P: TTreeIter): TTreeIter;
     //--
@@ -80,6 +91,11 @@ type
   protected
     procedure DoCloseQuery(CanClose: Boolean); override;
   public
+    LangMan: TSourceLanguagesManager;
+    CompPalette: TComponentPalette;
+    //--
+    Buffers: TBufferList;
+    //--
     CompEd: TComponentEditor;
     MyForm: TDesignForm;
     Project: TXPRProject;
@@ -104,7 +120,15 @@ uses compiler_opts, editor_opts, TxtBuffer, PasBuffer, FrmBuffer, frm_NewFile;
 constructor TMainForm.Create(AOwner: TComponent);
 begin
   inherited;
-
+  LangMan := TSourceLanguagesManager.Create(Self);
+  //==
+  CompPalette := TComponentPalette.Create(Self);
+  CompPalette.Parent := TopToolBox;
+  CompPalette.BoxExpand := True;
+  CompPalette.OnClassSelected := @PaletteClassSelected;
+  //==
+  Buffers := TBufferList.Create(Self);
+  //==
   CompEd := TComponentEditor.Create(Self);
   CompEd.PropTable := PropTable;
   CompEd.EventTable := EventTable;
@@ -144,10 +168,8 @@ end;
 
 procedure TMainForm.FileOpen(Sender: TObject);
 begin
-  FS.FileAction := fcaOpen;
-  FS.Title := 'Open...';
-  if FS.Execute = -3 then
-    DoFileOpen(FS.FileName);
+  if fcdOpen.Execute = -3 then
+    DoFileOpen(fcdOpen.FileName);
 end;
 
 procedure TMainForm.DoFileOpen(AFileName: String);
@@ -155,31 +177,51 @@ var
   B: TBuffer;
   ext: String;
 begin
-  if FileExists(ChangeFileExt(AFileName, '.frm')) then
-    AFileName := ChangeFileExt(AFileName, '.frm');
-
   ext := LowerCase(ExtractFileExt(AFileName));
 
-
-  if (ext = '.xpr') then
-  begin
-    Project.Load(AFileName);
-    UpdateProjectManager;
-    exit;
-  end
-  else if (ext = '.pas') or (ext = '.pp') or (ext = '.inc') or (ext = '.dpr') or (ext = '.p') then
-    B := TPasBuffer.Create(Self)
-  else if (ext = '.frm') then
-    B := TFrmBuffer.Create(Self)
+  if ext = '.frm' then
+    B := Buffers.GetByFileName(ChangeFileExt(AFileName, '.pas'))
   else
-    B := TTxtBuffer.Create(Self);
-  B.Open(AFileName);
-  B.Parent := NB;
+    B := Buffers.GetByFileName(AFileName);
+
+  if not Assigned(B) then
+  begin
+    if FileExists(ChangeFileExt(AFileName, '.frm')) then
+    begin
+      AFileName := ChangeFileExt(AFileName, '.frm');
+      ext := LowerCase(ExtractFileExt(AFileName));
+    end;
+   
+    if (ext = '.xpr') then
+    begin
+      Project.Load(AFileName);
+      UpdateProjectManager;
+      exit;
+    end
+    else if (ext = '.pas') or (ext = '.pp') or (ext = '.inc') or (ext = '.dpr') or (ext = '.p') then
+      B := TPasBuffer.Create(Self)
+    else if (ext = '.frm') then
+      B := TFrmBuffer.Create(Self)
+    else
+      B := TTxtBuffer.Create(Self);
+    Buffers.Add(B);
+    B.Open(AFileName);
+    B.Parent := NB;
+  end;
   NB.CurrentPage := NB.PageNum(B);
 // You don't need this, Changing current page to the only one, does not call OnSwitchPage,
 // but when you add the first page, its called.
 //  if not Assigned(MyForm) then
 //    SelectForm(B); 
+end;
+
+procedure TMainForm.FileOpenProject(Sender: TObject);
+begin
+  if (fcdOpenProject.Execute = -3) and FileExists(fcdOpenProject.FileName) then
+  begin
+    Project.Load(fcdOpenProject.FileName);
+    UpdateProjectManager;
+  end;
 end;
 
 procedure TMainForm.MainFormShow(Sender: TObject);
@@ -199,15 +241,23 @@ end;
 
 procedure TMainForm.FileSaveAs(Sender: TObject);
 begin
-  FS.FileAction := fcaSave;
-  FS.Title := 'Save As...';
-  if FS.Execute = -3 then
-    CurrentBuffer.SaveAs(FS.FileName);
+  if fcdSaveAs.Execute = -3 then
+    CurrentBuffer.SaveAs(fcdSaveAs.FileName);
 end;
 
 procedure TMainForm.FileSaveAsUpd(Sender: TObject);
 begin
   actFileSaveAs.Sensitive := CurrentBuffer <> nil;
+end;
+
+procedure TMainForm.FileSaveAll(Sender: TObject);
+begin
+  //TODO
+end;
+
+procedure TMainForm.FileSaveAllUpd(Sender: TObject);
+begin
+  //TODO
 end;
 
 procedure TMainForm.FileClose(Sender: TObject);
@@ -218,6 +268,17 @@ end;
 procedure TMainForm.FileCloseUpd(Sender: TObject);
 begin
   actFileClose.Sensitive := CurrentBuffer <> nil;
+end;
+
+procedure TMainForm.FileCloseAll(Sender: TObject);
+begin
+  while CurrentBuffer <> nil do
+    CurrentBuffer.Free;
+end;
+
+procedure TMainForm.FileCloseAllUpd(Sender: TObject);
+begin
+  actFileCloseAll.Sensitive := CurrentBuffer <> nil;
 end;
 
 
@@ -398,6 +459,20 @@ begin
     end;
   end;
 end;
+
+procedure TMainForm.ProjectTVRowActivated(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn);
+var
+  Item: TXPRCustom;
+begin
+  Item := TXPRCustom(ProjectTS.GetPointerValue(Iter, 1));
+  if Item is TXPRSource then
+    DoFileOpen(TXPRSource(Item).FileName)
+  else if Item is TXPRProject then
+    DoFileOpen(TXPRProject(Item).ProjectFile)
+  else if Item is TXPRResources then
+    DoFileOpen(TXPRResources(Item).FileName);
+end;
+
 
 procedure TMainForm.CompChanged(Sender: TObject);
 var
