@@ -10,7 +10,7 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
 
-unit propeditor;
+unit PropEditor;
 
 {$H+}
 {$IFDEF FPC}

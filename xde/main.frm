@@ -3,12 +3,20 @@ object TMainForm
   Width = 800
   Height = 600
   OnShow = MainFormShow
-  object LangMan: TSourceLanguagesManager
-  end
   object PBLogo: TPixbuf
     Resource = 'xde'
   end
-  object FS: TFileChooserDialog
+  object fcdOpen: TFileChooserDialog
+    FileAction = fcaOpen
+    Title = 'Open File'
+  end
+  object fcdSaveAs: TFileChooserDialog
+    FileAction = fcaSave
+    Title = 'Save As...'
+  end
+  object fcdOpenProject: TFileChooserDialog
+    FileAction = fcaOpen
+    Title = 'Open Project'
   end
   object AboutDlg: TAboutDialog
     AppName = 'XDE'
@@ -33,9 +41,15 @@ object TMainForm
     end
     object actFileOpen: TAction
       Accelerator = '<Control>o'
-      Caption = '_Open'
+      Caption = '_Open...'
       IconName = 'gtk-open'
       OnExecute = FileOpen
+    end
+    object actFileOpenProject: TAction
+      Accelerator = '<Control>F11'
+      Caption = 'Open Project...'
+      IconName = 'gtk-open'
+      OnExecute = FileOpenProject
     end
     object actFileSave: TAction
       Accelerator = '<Control>s'
@@ -45,11 +59,16 @@ object TMainForm
       OnUpdate = FileSaveUpd
     end
     object actFileSaveAs: TAction
-      Accelerator = '<Control><Shift>s'
-      Caption = 'Save _as...'
+      Caption = 'Save _As...'
       IconName = 'gtk-save-as'
       OnExecute = FileSaveAs
       OnUpdate = FileSaveAsUpd
+    end
+    object actFileSaveAll: TAction
+      Caption = 'Sa_ve All'
+      IconName = 'gtk-save'
+      OnExecute = FileSaveAll
+      OnUpdate = FileSaveAllUpd
     end
     object actFileClose: TAction
       Accelerator = '<Alt>q'
@@ -58,28 +77,16 @@ object TMainForm
       OnExecute = FileClose
       OnUpdate = FileCloseUpd
     end
+    object actFileCloseAll: TAction
+      Caption = 'C_lose All'
+      IconName = 'gtk-close'
+      OnExecute = FileCloseAll
+      OnUpdate = FileCloseAllUpd
+    end
     object actFileQuit: TAction
       Caption = '_Quit'
       IconName = 'gtk-quit'
       OnExecute = FileQuit
-    end
-    object actProjectAdd: TAction
-      Caption = '_Add File'
-      IconName = 'gtk-add'
-    end
-    object actProjectRemove: TAction
-      Caption = '_Remove File'
-      IconName = 'gtk-remove'
-    end
-    object actGoLeft: TAction
-      Accelerator = '<Alt>Left'
-      Caption = 'Go Left'
-      OnExecute = GoLeft
-    end
-    object actGoRight: TAction
-      Accelerator = '<Alt>Right'
-      Caption = 'Go Right'
-      OnExecute = GoRight
     end
     object actViewToggleFormCode: TAction
       Accelerator = 'F12'
@@ -92,14 +99,51 @@ object TMainForm
       OnExecute = ShowObjectInspector
     end
     object actViewProjectManager: TAction
-      Accelerator = '<Control>F11'
+      Accelerator = '<Ctrl><Alt>F11'
       Caption = '_Project Manager'
       OnExecute = ShowProjectManager
     end
     object actViewFileBrowser: TAction
-      Accelerator = '<Shift>F11'
       Caption = '_File Browser'
       OnExecute = ShowFileBrowser
+    end
+
+    object actProjectAdd: TAction
+      Accelerator = '<Shift>F11'
+      Caption = '_Add File...'
+      IconName = 'gtk-add'
+    end
+    object actProjectRemove: TAction
+      Caption = '_Remove File'
+      IconName = 'gtk-remove'
+    end
+    object actProjectViewSource: TAction
+      Caption = '_View Source'
+    end
+    object actProjectCompile: TAction
+      Accelerator = '<Ctrl>F9'
+      Caption = '_Compile'
+      IconName = 'gtk-convert'
+    end
+    object actProjectRun: TAction
+      Accelerator = 'F9'
+      Caption = '_Run'
+      IconName = 'gtk-execute'
+    end
+    object actProjectOptions: TAction
+      Accelerator = '<Shift><Ctrl>F11'
+      Caption = '_Options'
+      IconName = 'gtk-preferences'
+    end
+    object actGoLeft: TAction
+      Accelerator = '<Alt>Left'
+      Caption = 'Go Left'
+      OnExecute = GoLeft
+    end
+    object actGoRight: TAction
+      Accelerator = '<Alt>Right'
+      Caption = 'Go Right'
+      OnExecute = GoRight
     end
     object actHelpAbout: TAction
       Caption = '_About...'
@@ -118,15 +162,24 @@ object TMainForm
           Action = actFileOpen
         end
         object TMenuItem
+          Action = actFileOpenProject
+        end
+        object TMenuItem
           Action = actFileSave
         end
         object TMenuItem
           Action = actFileSaveAs
         end
+        object TMenuItem
+          Action = actFileSaveAll
+        end
         object TSeparatorMenuItem
         end
         object TMenuItem
           Action = actFileClose
+        end
+        object TMenuItem
+          Action = actFileCloseAll
         end
         object TSeparatorMenuItem
         end
@@ -135,39 +188,47 @@ object TMainForm
         end
       end
       object TMenuItem
-        Caption = '_Project'
+        Caption = '_View'
         object TMenuItem
-          Caption = 'Add _New...'
-          object TMenuItem
-            Caption = 'Form'
-          end
-          object TMenuItem
-            Caption = 'Unit'
-          end
+          Action = actViewProjectManager
         end
+        object TMenuItem
+          Action = actViewObjectInspector
+        end
+        object TMenuItem
+          Action = actViewFileBrowser
+        end
+        object TSeparatorMenuItem
+        end
+        object TMenuItem
+          Action = actViewToggleFormCode
+        end
+      end
+      object TMenuItem
+        Caption = '_Project'
         object TMenuItem
           Action = actProjectAdd
         end
         object TMenuItem
           Action = actProjectRemove
         end
-      end
-      object TMenuItem
-        Caption = '_View'
-        object TMenuItem
-          Caption = 'Project Source'
+        object TSeparatorMenuItem
         end
         object TMenuItem
-          Action = actViewToggleFormCode
+          Action = actProjectViewSource
+        end
+        object TSeparatorMenuItem
         end
         object TMenuItem
-          Action = actViewObjectInspector
+          Action = actProjectCompile
         end
         object TMenuItem
-          Action = actViewProjectManager
+          Action = actProjectRun
+        end
+        object TSeparatorMenuItem
         end
         object TMenuItem
-          Action = actViewFileBrowser
+          Action = actProjectOptions
         end
       end
       object TMenuItem
@@ -189,7 +250,7 @@ object TMainForm
         end
       end
     end
-    object THBox
+    object TopToolBox: THBox
       BoxExpand = False
       object TVBox
         BoxExpand = False
@@ -214,17 +275,62 @@ object TMainForm
         object THBox
           object TToolItem
             BoxExpand = False
-            Action = actFileClose
+            Action = actProjectCompile
+          end
+          object TToolItem
+            BoxExpand = False
+            Action = actProjectRun
           end
         end
-      end
-      object CompPalette: TComponentPalette
-        BoxExpand = True
-        OnClassSelected = PaletteClassSelected
       end
     end
     object THPaned
       object nbSide: TNotebook
+        object npProjMan: TNotebookPage
+          Caption = 'Project Manager'
+          object TVBox
+            object TToolBar
+              ToolBarStyle = tbsIcons
+              SmallIcons = True
+              object TToolItem
+                Action = actFileOpenProject
+              end
+              object TSeparatorToolItem
+              end
+              object TToolItem
+                Action = actProjectAdd
+              end
+              object TToolItem
+                Action = actProjectRemove
+              end
+              object TSeparatorToolItem
+              end
+              object TToolItem
+                Action = actProjectOptions
+              end
+            end
+            object TScrolledWindow
+              ShadowType = stIn
+              HPolicy = sbpAutomatic
+              VPolicy = sbpAutomatic
+              HeightRequest = 200
+              BoxExpand = True
+              object ProjectTV: TTreeView
+                Columns = <            
+                  item
+                    Clickable = False
+                    FixedWidth = 1
+                    Sizing = tvcsAutosize
+                    Title = 'Project Tree'
+                  end>
+                HeadersVisible = False
+                SelectionMode = smBrowse
+                Model = ProjectTS
+                OnRowActivated = ProjectTVRowActivated
+              end
+            end
+          end
+        end
         object npFileBrowser: TNotebookPage
           Caption = 'Browser'
           IconName = 'gtk-directory'
@@ -245,51 +351,6 @@ object TMainForm
               HeadersVisible = False
               SelectionMode = smBrowse
               OnRowActivated = FileBrowserTVRowActivated
-            end
-          end
-        end
-        object npProjMan: TNotebookPage
-          Caption = 'Project Manager'
-          object TVBox
-            object TToolBar
-              ToolBarStyle = tbsIcons
-              object TToolItem
-                object TButton
-                  Relief = rlfNone
-                  object TImage
-                    IconName = 'gtk-add'
-                    IconSize = iszMenu
-                  end
-                end
-              end
-              object TToolItem
-                object TButton
-                  Relief = rlfNone
-                  object TImage
-                    IconName = 'gtk-remove'
-                    IconSize = iszMenu
-                  end
-                end
-              end
-            end
-            object TScrolledWindow
-              ShadowType = stIn
-              HPolicy = sbpAutomatic
-              VPolicy = sbpAutomatic
-              HeightRequest = 200
-              BoxExpand = True
-              object ProjectTV: TTreeView
-                Columns = <            
-                  item
-                    Clickable = False
-                    FixedWidth = 1
-                    Sizing = tvcsAutosize
-                    Title = 'Project Tree'
-                  end>
-                HeadersVisible = False
-                SelectionMode = smBrowse
-                Model = ProjectTS
-              end
             end
           end
         end

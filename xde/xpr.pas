@@ -95,6 +95,9 @@ type
   TXPRResources = class(TXPRCustom)
   private
     ResourceList: TList;
+    //--
+    function GetFile: String;
+    procedure SetFile(AValue: String);
   protected
   public
     constructor Create(ANode: TDOMElement); override;
@@ -109,6 +112,8 @@ type
     //--
     property Count: Integer read ResourceCount;
     property Resources[AIdx: Integer]: TXPRResource read ResourceByIdx; default;
+    //--
+    property FileName: String read GetFile write SetFile;
   end;
 
   TXPRProject = class(TXPRCustom)
@@ -338,6 +343,16 @@ begin
   ResourceList.Free;
   //--
   inherited;
+end;
+
+function TXPRResources.GetFile: String;
+begin
+  Result := Node.GetAttribute('file');
+end;
+
+procedure TXPRResources.SetFile(AValue: String);
+begin
+  Node.SetAttribute('file', AValue);
 end;
 
 procedure TXPRResources.AddResource(AResource: TXPRResource);
