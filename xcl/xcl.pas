@@ -92,7 +92,7 @@ type
   {  |   |   |-} TViewPort = class;
   {  |   |   \-} TCustomToolItem = class;
   {  |   |       |-} TToolItem = class;
-  {  |   |       |-} TToolButton = class;
+  {  |   |       |-  TToolButton = class; XCL Deprecated (use TToolItem)}
   {  |   |       \-} TSeparatorToolItem = class;
   {  |   |-} TPaned = class;
   {  |   |   |-} THPaned = class;
@@ -250,7 +250,7 @@ initialization
   RegisterClass(TExpander);             //OK
   RegisterClass(TViewPort);             //OK
   RegisterClass(TToolItem);
-  RegisterClass(TToolButton);
+//RegisterClass(TToolButton);
   RegisterClass(TSeparatorToolItem);
   RegisterClass(THPaned);               //OK
   RegisterClass(TVPaned);               //OK

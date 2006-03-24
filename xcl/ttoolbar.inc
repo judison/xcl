@@ -14,10 +14,12 @@
   TToolBar = class(TContainerControl)
   private
     FDefaultToolBarStyle: Boolean;
+    FSmallIcons: Boolean;
     function GetOrientation: TOrientation;
     procedure SetOrientation(AValue: TOrientation);
     function GetShowArrow: Boolean;
     procedure SetShowArrow(AValue: Boolean);
+    procedure SetSmallIcons(AValue: Boolean);
     function GetToolBarStyle: TToolBarStyle;
     procedure SetToolBarStyle(AValue: TToolBarStyle);
   protected
@@ -36,6 +38,7 @@
   published
     property Orientation: TOrientation read GetOrientation write SetOrientation default orHorizontal;
     property ShowArrow: Boolean read GetShowArrow write SetShowArrow default True;
+    property SmallIcons: Boolean read FSmallIcons write SetSmallIcons;
     property ToolBarStyle: TToolBarStyle read GetToolBarStyle write SetToolBarStyle default tbsDefault;
   end;
 
@@ -104,6 +107,15 @@ end;
 procedure TToolBar.SetShowArrow(AValue: Boolean);
 begin
   gtk_toolbar_set_show_arrow(Handle, AValue);
+end;
+
+procedure TToolBar.SetSmallIcons(AValue: Boolean);
+begin
+  if FSmallIcons <> AValue then
+  begin
+    FSmallIcons := True;
+    //Changed; TODO
+  end;
 end;
 
 function TToolBar.GetToolBarStyle: TToolBarStyle;

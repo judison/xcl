@@ -11,6 +11,10 @@
 *)
 {** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
+(**********************************
+ * XCL DEPRECATED (use TToolItem) *
+ **********************************)
+
   TToolButton = class(TCustomToolItem)
   private
     FOnClicked: TNotifyEvent;

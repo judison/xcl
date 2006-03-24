@@ -15,6 +15,7 @@
   private
     function GetOrientation: TOrientation;
     function GetToolBarStyle: TToolBarStyle;
+    function GetSmallIcons: Boolean;
     function GetHomogeneous: Boolean;
     procedure SetHomogeneous(AValue: Boolean);
     function GetExpand: Boolean;
@@ -30,6 +31,7 @@
   public
     property Orientation: TOrientation read GetOrientation;
     property ToolBarStyle: TToolBarStyle read GetToolBarStyle;
+    property SmallIcons: Boolean read GetSmallIcons;
   published
     property Homogeneous: Boolean read GetHomogeneous write SetHomogeneous default True;
     property Expand: Boolean read GetExpand write SetExpand; //TODO: Default ???
@@ -55,6 +57,14 @@ end;
 function TCustomToolItem.GetToolBarStyle: TToolBarStyle;
 begin
   Result := TToolBarStyle(gtk_tool_item_get_toolbar_style(Handle)+1);
+end;
+
+function TCustomToolItem.GetSmallIcons: Boolean;
+begin
+  if Parent is TToolBar then
+    Result := TToolBar(Parent).SmallIcons
+  else
+    Result := False; // Its right? It is independent of ToolBarStyle?
 end;
 
 function TCustomToolItem.GetHomogeneous: Boolean;
