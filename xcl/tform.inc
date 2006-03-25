@@ -52,8 +52,10 @@
     procedure UnMaximize;
     //
     procedure Show; override;
+    procedure Show(ATransientFor: TForm);
     procedure Hide; override;
     procedure ShowModal;
+    procedure ShowModal(ATransientFor: TForm);
     procedure Close;
     procedure DoDeleteEvent(var Msg: TGtkSigEvent); message 'GTK:delete-event';
     //
@@ -298,9 +300,21 @@ begin
   inherited; // Show Ctrls ???
 end;
 
+procedure TForm.Show(ATransientFor: TForm);
+begin
+  gtk_window_set_transient_for(Handle, ATransientFor.Handle);
+  Show;
+end;
+
 procedure TForm.Hide;
 begin
   inherited; // Hide Ctrls ???
+end;
+
+procedure TForm.ShowModal(ATransientFor: TForm);
+begin
+  gtk_window_set_transient_for(Handle, ATransientFor.Handle);
+  ShowModal;
 end;
 
 procedure TForm.ShowModal;
@@ -316,12 +330,14 @@ procedure TForm.Close;
 var
   CanClose: Boolean;
 begin
+
   CanClose := True;
   DoCloseQuery(CanClose);
   if CanClose then
   begin
     FInModal := False;
     gtk_window_set_modal(Handle, False);
+    gtk_window_set_transient_for(Handle, nil);
 
     Hide;
 
