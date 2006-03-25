@@ -19,7 +19,7 @@ unit main;
 interface
 
 uses Classes, SysUtils, xcl, Buffer, BufferList, xclsourceview, componentpalette,
-  propeditor, designform, xpr;
+  propeditor, designform, xpr, Compiler;
 
 type
   TMainForm = class(TForm)
@@ -65,6 +65,7 @@ type
     procedure FileCloseAll(Sender: TObject);
     procedure FileCloseAllUpd(Sender: TObject);
     procedure FileQuit(Sender: TObject);
+    procedure ProjectCompile(Sender: TObject);
     procedure HelpAbout(Sender: TObject);
     procedure ShowCompilerOptions(Sender: TObject);
     procedure ShowEditorOptions(Sender: TObject);
@@ -124,7 +125,7 @@ begin
   //==
   CompPalette := TComponentPalette.Create(Self);
   CompPalette.Parent := TopToolBox;
-  CompPalette.BoxExpand := True;
+//  CompPalette.BoxExpand := True;
   CompPalette.OnClassSelected := @PaletteClassSelected;
   //==
   Buffers := TBufferList.Create(Self);
@@ -300,6 +301,15 @@ end;
 procedure TMainForm.FileQuit(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TMainForm.ProjectCompile(Sender: TObject);
+var
+  C: TCompiler;
+begin
+  C := TCompiler.Create;
+  C.Compile(Project, False);
+  C.Free;
 end;
 
 procedure TMainForm.HelpAbout(Sender: TObject);

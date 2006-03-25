@@ -154,21 +154,23 @@ procedure TFrmBuffer.Save;
 var
   AStream, BStream: TStream;
   SL: TStringList;
+  FN: String;
 begin
   inherited;
+  FN := ChangeFileExt(FileName, '.frm');
   //
-  if FileExists(FileName) then
+  if FileExists(FN) then
   begin
     SL := TStringList.Create;
     try
-      SL.LoadFromFile(FileName);
-      SL.SaveToFile(FileName+'~');
+      SL.LoadFromFile(FN);
+      SL.SaveToFile(FN+'~');
     finally
       SL.Free;
     end;
   end;
 
-  AStream := TFileStream.Create(FileName, fmCreate);
+  AStream := TFileStream.Create(FN, fmCreate);
   BStream := TMemoryStream.Create;
   try
     BStream.WriteComponent(MyForm);
