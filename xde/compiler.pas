@@ -34,7 +34,7 @@ type
   protected
     procedure ReadLine(ALine: String); override;
   public
-    procedure Compile(AProject: TXPRProject; BuildAll: Boolean);
+    function Compile(AProject: TXPRProject; BuildAll: Boolean; AutoClose: Boolean): Boolean;
   end;
 
 implementation
@@ -74,7 +74,7 @@ begin
   inherited;
 end;
 
-procedure TCompiler.Compile(AProject: TXPRProject; BuildAll: Boolean);
+function TCompiler.Compile(AProject: TXPRProject; BuildAll: Boolean; AutoClose: Boolean): Boolean;
 var
   CmdLine: String;
   ProjectFilename: String;
@@ -86,7 +86,7 @@ begin
   ProjectDir := ExtractFilePath(ProjectFilename);
 
   if not SetCurrentDir(ProjectDir) then
-    exit;
+    exit(False);
   try
     CmdLine := 'fpc ' + '-Fu../xcl -Fusourceview -Fu../xcl/extra -Fuicons';
     
@@ -120,11 +120,17 @@ begin
       else
         Frm.Title := 'Compiled';
 
+      if (not AutoClose) or FAborted then
+      begin
+        Frm.Btn.Caption := '_OK';
+        Frm.Btn.IconName := 'gtk-ok';
+        Frm.Btn.OnClicked := @BtnOK;
+        Frm.ShowModal(MainForm);
+      end
+      else
+        Frm.Close;
 
-      Frm.Btn.Caption := '_OK';
-      Frm.Btn.IconName := 'gtk-ok';
-      Frm.Btn.OnClicked := @BtnOK;
-      Frm.ShowModal(MainForm);
+      Result := (FErrors = 0) and (not FAborted);
     finally
       FreeAndNil(Frm);
     end;

@@ -57,6 +57,8 @@ var
   Img: TImage;
   R: String;
 begin
+  Scrollable := True;
+
   for I := 0 to ComponentCount -1 do
     Components[I].Free;
 
