@@ -23,10 +23,12 @@ uses Classes, SysUtils, DOM;
 type
   TXPRCustom = class
   private
+    FParent: TXPRCustom;
   protected
     Node: TDOMElement;
   public
-    constructor Create(ANode: TDOMElement); virtual;
+    constructor Create(AParent: TXPRCustom; ANode: TDOMElement); virtual;
+    property Parent: TXPRCustom read FParent;
   end;
 
   TXPRSource = class(TXPRCustom)
@@ -64,7 +66,7 @@ type
     IncludeList: TList;
   protected
   public
-    constructor Create(ANode: TDOMElement); override;
+    constructor Create(AParent: TXPRCustom; ANode: TDOMElement); override;
     destructor Destroy; override;
     //--
     procedure AddSource(ASource: TXPRSource);
@@ -86,10 +88,13 @@ type
     procedure SetType(AValue : String);
     function GetName: String;
     procedure SetName(AValue : String);
+    function GetFile: String;
+    procedure SetFile(AValue : String);
   protected
   public
     property RType: String read GetType write SetType;
     property RName: String read GetName write SetName;
+    property FileName: String read GetFile write SetFile;
   end;
 
   TXPRResources = class(TXPRCustom)
@@ -100,7 +105,7 @@ type
     procedure SetFile(AValue: String);
   protected
   public
-    constructor Create(ANode: TDOMElement); override;
+    constructor Create(AParent: TXPRCustom; ANode: TDOMElement); override;
     destructor Destroy; override;
     //--
     procedure AddResource(AResource: TXPRResource);
@@ -109,6 +114,8 @@ type
     function ResourceByIdx(AIdx: Integer): TXPRResource;
     //--
     function ResourceCount: Integer;
+    //--
+    function NeedsToRebuild: Boolean;
     //--
     property Count: Integer read ResourceCount;
     property Resources[AIdx: Integer]: TXPRResource read ResourceByIdx; default;
@@ -127,6 +134,7 @@ type
     function GetName: String;
     function GetType: String;
     function GetFile: String;
+    function GetExeFile: String;
     procedure SetName(AValue: String);
     procedure SetType(AValue: String);
     procedure SetFile(AValue: String);
@@ -142,10 +150,13 @@ type
     procedure SaveAs(AFileName: String);
     procedure Save;
     procedure Close;
+    //--
+    function NeedsToCompile: Boolean;
     //===
     property Name: String read GetName write SetName;
     property ProjectType: String read GetType write SetType;
     property ProjectFile: String read GetFile write SetFile;
+    property ProjectExeFile: String read GetExeFile;
     //==
     //property Options: TXPROptions read FOptions;
     property Sources: TXPRSources read FSources;
@@ -158,11 +169,19 @@ implementation
 
 uses XMLRead, XMLWrite;
 
+const
+{$IFDEF WIN32}
+  ExeExt = '.exe';
+{$ELSE}
+  ExeExt = '';
+{$ENDIF}
+
 { TXPRCustom }
 
-constructor TXPRCustom.Create(ANode: TDOMElement);
+constructor TXPRCustom.Create(AParent: TXPRCustom; ANode: TDOMElement);
 begin
   Node := ANode;
+  FParent := AParent;
 end;
 
 { TXPRSource }
@@ -206,7 +225,7 @@ end;
 
 { TXPRSources }
 
-constructor TXPRSources.Create(ANode: TDOMElement);
+constructor TXPRSources.Create(AParent: TXPRCustom; ANode: TDOMElement);
 var
   List: TDOMNodeList;
   I: Integer;
@@ -218,7 +237,7 @@ begin
   List := Node.GetElementsByTagName('unit');
   try
     for I := 0 to List.Count -1 do
-      AddSource(TXPRUnit.Create(TDOMElement(List.Item[I])));
+      AddSource(TXPRUnit.Create(Self, TDOMElement(List.Item[I])));
   finally
     List.Release;
   end;
@@ -226,7 +245,7 @@ begin
   List := Node.GetElementsByTagName('include');
   try
     for I := 0 to List.Count -1 do
-      AddSource(TXPRInclude.Create(TDOMElement(List.Item[I])));
+      AddSource(TXPRInclude.Create(Self, TDOMElement(List.Item[I])));
   finally
     List.Release;
   end;
@@ -315,9 +334,19 @@ begin
   Node.SetAttribute('name', AValue);
 end;
 
+function TXPRResource.GetFile: String;
+begin
+  Result := Node.GetAttribute('file');
+end;
+
+procedure TXPRResource.SetFile(AValue : String);
+begin
+  Node.SetAttribute('file', AValue);
+end;
+
 { TXPRResources }
 
-constructor TXPRResources.Create(ANode: TDOMElement);
+constructor TXPRResources.Create(AParent: TXPRCustom; ANode: TDOMElement);
 var
   List: TDOMNodeList;
   I: Integer;
@@ -328,7 +357,7 @@ begin
   List := Node.GetElementsByTagName('resource');
   try
     for I := 0 to List.Count -1 do
-      AddResource(TXPRResource.Create(TDOMElement(List.Item[I])));
+      AddResource(TXPRResource.Create(Self, TDOMElement(List.Item[I])));
   finally
     List.Release;
   end;
@@ -385,11 +414,43 @@ begin
   Result := ResourceList.Count;
 end;
 
+function TXPRResources.NeedsToRebuild: Boolean;
+var
+  dtRes: TDateTime;
+
+  function CheckFile(AFN: String): Boolean;
+  begin
+    Result := FileDateToDateTime(FileAge(AFN)) > dtRes;
+  end;
+var
+  I: Integer;
+  Prj: TXPRProject;
+begin
+  if not FileExists(GetFile) then
+    exit(True);
+
+  dtRes := FileDateToDateTime(FileAge(GetFile));
+
+  for I := 0 to Count -1 do
+    if CheckFile(ResourceByIdx(I).GetFile) then
+      exit(True);
+
+  if Assigned(Parent) and (Parent is TXPRProject) then
+  begin
+    Prj := TXPRProject(Parent);
+    for I := 0 to Prj.Sources.UnitCount -1 do
+      if (Prj.Sources.Units[I].Form <> '') and CheckFile(Prj.Sources.Units[I].Form) then
+        exit(True);
+  end;
+
+  Result := False;
+end;
+
 { TXPRProject }
 
 constructor TXPRProject.Create;
 begin
-  inherited Create(nil);
+  inherited Create(nil, nil);
   FXMLDoc := nil;
   FSources := nil;
   FResources := nil;
@@ -422,6 +483,11 @@ begin
     Result := Node.GetAttribute('file')
   else
     Result := '';
+end;
+
+function TXPRProject.GetExeFile: String;
+begin
+  Result := ChangeFileExt(GetFile, ExeExt);
 end;
 
 procedure TXPRProject.SetName(AValue: String);
@@ -482,8 +548,8 @@ begin
 
   Node := TDOMElement(FXMLDoc.FindNode('project'));
 
-  FSources := TXPRSources.Create(TDOMElement(Node.FindNode('sources')));
-  FResources := TXPRResources.Create(TDOMElement(Node.FindNode('resources')));
+  FSources := TXPRSources.Create(Self, TDOMElement(Node.FindNode('sources')));
+  FResources := TXPRResources.Create(Self, TDOMElement(Node.FindNode('resources')));
 end;
 
 procedure TXPRProject.SaveAs(AFileName: String);
@@ -505,6 +571,39 @@ begin
     FreeAndNil(FResources);
     FreeAndNil(FXMLDoc);
   end;
+end;
+
+function TXPRProject.NeedsToCompile: Boolean;
+var
+  dtExe: TDateTime;
+
+  function CheckFile(AFN: String): Boolean;
+  begin
+    Result := FileDateToDateTime(FileAge(AFN)) > dtExe;
+  end;
+var
+  I: Integer;
+begin
+  if not FileExists(ProjectExeFile) then
+    exit(True);
+
+  dtExe := FileDateToDateTime(FileAge(ProjectExeFile));
+
+  if CheckFile(GetFile) then
+    exit(True);
+
+  for I := 0 to Sources.UnitCount -1 do
+    if CheckFile(Sources.Units[I].FileName) then
+      exit(True);
+
+  for I := 0 to Sources.IncludeCount -1 do
+    if CheckFile(Sources.Includes[I].FileName) then
+      exit(True);
+
+  if CheckFile(Resources.FileName) or Resources.NeedsToRebuild then
+    exit(True);
+
+  Result := False;
 end;
 
 end.

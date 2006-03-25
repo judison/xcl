@@ -43,12 +43,9 @@ type
     ProjectTV: TTreeView;
     ProjectTS: TTreeStore;
     ComponentTV: TTreeView;
-    FileBrowserTV: TTreeView;
-    FileBrowserTS: TTreeStore;
     PropTable: TTable;
     EventTable: TTable;
     nbSide: TNotebook;
-    npFileBrowser: TNotebookPage;
     npProjMan: TNotebookPage;
     npObjIns: TNotebookPage;
     procedure FileOpen(Sender: TObject);
@@ -66,6 +63,7 @@ type
     procedure FileCloseAllUpd(Sender: TObject);
     procedure FileQuit(Sender: TObject);
     procedure ProjectCompile(Sender: TObject);
+    procedure ProjectRun(Sender: TObject);
     procedure HelpAbout(Sender: TObject);
     procedure ShowCompilerOptions(Sender: TObject);
     procedure ShowEditorOptions(Sender: TObject);
@@ -74,11 +72,9 @@ type
     procedure ToggleFormCode(Sender: TObject);
     procedure ShowObjectInspector(Sender: TObject);
     procedure ShowProjectManager(Sender: TObject);
-    procedure ShowFileBrowser(Sender: TObject);
     procedure CompChanged(Sender: TObject);
     procedure RemoveComp(Sender: TObject);
     procedure SwitchPage(Sender: TObject; NewPage: Integer);
-    procedure FileBrowserTVRowActivated(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn);
     procedure MainFormShow(Sender: TObject);
     procedure ProjectTVRowActivated(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn);
   private
@@ -87,7 +83,6 @@ type
     function CurrentBuffer: TBuffer;
     function AddTree(C: TComponent; P: TTreeIter): TTreeIter;
     //--
-    procedure UpdateFileBrowser;
     procedure UpdateProjectManager;
   protected
     procedure DoCloseQuery(CanClose: Boolean); override;
@@ -114,7 +109,8 @@ var
 
 implementation
 
-uses compiler_opts, editor_opts, TxtBuffer, PasBuffer, FrmBuffer, frm_NewFile;
+uses Process,
+  compiler_opts, editor_opts, TxtBuffer, PasBuffer, FrmBuffer, frm_NewFile;
 
 { TMainForm }
 
@@ -135,7 +131,6 @@ begin
   CompEd.EventTable := EventTable;
 
   Project := TXPRProject.Create;
-  UpdateFileBrowser;
   Icon := PBLogo;
 end;
 
@@ -308,8 +303,46 @@ var
   C: TCompiler;
 begin
   C := TCompiler.Create;
-  C.Compile(Project, False);
-  C.Free;
+  try
+    C.Compile(Project, False, False);
+  finally
+    C.Free;
+  end;
+end;
+
+procedure TMainForm.ProjectRun(Sender: TObject);
+var
+  C: TCompiler;
+  OK: Boolean;
+  P: TProcess;
+begin
+
+  if Project.NeedsToCompile then
+  begin
+    C := TCompiler.Create;
+    try
+      OK := C.Compile(Project, False, True);
+    finally
+      C.Free;
+    end;
+  end
+  else
+    OK := True;
+
+  if OK then
+  begin
+    P := TProcess.Create(nil);
+    try
+      P.CommandLine := GetCurrentDir+'/'+Project.ProjectExeFile;
+      P.Execute;
+      while (not Application.Terminated) and P.Running do
+        Application.ProcessMessages(True);
+      if P.Running then // Means Application Terminated
+        P.Terminate(0);
+    finally
+      P.Free;
+    end;
+  end;
 end;
 
 procedure TMainForm.HelpAbout(Sender: TObject);
@@ -367,68 +400,6 @@ end;
 procedure TMainForm.GoRight(Sender: TObject);
 begin
   NB.NextPage;
-end;
-
-procedure TMainForm.UpdateFileBrowser;
-var
-  Info : TSearchRec;
-  Ext: String;
-  It: TTreeIter;
-  DSL: TStringList;
-  FSL: TStringList;
-  I: Integer;
-begin
-  FileBrowserTS.Clear;
-
-  DSL := TStringList.Create;
-  FSL := TStringList.Create;
-  try
-  
-    if FindFirst ('*', faAnyFile, Info) = 0 then
-    repeat
-      Ext := LowerCase(ExtractFileExt(Info.Name));
-      if (Ext = '.pas') or (Ext = '.pp') or (Ext = '.inc') or (Ext = '.frm') then
-        FSL.Add(Info.Name)
-      else if ((Info.Attr and faDirectory) = faDirectory) and (Info.Name <> '.') then
-        DSL.Add(Info.Name + '/');
-    until FindNext(Info) <> 0;
-    FindClose(Info);
-
-    DSL.Sort;
-    FSL.Sort;
-
-    for I := 0 to DSL.Count -1 do
-    begin
-      FileBrowserTS.Append(It);
-      FileBrowserTS.SetStringValue(It, 0, DSL[I]);
-    end;
-
-    for I := 0 to FSL.Count -1 do
-    begin
-      FileBrowserTS.Append(It);
-      FileBrowserTS.SetStringValue(It, 0, FSL[I]);
-    end;
-
-  finally
-    DSL.Free;
-    FSL.Free;
-  end;
-end;
-
-procedure TMainForm.FileBrowserTVRowActivated(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn);
-var
-  FN: String;
-begin
-  FN := FileBrowserTS.GetStringValue(Iter, 0);
-  if FN[Length(FN)] = '/' then
-  begin
-    ChDir(FN);
-    UpdateFileBrowser;
-  end
-  else
-  begin
-    DoFileOpen(FN);
-  end;
 end;
 
 procedure TMainForm.UpdateProjectManager;
@@ -655,12 +626,5 @@ begin
   nbSide.CurrentPage := nbSide.PageNum(npProjMan);
   ProjectTV.GrabFocus;
 end;
-
-procedure TMainForm.ShowFileBrowser(Sender: TObject);
-begin
-  nbSide.CurrentPage := nbSide.PageNum(npFileBrowser);
-  FileBrowserTV.GrabFocus;
-end;
-
 
 end.

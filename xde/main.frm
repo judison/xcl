@@ -26,9 +26,6 @@ object TMainForm
     Website = 'http://xcl.sourceforge.net/'
     Logo = PBLogo
   end
-  object FileBrowserTS: TTreeStore
-    Structure = 'S'
-  end
   object ProjectTS: TTreeStore
     Structure = 'SP'
   end
@@ -103,10 +100,6 @@ object TMainForm
       Caption = '_Project Manager'
       OnExecute = ShowProjectManager
     end
-    object actViewFileBrowser: TAction
-      Caption = '_File Browser'
-      OnExecute = ShowFileBrowser
-    end
     object actProjectAdd: TAction
       Accelerator = '<Shift>F11'
       Caption = '_Add File...'
@@ -129,6 +122,7 @@ object TMainForm
       Accelerator = 'F9'
       Caption = '_Run'
       IconName = 'gtk-execute'
+      OnExecute = ProjectRun
     end
     object actProjectOptions: TAction
       Accelerator = '<Shift><Ctrl>F11'
@@ -194,9 +188,6 @@ object TMainForm
         end
         object TMenuItem
           Action = actViewObjectInspector
-        end
-        object TMenuItem
-          Action = actViewFileBrowser
         end
         object TSeparatorMenuItem
         end
@@ -286,6 +277,7 @@ object TMainForm
     end
     object THPaned
       object nbSide: TNotebook
+        PanedShrink = False
         object npProjMan: TNotebookPage
           Caption = 'Project Manager'
           object TVBox
@@ -328,29 +320,6 @@ object TMainForm
                 Model = ProjectTS
                 OnRowActivated = ProjectTVRowActivated
               end
-            end
-          end
-        end
-        object npFileBrowser: TNotebookPage
-          Caption = 'Browser'
-          IconName = 'gtk-directory'
-          object TScrolledWindow
-            ShadowType = stIn
-            HPolicy = sbpAutomatic
-            VPolicy = sbpAutomatic
-            HeightRequest = 200
-            object FileBrowserTV: TTreeView
-              Columns = <            
-                item
-                  Clickable = False
-                  FixedWidth = 1
-                  Sizing = tvcsAutosize
-                  Title = 'File Tree'
-                end>
-              Model = FileBrowserTS
-              HeadersVisible = False
-              SelectionMode = smBrowse
-              OnRowActivated = FileBrowserTVRowActivated
             end
           end
         end
