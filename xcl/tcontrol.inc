@@ -637,22 +637,16 @@ end;
 
 function TControl.GetPanedResize: Boolean;
 begin
-  if Parent is TBox then
-    if TPaned(Parent).ChildA = Self then
-      Result := child1_resize(PGtkPaned(Handle)^) <> 0
-    else
-      Result := child2_resize(PGtkPaned(Handle)^) <> 0
+  if Parent is TPaned then
+    gtk_container_child_get(Parent.Handle, Handle, 'resize', [@Result, 0])
   else
     Result := False;
 end;
 
 function TControl.GetPanedShrink: Boolean;
 begin
-  if Parent is TBox then
-    if TPaned(Parent).ChildA = Self then
-      Result := child1_shrink(PGtkPaned(Handle)^) <> 0
-    else
-      Result := child2_shrink(PGtkPaned(Handle)^) <> 0
+  if Parent is TPaned then
+    gtk_container_child_get(Parent.Handle, Handle, 'shrink', [@Result, 0])
   else
     Result := False;
 end;
@@ -660,10 +654,7 @@ end;
 procedure TControl.SetPanedResize(AValue: Boolean);
 begin
   if Parent is TPaned then
-    if TPaned(Parent).ChildA = Self then
-      set_child2_resize(PGtkPaned(Handle)^, LongWord(AValue))
-    else
-      set_child1_resize(PGtkPaned(Handle)^, LongWord(AValue))
+    gtk_container_child_set(Parent.Handle, Handle, 'resize', [AValue, 0])
   else
     raise Exception.Create('PanedResize can be set only in a TPaned Child.');
 end;
@@ -671,10 +662,7 @@ end;
 procedure TControl.SetPanedShrink(AValue: Boolean);
 begin
   if Parent is TPaned then
-    if TPaned(Parent).ChildA = Self then
-      set_child1_shrink(PGtkPaned(Handle)^, LongWord(AValue))
-    else
-      set_child2_shrink(PGtkPaned(Handle)^, LongWord(AValue))
+    gtk_container_child_set(Parent.Handle, Handle, 'shrink', [AValue, 0])
   else
     raise Exception.Create('PanedShrink can be set only in a TPaned Child.');
 end;
@@ -821,7 +809,11 @@ end;
 procedure TControl.SetTableYOptions(AValue: TAttachOptions);
 begin
   if Parent is TTable then
+  begin
     gtk_container_child_set(Parent.Handle, Handle, 'y-options', [Integer(AValue), 0])
+    gtk_container_resize_children(Parent.Handle);
+    gtk_widget_child_notify(Handle, 'y-options');
+  end
   else
     raise Exception.Create('TableYOptions can be set only in a TTable Child.');
 end;
