@@ -8,6 +8,7 @@
     <unit name="TxtBuffer" file="txtbuffer.pas" form="txtbuffer.frm"/>
     <unit name="PasBuffer" file="pasbuffer.pas"/>
     <unit name="FrmBuffer" file="frmbuffer.pas" form="frmbuffer.frm"/>
+    <unit name="Project_Opts" file="project_opts.pas" form="project_opts.frm"/>
     <unit name="Compiler_Opts" file="compiler_opts.pas" form="compiler_opts.frm"/>
     <unit name="Editor_Opts" file="editor_opts.pas" form="editor_opts.frm"/>
     <unit name="Frm_NewFile" file="frm_newfile.pas" form="frm_newfile.frm"/>

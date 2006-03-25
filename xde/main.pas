@@ -35,6 +35,7 @@ type
     actFileClose: TAction;
     actFileCloseAll: TAction;
     actFileQuit: TAction;
+    actAddComponentChild: TAction;
     TopToolBox: THBox;
     AboutDlg: TAboutDialog;
     MenuBar: TMenuBar;
@@ -64,6 +65,7 @@ type
     procedure FileQuit(Sender: TObject);
     procedure ProjectCompile(Sender: TObject);
     procedure ProjectRun(Sender: TObject);
+    procedure ProjectOptions(Sender: TObject);
     procedure HelpAbout(Sender: TObject);
     procedure ShowCompilerOptions(Sender: TObject);
     procedure ShowEditorOptions(Sender: TObject);
@@ -73,7 +75,9 @@ type
     procedure ShowObjectInspector(Sender: TObject);
     procedure ShowProjectManager(Sender: TObject);
     procedure CompChanged(Sender: TObject);
-    procedure RemoveComp(Sender: TObject);
+    procedure RemoveComponent(Sender: TObject);
+    procedure AddComponentChild(Sender: TObject);
+    procedure AddComponentChildUpd(Sender: TObject);
     procedure SwitchPage(Sender: TObject; NewPage: Integer);
     procedure MainFormShow(Sender: TObject);
     procedure ProjectTVRowActivated(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn);
@@ -110,7 +114,8 @@ var
 implementation
 
 uses Process,
-  compiler_opts, editor_opts, TxtBuffer, PasBuffer, FrmBuffer, frm_NewFile;
+  project_opts, compiler_opts, editor_opts,
+  TxtBuffer, PasBuffer, FrmBuffer, frm_NewFile;
 
 { TMainForm }
 
@@ -147,7 +152,7 @@ begin
   frmNewFile := TFrmNewFile.Create(nil);
   try
     frmNewFile.Tag := 0;
-    frmNewFile.ShowModal;
+    frmNewFile.ShowModal(Self);
     case frmNewFile.Tag of
       1: B := TPasBuffer.Create(Self);
       2: B := TFrmBuffer.Create(Self);
@@ -345,6 +350,18 @@ begin
   end;
 end;
 
+procedure TMainForm.ProjectOptions(Sender: TObject);
+var
+  Frm: TFrmProjectOpts;
+begin
+  Frm := TFrmProjectOpts.Create(nil);
+  try
+    Frm.ShowModal(Self);
+  finally
+    Frm.Free;
+  end;
+end;
+
 procedure TMainForm.HelpAbout(Sender: TObject);
 var
   SL: TStringList;
@@ -371,7 +388,7 @@ procedure TMainForm.ShowCompilerOptions(Sender: TObject);
 begin
   FrmCompilerOpts := TFrmCompilerOpts.Create(nil);
   try
-    FrmCompilerOpts.ShowModal;
+    FrmCompilerOpts.ShowModal(Self);
   finally
     FrmCompilerOpts.Free;
   end;
@@ -381,7 +398,7 @@ procedure TMainForm.ShowEditorOptions(Sender: TObject);
 begin
   FrmEditorOpts := TFrmEditorOpts.Create(nil);
   try
-    FrmEditorOpts.ShowModal;
+    FrmEditorOpts.ShowModal(Self);
   finally
     FrmEditorOpts.Free;
   end;
@@ -500,13 +517,15 @@ begin
     C := AClass.Create(MyForm);
     try
       if (C is TControl) then
-        if (CompEd.Component is TContainerControl) then
-        begin
-          TControl(C).Parent := TControl(CompEd.Component);
-          ComponentTV.GetSelected(It);
-        end
-        else
-          raise Exception.Create('A Control can only be place inside a Container Contol')
+      begin
+        TControl(C).Parent := TControl(CompEd.Component);
+        ComponentTV.GetSelected(It);
+      end
+      else if (C is TCustomAction) and (CompEd.Component is TActionList) then
+      begin
+        TCustomAction(C).ActionList := TActionList(CompEd.Component);
+        ComponentTV.GetSelected(It);
+      end
       else
         ComponentTV.Model.GetIterFirst(It);
     except
@@ -551,7 +570,7 @@ begin
   end;
 end;
 
-procedure TMainForm.RemoveComp(Sender: TObject);
+procedure TMainForm.RemoveComponent(Sender: TObject);
 var
   It: TTreeIter;
   C,P: TComponent;
@@ -574,6 +593,39 @@ begin
       C.Free;
     end;
   end;
+end;
+
+procedure TMainForm.AddComponentChild(Sender: TObject);
+var
+  It: TTreeIter;
+  C: TComponent;
+begin
+  if ComponentTV.GetSelected(It) then
+  begin
+    C := TComponent(ComponentTV.Model.GetPointerValue(It, 1));
+    if C is TNotebook then
+      PaletteClassSelected(Self, TNotebookPage)
+    else if C is TActionList then
+      PaletteClassSelected(Self, TAction)
+    else if C is TToolBar then
+      PaletteClassSelected(Self, TToolItem)
+    else if (C is TMenuBar) or (C is TMenuItem) then
+      PaletteClassSelected(Self, TMenuItem)
+  end;
+end;
+
+procedure TMainForm.AddComponentChildUpd(Sender: TObject);
+var
+  It: TTreeIter;
+  C: TComponent;
+begin
+  if ComponentTV.GetSelected(It) then
+  begin
+    C := TComponent(ComponentTV.Model.GetPointerValue(It, 1));
+    actAddComponentChild.Sensitive := (C is TNotebook) or (C is TActionList) or (C is TToolBar) or (C is TMenuBar) or (C is TMenuItem);
+  end
+  else
+    actAddComponentChild.Sensitive := False;
 end;
 
 procedure TMainForm.SelectForm(B: TBuffer);

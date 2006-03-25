@@ -134,7 +134,7 @@ type
 
 implementation
 
-uses gtk2;
+uses gtk2, glib2;
 
 { TComponentEditor }
 
@@ -170,6 +170,7 @@ var
   procedure AddProp(AProp: PPropInfo; AClass: TPropertyEditorClass; AEvent: Boolean);
   var
     Lbl: TLabel;
+//    Sep: THSeparator;
     PropEd: TPropertyEditor;
   begin
     if (not (FComponent is TControl)) or (TControl(FComponent).DesignShowProp(AProp^.Name)) then
@@ -181,10 +182,10 @@ var
         Lbl.Parent := FPropTable;
       Lbl.TableTopAttach := TopP;
       Lbl.TableLeftAttach := 1;
-      Lbl.Caption := ' '+AProp^.Name;
-      Lbl.YPad := 5;
+      Lbl.Caption := AProp^.Name;
       Lbl.TableXOptions := [aoFill];
       Lbl.TableYOptions := [aoFill];
+      Lbl.TableXPadding := 4;
       Lbl.SetAlignment(0, 0.5);
 
 
@@ -198,8 +199,22 @@ var
       PropEd.TableXOptions := [aoFill, aoExpand, aoShrink];
       PropEd.TableYOptions := [aoFill];
       PropEd.WidthRequest := 50;
+      PropEd.TableYPadding := 1;
       FPropEditors.Add(PropEd);
 
+{
+      Inc(TopP);
+      Sep := THSeparator.Create(Self);
+      if AEvent then
+        Sep.Parent := FEventTable
+      else
+        Sep.Parent := FPropTable;
+      Sep.TableTopAttach := TopP;
+      Sep.TableLeftAttach := 1;
+      Sep.TableRightAttach := 3;
+      Sep.TableXOptions := [aoFill];
+      Sep.TableYOptions := [aoFill];
+}
       Inc(TopP);
     end;
   end;
@@ -285,8 +300,9 @@ end;
 
 procedure TPropertyEditor.CreateHandle;
 begin
-  Handle := gtk_frame_new(nil);
-  gtk_frame_set_shadow_type(Handle, GTK_SHADOW_NONE);
+  Handle := gtk_hbox_new(False, 0);
+//  Handle := gtk_frame_new(nil);
+//  gtk_frame_set_shadow_type(Handle, GTK_SHADOW_IN);
   //==
   CreateControls;
 end;
@@ -342,6 +358,7 @@ begin
   FEntry := TEntry.Create(Self);
   FEntry.Parent := Self;
   FEntry.OnFocusOut := @EntryFocusOut;
+//  FEntry.HasFrame := False;
 end;
 
 procedure TStringPropEditor.CompChanged;
@@ -364,6 +381,7 @@ begin
   FSpinButton.Min := Low(Integer);
   FSpinButton.Max := High(Integer);
   FSpinButton.OnFocusOut := @SpinButtonFocusOut;
+//  FSpinButton.HasFrame := False;
 end;
 
 procedure TIntegerPropEditor.CompChanged;
@@ -394,6 +412,7 @@ begin
 //  FSpinButton.Max := +200; // ??????
   FSpinButton.Digits := 3;
   FSpinButton.OnFocusOut := @SpinButtonFocusOut;
+//  FSpinButton.HasFrame := False;
 end;
 
 procedure TFloatPropEditor.CompChanged;
@@ -431,7 +450,6 @@ begin
   FComboBox := TComboBox.Create(Self);
   FComboBox.Parent := Self;
   FComboBox.Model := FLS;
-  FComboBox.TextColumn := 0;
   FComboBox.OnChanged := @ComboBoxChanged;
 end;
 

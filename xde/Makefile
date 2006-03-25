@@ -14,6 +14,7 @@ PAS_FILES =	buffer.pas \
 		executor.pas \
 		compiler.pas \
 		compilingdlg.pas \
+		project_opts.pas \
 		compiler_opts.pas \
 		editor_opts.pas \
 		frm_newfile.pas \
@@ -30,6 +31,7 @@ PAS_FILES =	buffer.pas \
 
 FRM_FILES =     compiler_opts.frm \
 		editor_opts.frm \
+		project_opts.frm \
 		compilingdlg.frm \
 		frm_newfile.frm \
 		frmbuffer.frm \
