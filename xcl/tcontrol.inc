@@ -810,7 +810,7 @@ procedure TControl.SetTableYOptions(AValue: TAttachOptions);
 begin
   if Parent is TTable then
   begin
-    gtk_container_child_set(Parent.Handle, Handle, 'y-options', [Integer(AValue), 0])
+    gtk_container_child_set(Parent.Handle, Handle, 'y-options', [Integer(AValue), 0]);
     gtk_container_resize_children(Parent.Handle);
     gtk_widget_child_notify(Handle, 'y-options');
   end
