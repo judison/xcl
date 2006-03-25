@@ -128,6 +128,18 @@ object TMainForm
       Accelerator = '<Shift><Ctrl>F11'
       Caption = '_Options'
       IconName = 'gtk-preferences'
+      OnExecute = ProjectOptions
+    end
+    object actRemoveComponent: TAction
+      Caption = 'Remove Component'
+      IconName = 'gtk-remove'
+      OnExecute = RemoveComponent
+    end
+    object actAddComponentChild: TAction
+      Caption = 'Add Component Child'
+      IconName = 'gtk-add'
+      OnExecute = AddComponentChild
+      OnUpdate = AddComponentChildUpd
     end
     object actGoLeft: TAction
       Accelerator = '<Alt>Left'
@@ -329,15 +341,12 @@ object TMainForm
             object TVBox
               object TToolBar
                 ToolBarStyle = tbsIcons
+                SmallIcons = True
                 object TToolItem
-                  Homogeneous = False
-                  object TButton
-                    Relief = rlfNone
-                    object TImage
-                      IconName = 'gtk-remove'
-                      IconSize = iszMenu
-                    end
-                  end
+                  Action = actAddComponentChild
+                end
+                object TToolItem
+                  Action = actRemoveComponent
                 end
               end
               object TScrolledWindow

@@ -212,8 +212,10 @@ uses
 
 procedure Register;
 begin
-  RegisterComponents('Containers', [THBox, TVBox, TTable, THPaned, TVPaned, THButtonBox, TVButtonBox, TFrame, TAlignment, TExpander, THandleBox, TScrolledWindow, TViewPort, TFixed]);
-  RegisterComponents('Standard', [TLabel, TButton, TToggleButton, TEntry, TSpinButton, TTextView, TCheckButton, TRadioButton, TComboBox, TComboBoxEntry, TImage]);
+  RegisterComponents('Containers', [THBox, TVBox, TTable, THPaned, TVPaned, THButtonBox, TVButtonBox, TFrame, TNoteBook, TAlignment, TExpander, THandleBox, TScrolledWindow, TViewPort, TFixed]);
+  RegisterComponents('Standard', [TActionList, TLabel, TButton, TToggleButton, TEntry, TSpinButton, TTextView, TCheckButton, TRadioButton, TComboBox, TComboBoxEntry, TImage]);
+  RegisterComponents('Menu/Tool', [TMenuBar, TMenuItem, TSeparatorMenuItem, TToolBar, TToolItem, TSeparatorToolItem]);
+  RegisterComponents('List/Tree', [TTreeView, TTreeStore, TListStore]);
   RegisterComponents('Additional', [THSeparator, TVSeparator, THScrollbar, TVScrollBar, THScale, TVScale, TProgressBar, TStatusBar, TArrow]);
   RegisterComponents('Extra', [TCalendar, TColorButton, TFontButton, TColorSelection, TFileChooserWidget]);
 end;
@@ -223,10 +225,10 @@ initialization
 
 //---------------------------------  Registrar as Classes
 //-------------------- Nao Visuais
-  RegisterClass(TActionList);
+  RegisterClass(TActionList);           //OK
   RegisterClass(TAction);
-  RegisterClass(TTreeStore);
-  RegisterClass(TListStore);
+  RegisterClass(TTreeStore);            //OK
+  RegisterClass(TListStore);            //OK
   RegisterClass(TPixBuf);
   RegisterClass(TTimer);
   RegisterClass(TAccelGroup);
@@ -250,14 +252,14 @@ initialization
   RegisterClass(THandleBox);            //OK
   RegisterClass(TExpander);             //OK
   RegisterClass(TViewPort);             //OK
-  RegisterClass(TToolItem);
+  RegisterClass(TToolItem);             //OK
 //RegisterClass(TToolButton);
-  RegisterClass(TSeparatorToolItem);
+  RegisterClass(TSeparatorToolItem);    //OK
   RegisterClass(THPaned);               //OK
   RegisterClass(TVPaned);               //OK
-  RegisterClass(TMenuBar);
-  RegisterClass(TNotebook);
-  RegisterClass(TToolBar);
+  RegisterClass(TMenuBar);              //OK
+  RegisterClass(TNotebook);             //OK
+  RegisterClass(TToolBar);              //OK
   RegisterClass(TFixed);                //OK
   RegisterClass(TTable);                //OK
   RegisterClass(THBox);                 //OK
@@ -275,8 +277,8 @@ initialization
   RegisterClass(TCalendar);             //OK
   RegisterClass(TColorSelection);       //OK
   RegisterClass(TFileChooserWidget);    //OK
-  RegisterClass(TMenuItem);
-  RegisterClass(TSeparatorMenuItem);
+  RegisterClass(TMenuItem);             //OK
+  RegisterClass(TSeparatorMenuItem);    //OK
   RegisterClass(TTearoffMenuItem);
   RegisterClass(THSeparator);           //OK
   RegisterClass(TVSeparator);           //OK
@@ -284,7 +286,7 @@ initialization
   RegisterClass(TVScrollBar);           //OK
   RegisterClass(THScale);               //OK
   RegisterClass(TVScale);               //OK
-  RegisterClass(TTreeView);
+  RegisterClass(TTreeView);             //OK
 //--
   RegisterClass(TFileChooserDialog);
 //----------------------------------

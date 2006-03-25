@@ -11,7 +11,6 @@ FPC=ppc386
 #	taspectframe.xpm \
 #	tcheckmenuitem.xpm \
 #	tclock.xpm \
-#	tcolorbutton.xpm \
 #	tcolorseldialog.xpm \
 #	tdbcontrol.xpm \
 #	tdial.xpm \
@@ -24,9 +23,6 @@ FPC=ppc386
 #	thruler.xpm \
 #	tinputdialog.xpm \
 #	tlayout.xpm \
-#	tmenubar.xpm \
-#	tmenuitem.xpm \
-#	tnotebook.xpm \
 #	toptionmenu.xpm \
 #	tpacker.xpm \
 #	tpixbuf.xpm \
@@ -35,14 +31,12 @@ FPC=ppc386
 #	tradiotoolbutton.xpm \
 #	tseparatortoolitem.xpm \
 #	ttoggletoolbutton.xpm \
-#	ttoolbar.xpm \
 #	ttoolbutton.xpm \
-#	ttoolitem.xpm \
-#	ttreeview.xpm \
 #	tvruler.xpm \
 
 
 ICON_FILES = unknown.xpm \
+	tactionlist.xpm \
 	tarrow.xpm \
 	talignment.xpm \
 	tbutton.xpm \
@@ -78,7 +72,10 @@ ICON_FILES = unknown.xpm \
 	timage.xpm \
 	tlabel.xpm \
 	tmemdataset.xpm \
+	tmenubar.xpm \
+	tmenuitem.xpm \
 	tmysqlconnection.xpm \
+	tnotebook.xpm \
 	tpqconnection.xpm \
 	tprogressbar.xpm \
 	tradiobutton.xpm \
@@ -91,6 +88,9 @@ ICON_FILES = unknown.xpm \
 	ttable.xpm \
 	ttextview.xpm \
 	ttogglebutton.xpm \
+	ttoolbar.xpm \
+	ttoolitem.xpm \
+	ttreeview.xpm \
 	tvbox.xpm \
 	tvbuttonbox.xpm \
 	tviewport.xpm \

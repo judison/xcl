@@ -279,17 +279,17 @@ object FrmCompilerOpts: TFrmCompilerOpts
     end
     object TLabel
       Caption = 'Conditional defines'
-      BoxExpand = True
+      BoxExpand = False
     end
     object TEntry
-      BoxExpand = True
+      BoxExpand = False
     end
     object THSeparator
     end
     object THButtonBox
       Layout = bblEnd
       Spacing = 8
-      BoxExpand = True
+      BoxExpand = False
       object TButton
         Caption = '_Cancel'
         IconName = 'gtk-cancel'
