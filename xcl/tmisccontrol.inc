@@ -110,12 +110,12 @@ end;
 
 function TMiscControl.IsXAlignStored: Boolean;
 begin
-  Result := GetXAlign = 0.5;
+  Result := GetXAlign <> 0.5;
 end;
 
 function TMiscControl.IsYAlignStored: Boolean;
 begin
-  Result := GetYAlign = 0.5;
+  Result := GetYAlign <> 0.5;
 end;
 
 procedure TMiscControl.GetPadding(var AXPad, AYPad: Integer);
