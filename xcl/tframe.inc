@@ -46,7 +46,10 @@ end;
 
 procedure TFrame.SetCaption(Value: string);
 begin
-  gtk_frame_set_label(Handle, PChar(Value));
+  if Value = '' then
+    gtk_frame_set_label(Handle, nil)
+  else
+    gtk_frame_set_label(Handle, PChar(Value));
 end;
 
 procedure TFrame.SetShadowType(Value: TShadowType);
