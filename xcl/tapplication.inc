@@ -150,16 +150,15 @@ begin
   g_object_ref(FToolTips);
 end;
 
-//var
-//  InSE: Boolean = False;
+var
+  InSE: Boolean = False;
 
 procedure TApplication.ShowException(E: Exception);
-//var
-//  Dlg: Pointer;
-//  Msg: String;
-//  Frm: Pointer;
+var
+  Dlg: Pointer;
+  Msg: String;
+  Frm: Pointer;
 begin
-{
   if InSE then
   begin
     //WriteLn('Aha!');
@@ -184,12 +183,12 @@ begin
     gtk_widget_destroy(Dlg);
   end
   else
-  begin}
+  begin
     WriteLn('Exception (',E.ClassName,'):');
     WriteLn(E.Message);
     WriteLn('*************************');
-{  end;
-  InSE := False;}
+  end;
+  InSE := False;
 end;
 
 procedure TApplication.CreateForm(AClass: TFormClass; var Ref);

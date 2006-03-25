@@ -37,7 +37,7 @@
     property Pages[Index: Integer]: TNotebookPage read GetNthPage;
     property PageCount: Integer read GetNPages;
   published
-    property ShowTabs: Boolean read GetShowTabs write SetShowTabs;
+    property ShowTabs: Boolean read GetShowTabs write SetShowTabs default True;
     property Scrollable: Boolean read GetScrollable write SetScrollable;
     property OnSwitchPage: TSwitchPageEvent read FOnSwitchPage write FOnSwitchPage;
   end;
