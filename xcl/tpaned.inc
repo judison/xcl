@@ -15,6 +15,8 @@
   private
     FChildA: TControl;
     FChildB: TControl;
+    function GetPosition: Integer;
+    procedure SetPosition(AValue: Integer);
   protected
     procedure AddControl(AControl: TControl); override;
     procedure RemoveControl(AControl: TControl); override;
@@ -24,6 +26,7 @@
   public
     property ChildA: TControl read FChildA;
     property ChildB: TControl read FChildB;
+    property Position: Integer read GetPosition write SetPosition;
   published
   end;
 
@@ -127,6 +130,16 @@ begin
     FChildB.ShowCtrls;
   //---
   inherited;
+end;
+
+function TPaned.GetPosition: Integer;
+begin
+  Result := gtk_paned_get_position(Handle);
+end;
+
+procedure TPaned.SetPosition(AValue: Integer);
+begin
+  gtk_paned_set_position(Handle, AValue);
 end;
 
 { THPaned }
