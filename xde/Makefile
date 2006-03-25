@@ -9,24 +9,28 @@ FPC=ppc386
 PAS_FILES =	buffer.pas \
 		bufferlist.pas \
 		txtbuffer.pas \
-                pasbuffer.pas \
-                frmbuffer.pas \
+		pasbuffer.pas \
+		frmbuffer.pas \
+		executor.pas \
+		compiler.pas \
+		compilingdlg.pas \
 		compiler_opts.pas \
 		editor_opts.pas \
 		frm_newfile.pas \
-                dbg.pas \
+		dbg.pas \
 		jitform.pas \
 		jitforms.pas \
 		main.pas \
 		propeditor.pas \
-                componentpalette.pas \
-                regcomps.pas \
+		componentpalette.pas \
+		regcomps.pas \
 		xpr.pas \
 		xde.pas
 
 
 FRM_FILES =     compiler_opts.frm \
 		editor_opts.frm \
+		compilingdlg.frm \
 		frm_newfile.frm \
 		frmbuffer.frm \
 		txtbuffer.frm \

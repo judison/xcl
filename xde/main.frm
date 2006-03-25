@@ -107,7 +107,6 @@ object TMainForm
       Caption = '_File Browser'
       OnExecute = ShowFileBrowser
     end
-
     object actProjectAdd: TAction
       Accelerator = '<Shift>F11'
       Caption = '_Add File...'
@@ -124,6 +123,7 @@ object TMainForm
       Accelerator = '<Ctrl>F9'
       Caption = '_Compile'
       IconName = 'gtk-convert'
+      OnExecute = ProjectCompile
     end
     object actProjectRun: TAction
       Accelerator = 'F9'

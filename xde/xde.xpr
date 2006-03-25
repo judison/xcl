@@ -8,18 +8,20 @@
     <unit name="TxtBuffer" file="txtbuffer.pas" form="txtbuffer.frm"/>
     <unit name="PasBuffer" file="pasbuffer.pas"/>
     <unit name="FrmBuffer" file="frmbuffer.pas" form="frmbuffer.frm"/>
-    <unit name="compiler_opts" file="compiler_opts.pas" form="compiler_opts.frm"/>
-    <unit name="editor_opts" file="editor_opts.pas" form="editor_opts.frm"/>
-    <unit name="frm_newfile" file="frm_newfile.pas" form="frm_newfile.frm"/>
-    <unit name="main" file="main.pas" form="main.frm"/>
-    <unit name="dbg" file="dbg.pas"/>
-    <unit name="jitform" file="jitform.pas"/>
-    <unit name="jitforms" file="jitforms.pas"/>
+    <unit name="Compiler_Opts" file="compiler_opts.pas" form="compiler_opts.frm"/>
+    <unit name="Editor_Opts" file="editor_opts.pas" form="editor_opts.frm"/>
+    <unit name="Frm_NewFile" file="frm_newfile.pas" form="frm_newfile.frm"/>
+    <unit name="Main" file="main.pas" form="main.frm"/>
+    <unit name="Dbg" file="dbg.pas"/>
+    <unit name="JitForm" file="jitform.pas"/>
+    <unit name="JitForms" file="jitforms.pas"/>
     <unit name="PropEditor" file="propeditor.pas"/>
-    <unit name="componentpalette" file="componentpalette.pas"/>
-    <unit name="regcomps" file="regcomps.pas"/>
-    <unit name="xpr" file="xpr.pas"/>
+    <unit name="ComponentPalette" file="componentpalette.pas"/>
+    <unit name="RegComps" file="regcomps.pas"/>
+    <unit name="XPR" file="xpr.pas"/>
+    <unit name="Executor" file="executor.pas"/>
     <unit name="Compiler" file="compiler.pas"/>
+    <unit name="CompilingDlg" file="compilingdlg.pas" form="compilingdlg.frm"/>
   </sources>
   <resources file="resources.pp">
     <resource type="STR" name="license" file="license.str"/>

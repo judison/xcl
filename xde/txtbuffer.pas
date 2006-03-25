@@ -100,7 +100,7 @@ end;
 
 procedure TTxtBuffer.BufChanged(Sender: TObject);
 begin
-  Modified := Buf.Modified;
+  Modified := True;
 end;
 
 end.
