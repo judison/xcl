@@ -126,7 +126,7 @@ type
   TXPROptions = class(TXPRCustom)
   private
   protected
-    function GetNode(AName: String; var ANode: TDOMElement; ACanCreate: Boolean): Boolean; inline;
+    function GetNode(AName: String; var AN: TDOMElement; ACanCreate: Boolean): Boolean;
   public
     constructor Create(AParent: TXPRCustom; ANode: TDOMElement); override;
     function Has(AName: String): Boolean;
@@ -468,6 +468,9 @@ end;
 
 constructor TXPROptions.Create(AParent: TXPRCustom; ANode: TDOMElement);
 begin
+  WriteLn('Create');
+  if Assigned(ANode) then
+    WriteLn('Assigned On Create');
   inherited;
 end;
 {
@@ -486,34 +489,39 @@ begin
 end;
 }
 
-function TXPROptions.GetNode(AName: String; var ANode: TDOMElement; ACanCreate: Boolean): Boolean; inline;
+function TXPROptions.GetNode(AName: String; var AN: TDOMElement; ACanCreate: Boolean): Boolean;
 var
   List: TDOMNodeList;
   I: Integer;
 begin
   Result := False;
-  ANode := nil;
+  AN := nil;
   //--
-  List := Node.GetElementsByTagName('option');
-  try
-    for I := 0 to List.Count -1 do
-      if TDOMElement(List.Item[I]).GetAttribute('name') = AName then
+  if Assigned(Node) then
+  begin
+    List := Node.GetElementsByTagName('option');
+    try
+      for I := 0 to List.Count -1 do
+        if TDOMElement(List.Item[I]).GetAttribute('name') = AName then
+        begin
+          Result := True;
+          AN := TDOMElement(List.Item[I]);
+          Break;
+        end;
+  
+      if (not Assigned(AN)) and ACanCreate then
       begin
         Result := True;
-        ANode := TDOMElement(List.Item[I]);
-        Break;
+        AN := TXPRProject(Parent).FXMLDoc.CreateElement('option');
+        AN.SetAttribute('name', AName);
+        AN := TDOMElement(Node.AppendChild(AN));
       end;
-
-    if (not Assigned(ANode)) and ACanCreate then
-    begin
-      Result := True;
-      ANode := TXPRProject(Parent).FXMLDoc.CreateElement('option');
-      ANode.SetAttribute('name', AName);
-      ANode := TDOMElement(Node.AppendChild(ANode));
+    finally
+      List.Release;
     end;
-  finally
-    List.Release;
-  end;
+  end
+  else
+    WriteLn('Node = nil');
 end;
 
 function TXPROptions.Has(AName: String): Boolean;
@@ -561,8 +569,13 @@ procedure TXPROptions.SetS(AName: String; AValue: String);
 var
   N: TDOMElement;
 begin
-  GetNode(AName, N, True);
-  N.SetAttribute('value', AValue);
+  if AValue = '' then
+    Unset(AName)
+  else
+  begin
+    GetNode(AName, N, True);
+    N.SetAttribute('value', AValue);
+  end;
 end;
 
 procedure TXPROptions.SetI(AName: String; AValue: Integer);
@@ -665,7 +678,7 @@ begin
 
   FFileName := AName + '.xpr';
   S := TStringStream.Create(
-  '<?xml version="1.0" encoding="utf-8"?>'+
+  '<?xml version="1.0"?>'+
   '<project type="program" name="'+AName+'" file="'+FFileName+'">'+
   '  <options>'+
   '  </options>'+

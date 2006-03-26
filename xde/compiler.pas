@@ -79,6 +79,8 @@ var
   CmdLine: String;
   ProjectFilename: String;
   OldCurDir, ProjectDir: String;
+  Opts: String;
+  S: String;
 begin
   OldCurDir := GetCurrentDir;
 
@@ -88,7 +90,34 @@ begin
   if not SetCurrentDir(ProjectDir) then
     exit(False);
   try
-    CmdLine := 'fpc ' + '-Fu../xcl -Fusourceview -Fu../xcl/extra -Fuicons';
+    // Read Project Options ===========
+    Opts := '';
+    //--
+    S := AProject.Options.GetS('OutputPath');
+    if S <> '' then
+      Opts := Opts + ' -FE'+S;
+    //--
+    S := AProject.Options.GetS('UnitOutputPath');
+    if S <> '' then
+      Opts := Opts + ' -FU'+S;
+    //--
+    S := AProject.Options.GetS('UnitSearchPath');
+    if S <> '' then
+    begin
+      S := '-Fu'+S;
+      StringReplace(S, ';', ' -Fu', [rfReplaceAll]);
+      Opts := Opts + ' ' + S
+    end;
+    //--
+    S := AProject.Options.GetS('Conditionals');
+    if S <> '' then
+    begin
+      S := '-d'+S;
+      StringReplace(S, ';', ' -d', [rfReplaceAll]);
+      Opts := Opts + ' ' + S
+    end;
+    //=================================
+    CmdLine := 'fpc' + Opts;
     
     if BuildAll then
       CmdLine := CmdLine + ' -B';
