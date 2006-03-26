@@ -123,11 +123,28 @@ type
     property FileName: String read GetFile write SetFile;
   end;
 
+  TXPROptions = class(TXPRCustom)
+  private
+  protected
+    function GetNode(AName: String; var ANode: TDOMElement; ACanCreate: Boolean): Boolean; inline;
+  public
+    constructor Create(AParent: TXPRCustom; ANode: TDOMElement); override;
+    function Has(AName: String): Boolean;
+    function GetS(AName: String): String;
+    function GetI(AName: String): Integer;
+    function GetB(AName: String): Boolean;
+    procedure SetS(AName: String; AValue: String);
+    procedure SetI(AName: String; AValue: Integer);
+    procedure SetB(AName: String; AValue: Boolean);
+    procedure Unset(AName: String);
+  end;
+
   TXPRProject = class(TXPRCustom)
   private
     FXMLDoc: TXMLDocument;
     FSources: TXPRSources;
     FResources: TXPRResources;
+    FOptions: TXPROptions;
     //--
     FFileName: String;
     //--
@@ -161,6 +178,7 @@ type
     //property Options: TXPROptions read FOptions;
     property Sources: TXPRSources read FSources;
     property Resources: TXPRResources read FResources;
+    property Options: TXPROptions read FOptions;
     //--
     property FileName: String read FFileName;
   end;
@@ -446,6 +464,136 @@ begin
   Result := False;
 end;
 
+{ TXPROptions }
+
+constructor TXPROptions.Create(AParent: TXPRCustom; ANode: TDOMElement);
+begin
+  inherited;
+end;
+{
+procedure PrintNode(L: Integer; ANode: TDOMNode);
+var
+  I: Word;
+begin
+  if Assigned(ANode) then
+  begin
+    for I := 0 to L do
+      Write('  ');
+    WriteLn(ANode.NodeName);
+    PrintNode(L+1,ANode.FirstChild);
+    PrintNode(L,ANode.NextSibling);
+  end;
+end;
+}
+
+function TXPROptions.GetNode(AName: String; var ANode: TDOMElement; ACanCreate: Boolean): Boolean; inline;
+var
+  List: TDOMNodeList;
+  I: Integer;
+begin
+  Result := False;
+  ANode := nil;
+  //--
+  List := Node.GetElementsByTagName('option');
+  try
+    for I := 0 to List.Count -1 do
+      if TDOMElement(List.Item[I]).GetAttribute('name') = AName then
+      begin
+        Result := True;
+        ANode := TDOMElement(List.Item[I]);
+        Break;
+      end;
+
+    if (not Assigned(ANode)) and ACanCreate then
+    begin
+      Result := True;
+      ANode := TXPRProject(Parent).FXMLDoc.CreateElement('option');
+      ANode.SetAttribute('name', AName);
+      ANode := TDOMElement(Node.AppendChild(ANode));
+    end;
+  finally
+    List.Release;
+  end;
+end;
+
+function TXPROptions.Has(AName: String): Boolean;
+var
+  N: TDOMElement;
+begin
+  Result := GetNode(AName, N, False);
+end;
+
+function TXPROptions.GetS(AName: String): String;
+var
+  N: TDOMElement;
+begin
+  if GetNode(AName, N, False) then
+    Result := N.GetAttribute('value')
+  else
+    Result := '';
+end;
+
+function TXPROptions.GetI(AName: String): Integer;
+var
+  N: TDOMElement;
+begin
+  if GetNode(AName, N, False) then
+    Result := StrToInt(N.GetAttribute('value'))
+  else
+    Result := 0;
+end;
+
+function TXPROptions.GetB(AName: String): Boolean;
+var
+  N: TDOMElement;
+  S: String;
+begin
+  if GetNode(AName, N, False) then
+  begin
+    S := LowerCase(N.GetAttribute('value'));
+    Result := (S = '1') or (S = 't') or (S = 'true') or (S = 'y') or (S = 'yes');
+  end
+  else
+    Result := False;
+end;
+
+procedure TXPROptions.SetS(AName: String; AValue: String);
+var
+  N: TDOMElement;
+begin
+  GetNode(AName, N, True);
+  N.SetAttribute('value', AValue);
+end;
+
+procedure TXPROptions.SetI(AName: String; AValue: Integer);
+var
+  N: TDOMElement;
+begin
+  GetNode(AName, N, True);
+  N.SetAttribute('value', IntToStr(AValue));
+end;
+
+procedure TXPROptions.SetB(AName: String; AValue: Boolean);
+var
+  N: TDOMElement;
+begin
+  GetNode(AName, N, True);
+  if AValue then
+    N.SetAttribute('value', 'true')
+  else
+    N.SetAttribute('value', 'false');
+end;
+
+procedure TXPROptions.Unset(AName: String);
+var
+  N: TDOMElement;
+begin
+  if GetNode(AName, N, False) then
+  begin
+    Node.RemoveChild(N).Free;
+  end;
+end;
+
 { TXPRProject }
 
 constructor TXPRProject.Create;
@@ -454,6 +602,7 @@ begin
   FXMLDoc := nil;
   FSources := nil;
   FResources := nil;
+  FOptions := nil;
 end;
 
 destructor TXPRProject.Destroy;
@@ -518,9 +667,12 @@ begin
   S := TStringStream.Create(
   '<?xml version="1.0" encoding="utf-8"?>'+
   '<project type="program" name="'+AName+'" file="'+FFileName+'">'+
-    '<options></options>'+
-    '<sources></sources>'+
-    '<resources file="'+AName+'_xrc.pp"></resources>'+
+  '  <options>'+
+  '  </options>'+
+  '  <sources>'+
+  '  </sources>'+
+  '  <resources file="'+AName+'_xrc.pp">'+
+  '  </resources>'+
   '</project>');
   try
     ReadXMLFile(FXMLDoc, S);
@@ -548,6 +700,7 @@ begin
 
   Node := TDOMElement(FXMLDoc.FindNode('project'));
 
+  FOptions := TXPROptions.Create(Self, TDOMElement(Node.FindNode('options')));
   FSources := TXPRSources.Create(Self, TDOMElement(Node.FindNode('sources')));
   FResources := TXPRResources.Create(Self, TDOMElement(Node.FindNode('resources')));
 end;
@@ -567,6 +720,7 @@ procedure TXPRProject.Close;
 begin
   if Assigned(FXMLDoc) then
   begin
+    FreeAndNil(FOptions);
     FreeAndNil(FSources);
     FreeAndNil(FResources);
     FreeAndNil(FXMLDoc);
