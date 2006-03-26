@@ -17,15 +17,23 @@ unit Project_Opts;
 
 interface
 
-uses Classes, XCL;
+uses Classes, XCL, XPR;
 
 type
   TFrmProjectOpts = class(TForm)
+    entOutputPath: TEntry;
+    entUnitOutputPath: TEntry;
+    entSearchPath: TEntry;
+    entConditionals: TEntry;
     procedure BtnOKClicked(Sender: TObject);
     procedure BtnCancelClicked(Sender: TObject);
   private
+    FProject: TXPRProject;
+    Opt: TXPROptions;
+    procedure SetProject(AValue: TXPRProject);
   protected
   public
+    property Project: TXPRProject read FProject write SetProject;
   end;
 
 var
@@ -35,8 +43,25 @@ implementation
 
 { TFrmProjectOps }
 
+procedure TFrmProjectOpts.SetProject(AValue: TXPRProject);
+begin
+  FProject := AValue;
+  Opt := FProject.Options;
+  //== Directories/Conditionals
+  entOutputPath.Text := Opt.GetS('OutputPath');
+  entUnitOutputPath.Text := Opt.GetS('UnitOutputPath');
+  entSearchPath.Text := Opt.GetS('UnitSearchPath');
+  entConditionals.Text := Opt.GetS('Conditionals');
+end;
+
 procedure TFrmProjectOpts.BtnOKClicked(Sender: TObject);
 begin
+  //== Directories/Conditionals
+  Opt.SetS('OutputPath', entOutputPath.Text);
+  Opt.SetS('UnitOutputPath', entUnitOutputPath.Text);
+  Opt.SetS('UnitSearchPath', entSearchPath.Text);
+  Opt.SetS('Conditionals', entConditionals.Text);
+  //==
   Close;
 end;
 

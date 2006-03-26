@@ -356,7 +356,9 @@ var
 begin
   Frm := TFrmProjectOpts.Create(nil);
   try
+    Frm.Project := Project;
     Frm.ShowModal(Self);
+    Project.Save;
   finally
     Frm.Free;
   end;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project type="program" name="xde" file="xde.pas">
   <options>
+    <option name="a" value="b"/>
   </options>
   <sources>
     <unit name="Buffer" file="buffer.pas"/>
