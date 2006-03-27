@@ -63,6 +63,7 @@ type
     procedure FileCloseAll(Sender: TObject);
     procedure FileCloseAllUpd(Sender: TObject);
     procedure FileQuit(Sender: TObject);
+    procedure ProjectBuild(Sender: TObject);
     procedure ProjectCompile(Sender: TObject);
     procedure ProjectRun(Sender: TObject);
     procedure ProjectOptions(Sender: TObject);
@@ -89,7 +90,7 @@ type
     //--
     procedure UpdateProjectManager;
   protected
-    procedure DoCloseQuery(CanClose: Boolean); override;
+    procedure DoCloseQuery(var CanClose: Boolean); override;
   public
     LangMan: TSourceLanguagesManager;
     CompPalette: TComponentPalette;
@@ -263,7 +264,7 @@ end;
 
 procedure TMainForm.FileClose(Sender: TObject);
 begin
-  CurrentBuffer.Free;
+  CurrentBuffer.Close;
 end;
 
 procedure TMainForm.FileCloseUpd(Sender: TObject);
@@ -272,9 +273,14 @@ begin
 end;
 
 procedure TMainForm.FileCloseAll(Sender: TObject);
+var
+  lOK: Boolean;
 begin
-  while CurrentBuffer <> nil do
-    CurrentBuffer.Free;
+  lOK := True;
+  while lOK and (CurrentBuffer <> nil) do
+    lOK := CurrentBuffer.Close;
+  if not lOK then
+    Abort;
 end;
 
 procedure TMainForm.FileCloseAllUpd(Sender: TObject);
@@ -282,25 +288,35 @@ begin
   actFileCloseAll.Sensitive := CurrentBuffer <> nil;
 end;
 
-
-procedure TMainForm.DoCloseQuery(CanClose: Boolean);
+procedure TMainForm.DoCloseQuery(var CanClose: Boolean);
 var
   Buffer: TBuffer;
   I: Integer;
 begin
   inherited;
-  for I := 0 to NB.PageCount -1 do
-  begin
-    Buffer := TBuffer(NB.Pages[I]);
-    if Buffer.Modified then
-      Abort;
-      //CanClose := False;
+  try
+    actFileCloseAll.Execute;
+  except
+    on EAbort do
+      CanClose := False;
   end;
 end;
 
 procedure TMainForm.FileQuit(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TMainForm.ProjectBuild(Sender: TObject);
+var
+  C: TCompiler;
+begin
+  C := TCompiler.Create;
+  try
+    C.Compile(Project, True, False);
+  finally
+    C.Free;
+  end;
 end;
 
 procedure TMainForm.ProjectCompile(Sender: TObject);
