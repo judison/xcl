@@ -35,5 +35,5 @@ begin
   Application.Initialize;
   Application.Title := 'XDE: XCL''s Development Environment';
   Application.CreateForm(TMainForm, MainForm);
-  Application.Run;
+  Application.Run; 
 end.
