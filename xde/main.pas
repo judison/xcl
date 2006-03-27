@@ -137,7 +137,7 @@ begin
   CompEd.EventTable := EventTable;
 
   Project := TXPRProject.Create;
-  Icon := PBLogo;
+  //Icon := PBLogo; //Bugs on Win32!!!
 end;
 
 function TMainForm.CurrentBuffer: TBuffer;

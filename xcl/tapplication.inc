@@ -160,6 +160,13 @@ var
   InSE: Boolean = False;
 
 procedure TApplication.ShowException(E: Exception);
+{$IFDEF Win32}
+begin
+  WriteLn('Exception (',E.ClassName,'):');
+  WriteLn(E.Message);
+  WriteLn('*************************');
+end;
+{$ELSE}
 var
   Dlg: Pointer;
   Msg: String;
@@ -197,8 +204,9 @@ begin
     WriteLn(E.Message);
     WriteLn('*************************');
   end;
-  InSE := False;
+  InSE := False;}
 end;
+{$ENDIF}
 
 procedure TApplication.CreateForm(AClass: TFormClass; var Ref);
 begin
