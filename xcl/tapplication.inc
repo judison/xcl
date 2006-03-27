@@ -28,6 +28,12 @@
     procedure Initialize; override;
     procedure ShowException(E: Exception); override;
     procedure CreateForm(AClass: TFormClass; var Ref);
+    //==
+    function ShowMessage(AType: TMessageType; AButtons: TMessageButtons; ATitle: String; AMsg: String; ASec: String): TMessageResponse; inline;
+    function ShowMessage(AType: TMessageType; AButtons: TMessageButtons; ATitle: String; AMsg: String): TMessageResponse;
+    function ShowMessage(AType: TMessageType; AButtons: TMessageButtons; AMsg: String): TMessageResponse;
+    function ShowMessage(AType: TMessageType; AMsg: String): TMessageResponse;
+    function ShowMessage(AMsg: String): TMessageResponse;
     // ToolTips
     procedure EnableToolTips;
     procedure DisableToolTips;
@@ -159,6 +165,9 @@ var
   Msg: String;
   Frm: Pointer;
 begin
+  if E is EAbort then
+    exit;
+
   if InSE then
   begin
     //WriteLn('Aha!');
@@ -198,5 +207,61 @@ begin
     FMainForm := TForm(Ref);
 end;
 
+function TApplication.ShowMessage(AType: TMessageType; AButtons: TMessageButtons; ATitle: String; AMsg: String; ASec: String): TMessageResponse; inline;
+var
+  Frm: Pointer;
+  Dlg: Pointer;
+  R: Integer;
+begin
+  if Assigned(MainForm) then
+    Frm := MainForm.Handle
+  else
+    Frm := nil;
+  //--
+  Dlg := gtk_message_dialog_new(Frm, GTK_DIALOG_MODAL, TGtkMessageType(AType), GTK_BUTTONS_NONE, PChar(AMsg));
+  //--
+  if ATitle <> '' then
+    gtk_window_set_title(Dlg, PChar(ATitle));
+  //--
+  if ASec <> '' then
+    gtk_message_dialog_format_secondary_text(Dlg, PChar(ASec));
+  //--
+  if mbCancel in AButtons then
+    gtk_dialog_add_button(Dlg, 'gtk-cancel', Ord(mrCancel));
+  if mbOK in AButtons then
+    gtk_dialog_add_button(Dlg, 'gtk-ok', Ord(mrOK));
+  if mbNo in AButtons then
+    gtk_dialog_add_button(Dlg, 'gtk-no', Ord(mrNo));
+  if mbYes in AButtons then
+    gtk_dialog_add_button(Dlg, 'gtk-yes', Ord(mrYes));
+  if mbClose in AButtons then
+    gtk_dialog_add_button(Dlg, 'gtk-close', Ord(mrClose));
+  //--
+  R := gtk_dialog_run(Dlg);
+  gtk_widget_destroy(Dlg);
+  //--
+  Result := TMessageResponse(R);
+end;
+
+function TApplication.ShowMessage(AType: TMessageType; AButtons: TMessageButtons; ATitle: String; AMsg: String): TMessageResponse;
+begin
+  Result := ShowMessage(AType, AButtons, ATitle, AMsg, '');
+end;
+
+
+function TApplication.ShowMessage(AType: TMessageType; AButtons: TMessageButtons; AMsg: String): TMessageResponse;
+begin
+  Result := ShowMessage(AType, AButtons, '', AMsg, '');
+end;
+
+function TApplication.ShowMessage(AType: TMessageType; AMsg: String): TMessageResponse;
+begin
+  Result := ShowMessage(AType, [mbOK], '', AMsg, '');
+end;
+
+function TApplication.ShowMessage(AMsg: String): TMessageResponse;
+begin
+  Result := ShowMessage(mtInfo, [mbOK], '', AMsg, '');
+end;
 
 {$ENDIF}

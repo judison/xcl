@@ -174,9 +174,12 @@ type
   TWrapMode = (wmNone, wmChar, wmWord, wmWordChar);
   TEllipsizeMode = (emNone, emStart, emMiddle, emEnd);
   TMessageType = (mtInfo, mtWarning, mtQuestion, mtError);
+  TMessageButton = (mbOK, mbCancel, mbClose, mbYes, mbNo);
+  TMessageResponse = (mrNone, mrOK, mrCancel, mrClose, mrYes, mrNo);
 
   {*** Sets ***}
   TAttachOptions = set of TAttachOption;
+  TMessageButtons = set of TMessageButton;
 
 {$DEFINE INC_READ_INTERFACE}
   {$I xcl.inc}

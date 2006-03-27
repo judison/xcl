@@ -28,6 +28,10 @@ function g_closure_new_simple(sizeof_closure:guint; data:gpointer):PGClosure; cd
 
 function gdk_event_new(_type: TGdkEventType): PGdkEvent;  cdecl; external gdklib;
 
+// GtkMessageDialog
+
+procedure gtk_message_dialog_format_secondary_text(dialog: pointer; msg: pgchar); cdecl; external gtklib;
+
 // GtkAccelerator
 
 function gtk_accelerator_get_label(accelerator_key: guint; accelerator_mods: longint): PGChar; cdecl; external gtklib;
