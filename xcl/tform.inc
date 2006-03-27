@@ -36,7 +36,7 @@
     procedure ChangeIcon;
     //--
     procedure ConnectSignals; override;
-    procedure DoCloseQuery(CanClose: Boolean); virtual;
+    procedure DoCloseQuery(var CanClose: Boolean); virtual;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -419,7 +419,7 @@ begin
   ConnectGtkSignal('delete-event');
 end;
 
-procedure TForm.DoCloseQuery(CanClose: Boolean);
+procedure TForm.DoCloseQuery(var CanClose: Boolean);
 begin
   //---
 end;
