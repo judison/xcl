@@ -45,6 +45,7 @@ type
     procedure Open(AFileName: String); virtual;
     procedure SaveAs(AFileName: String); virtual;
     procedure Save; virtual;
+    function Close: Boolean; virtual;
     // Properties
     property Modified: Boolean read FModified write SetModified;
     property FileName: String read FFileName write SetFileName;
@@ -115,6 +116,28 @@ begin
   Modified := False;
 end;
 
+function TBuffer.Close: Boolean;
+var
+  R: TMessageResponse;
+begin
+  Result := True;
+  if Modified then
+  begin
+    R := Application.ShowMessage(mtQuestion, [mbYes, mbNo, mbCancel], 'Save Changes?', 'File is modified, save changes?', FileName);
+    case R of
+      mrYes:
+      begin
+        Save;
+        Free;
+      end;
+      mrNo: Free;
+      mrCancel: Result := False;
+    end;
+  end
+  else
+    Free;
+end;
+
 procedure TBuffer.SetFileName(AValue: String);
 begin
   FFileName := AValue;
@@ -132,7 +155,7 @@ end;
 
 procedure TBuffer.CloseBtnClicked(Sender: TObject);
 begin
-  Free;
+  Close;
 end;
 
 procedure TBuffer.UpdateCaption;

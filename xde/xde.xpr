@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project type="program" name="xde" file="xde.pas">
   <options>
-    <option name="UnitSearchPath" value="../xcl;../xcl/extra;./sourceview;./icons"/>
+    <option name="UnitSearchPath" value="../xcl;../xcl/extra;sourceview;icons"/>
   </options>
   <sources>
     <unit name="Buffer" file="buffer.pas"/>

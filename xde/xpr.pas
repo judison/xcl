@@ -468,9 +468,6 @@ end;
 
 constructor TXPROptions.Create(AParent: TXPRCustom; ANode: TDOMElement);
 begin
-  WriteLn('Create');
-  if Assigned(ANode) then
-    WriteLn('Assigned On Create');
   inherited;
 end;
 {
@@ -497,31 +494,26 @@ begin
   Result := False;
   AN := nil;
   //--
-  if Assigned(Node) then
-  begin
-    List := Node.GetElementsByTagName('option');
-    try
-      for I := 0 to List.Count -1 do
-        if TDOMElement(List.Item[I]).GetAttribute('name') = AName then
-        begin
-          Result := True;
-          AN := TDOMElement(List.Item[I]);
-          Break;
-        end;
-  
-      if (not Assigned(AN)) and ACanCreate then
+  List := Node.GetElementsByTagName('option');
+  try
+    for I := 0 to List.Count -1 do
+      if TDOMElement(List.Item[I]).GetAttribute('name') = AName then
       begin
         Result := True;
-        AN := TXPRProject(Parent).FXMLDoc.CreateElement('option');
-        AN.SetAttribute('name', AName);
-        AN := TDOMElement(Node.AppendChild(AN));
+        AN := TDOMElement(List.Item[I]);
+        Break;
       end;
-    finally
-      List.Release;
+
+    if (not Assigned(AN)) and ACanCreate then
+    begin
+      Result := True;
+      AN := TXPRProject(Parent).FXMLDoc.CreateElement('option');
+      AN.SetAttribute('name', AName);
+      AN := TDOMElement(Node.AppendChild(AN));
     end;
-  end
-  else
-    WriteLn('Node = nil');
+  finally
+    List.Release;
+  end;
 end;
 
 function TXPROptions.Has(AName: String): Boolean;

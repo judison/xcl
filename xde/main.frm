@@ -118,6 +118,10 @@ object TMainForm
       IconName = 'gtk-convert'
       OnExecute = ProjectCompile
     end
+    object actProjectBuild: TAction
+      Caption = '_Build'
+      OnExecute = ProjectBuild
+    end
     object actProjectRun: TAction
       Accelerator = 'F9'
       Caption = '_Run'
@@ -221,6 +225,9 @@ object TMainForm
           Action = actProjectViewSource
         end
         object TSeparatorMenuItem
+        end
+        object TMenuItem
+          Action = actProjectBuild
         end
         object TMenuItem
           Action = actProjectCompile
