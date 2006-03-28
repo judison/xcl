@@ -198,6 +198,7 @@ var
 constructor TControl.Create(AOwner: TComponent);
 begin
   inherited;
+  FPopupMenu := nil;
   Handle := nil;
   CreateHandle;
 
