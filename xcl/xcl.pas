@@ -56,6 +56,8 @@ type
   TAccelGroup = class;
   TAccelerator = class;
   {**************************}
+  TMenu = class;
+  {**************************}
   TPixBuf = class;
   { ***      Action      *** }
   {} TActionList = class;
@@ -236,6 +238,7 @@ initialization
   RegisterClass(TTimer);
   RegisterClass(TAccelGroup);
   RegisterClass(TAccelerator);
+  RegisterClass(TMenu);
 //-------------------- Visuais
   RegisterClass(TAboutDialog);
   RegisterClass(TArrow);                //OK

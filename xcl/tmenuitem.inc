@@ -32,6 +32,7 @@
     procedure CreateHandle; override;
     procedure DestroyHandle; override;
     procedure SetParent(ANewParent: TControl); override;
+    procedure SetParentMenu(AValue: TMenu); override;
     //--
     procedure DoActivate(var Msg: TGtkSig); message 'GTK:activate'; override;
   public
@@ -53,7 +54,6 @@ begin
   end;
   inherited;
 end;
-
 
 procedure TMenuItem.CreateHandle;
 begin
@@ -101,6 +101,11 @@ begin
   FImage.Free;
   gtk_container_remove(Handle, FBox.Handle);
   FBox.Free;
+
+  //==
+  g_object_unref(FIconSizeGroup);
+  g_object_unref(FLabelSizeGroup);
+  //==
   inherited;
 end;
 
@@ -118,6 +123,28 @@ begin
   begin
     gtk_size_group_add_widget(TMenuItem(Parent).FIconSizeGroup, FImage.Handle);
     gtk_size_group_add_widget(TMenuItem(Parent).FLabelSizeGroup, FLabel.Handle);
+    FImage.Visible := True;
+  end
+  else
+  begin
+    FImage.Visible := False;
+  end;
+end;
+
+procedure TMenuItem.SetParentMenu(AValue: TMenu);
+begin
+  if Assigned(ParentMenu) then
+  begin
+    gtk_size_group_remove_widget(ParentMenu.FIconSizeGroup, FImage.Handle);
+    gtk_size_group_remove_widget(ParentMenu.FLabelSizeGroup, FLabel.Handle);
+  end;
+
+  inherited;
+
+  if Assigned(ParentMenu) then
+  begin
+    gtk_size_group_add_widget(ParentMenu.FIconSizeGroup, FImage.Handle);
+    gtk_size_group_add_widget(ParentMenu.FLabelSizeGroup, FLabel.Handle);
     FImage.Visible := True;
   end
   else

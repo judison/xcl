@@ -15,6 +15,7 @@
   private
     FParent: TControl;
     FFixedX, FFixedY: Integer; // remover?
+    FPopupMenu: TMenu;
     FOnShow: TNotifyEvent;
     FOnHide: TNotifyEvent;
     FOnFocusIn: TNotifyEvent;
@@ -26,7 +27,9 @@
     //
     function GetToolTip: string;
     procedure SetToolTip(AValue: string);
-
+    //--
+    procedure SetPopupMenu(AValue: TMenu);
+    //--
 
     function GetVisible: Boolean;
     procedure SetVisible(AValue: Boolean);
@@ -105,8 +108,10 @@
     // Aux das property
     function IsBoxExpandStored: Boolean; virtual;
     // Signals DO's
+    procedure DoPopupMenu(var Msg: TGtkSig); message 'GTK:popup-menu'; virtual;
     procedure DoShow(var Msg: TGtkSig); message 'GTK:show'; virtual;
     procedure DoHide(var Msg: TGtkSig); message 'GTK:hide'; virtual;
+    procedure DoButtonPress(var Msg: TGtkSigEvent); message 'GTK:button-press-event'; virtual;
     procedure DoFocusIn(var Msg: TGtkSigEvent); message 'GTK:focus-in-event'; virtual;
     procedure DoFocusOut(var Msg: TGtkSigEvent); message 'GTK:focus-out-event'; virtual;
   public
@@ -126,6 +131,8 @@
     procedure Show; virtual;
     procedure Hide; virtual;
     //==
+    procedure ShowPopupMenu(AButton: Integer = 0);
+    //==
     procedure SendMessage(var AMsg: TXCLMsg); inline;
     procedure SendMessage(AName: String);
     //==
@@ -138,6 +145,7 @@
     //====
     property FontDesc: string read GetFontDesc write SetFontDesc stored IsFontDescStored;
   published
+    property PopupMenu: TMenu read FPopupMenu write SetPopupMenu;
     property ToolTip: String read GetToolTip write SetToolTip;
     property Sensitive: Boolean read GetSensitive write SetSensitive default True;
     property Visible: Boolean read GetVisible write SetVisible default True;
@@ -305,6 +313,8 @@ procedure TControl.Notification(AComponent: TComponent; Operation: TOperation);
 begin
   if (AComponent is TControl) and (TControl(AComponent).Parent = Self) and (Operation = opRemove) then
     RemoveControl(TControl(AComponent));
+  if (AComponent = FPopupMenu) and (Operation = opRemove) then
+    PopupMenu := nil;
   inherited;
 end;
 
@@ -391,6 +401,26 @@ begin
   HideMe;
 end;
 
+procedure TControl.ShowPopupMenu(AButton: Integer = 0);
+begin
+  if Assigned(FPopupMenu) then
+    FPopupMenu.Popup(AButton);
+end;
+
+procedure TControl.SetPopupMenu(AValue: TMenu);
+begin
+  if AValue <> FPopupMenu then
+  begin
+    if Assigned(FPopupMenu) then
+      FPopupMenu.RemoveFreeNotification(Self);
+    //--
+    FPopupMenu := AValue;
+    //--
+    if Assigned(FPopupMenu) then
+      FPopupMenu.FreeNotification(Self);
+  end;
+end;
+
 function TControl.GetToolTip: string;
 var
   D: PGtkToolTipsData;
@@ -447,6 +477,7 @@ procedure TControl.ConnectSignals;
 begin
   ConnectGtkSignal('show');
   ConnectGtkSignal('hide');
+  ConnectGtkSignal('button-press-event');
   ConnectGtkSignal('focus-in-event');
   ConnectGtkSignal('focus-out-event');
   ConnectGtkSignal('client-event');
@@ -473,16 +504,30 @@ begin
     raise Exception.Create('You can set position only inside of a TFixed container.');
 end;
 
+procedure TControl.DoPopupMenu(var Msg: TGtkSig);
+begin
+  if Assigned(FPopupMenu) then
+    FPopupMenu.Popup;
+end;
+
 procedure TControl.DoShow(var Msg: TGtkSig);
 begin
-  if Assigned(FOnShow) then
-    FOnShow(Self);
+  ShowPopupMenu;
 end;
 
 procedure TControl.DoHide(var Msg: TGtkSig);
 begin
   if Assigned(FOnHide) then
     FOnHide(Self);
+end;
+
+procedure TControl.DoButtonPress(var Msg: TGtkSigEvent);
+var
+  Ev: PGdkEventButton;
+begin
+  Ev := PGdkEventButton(Msg.Event);
+  if (Ev^.button = 3) and (Ev^._type = GDK_BUTTON_PRESS) then // It isn't always GDK_BUTTON_PRESS???
+    ShowPopupMenu(3);
 end;
 
 procedure TControl.DoFocusIn(var Msg: TGtkSigEvent);

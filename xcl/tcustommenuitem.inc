@@ -11,7 +11,7 @@
 *)
 {** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
-  TCustomMenuItem = class(TControl) // ou TComponent???
+  TCustomMenuItem = class(TControl)
   private
     MenuHandle: Pointer;
     FSubItems: TComponentList;
@@ -19,6 +19,8 @@
     //---
     function GetRightJustified: Boolean;
     procedure SetRightJustified(AValue: Boolean);
+    //--
+    FParentMenu: TMenu;
   protected
     procedure CreateHandle; override;
     procedure DestroyHandle; override;
@@ -32,11 +34,19 @@
     function GetControlCount: Integer; override;
     procedure ShowCtrls; override;
     //--
+    procedure ReadState(Reader: TReader); override;
+    procedure SetParent(ANewParent: TControl); override;
+    procedure SetParentMenu(AValue: TMenu); virtual;
+    //--
     procedure DoActivate(var Msg: TGtkSig); message 'GTK:activate'; virtual;
   public
+    function HasParent: Boolean; override;
+    //--
     procedure Activate;
     procedure Select;
     procedure Deselect;
+    //---
+    property ParentMenu: TMenu read FParentMenu write SetParentMenu;
   published
     property RightJustified: Boolean read GetRightJustified write SetRightJustified default False;
     property OnClick: TNotifyEvent read FOnClick write FOnClick;
@@ -45,6 +55,41 @@
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
 
 { TCustomMenuItem }
+
+procedure TCustomMenuItem.ReadState(Reader: TReader);
+begin
+  if Reader.Parent is TMenu then
+  begin
+    ParentMenu := TMenu(Reader.Parent);
+  end;
+  inherited ReadState(Reader);
+end;
+
+procedure TCustomMenuItem.SetParent(ANewParent: TControl);
+begin
+  if Assigned(ANewParent) and Assigned(FParentMenu) then
+    FParentMenu.RemoveMenu(Self);
+  inherited;
+end;
+
+procedure TCustomMenuItem.SetParentMenu(AValue: TMenu);
+begin
+  if AValue <> FParentMenu then
+  begin
+    if Assigned(FParentMenu) then
+      FParentMenu.RemoveMenu(Self);
+    //==
+    Parent := nil;
+    //==
+    if Assigned(AValue) then
+      AValue.AddMenu(Self);
+  end;
+end;
+
+function TCustomMenuItem.HasParent: Boolean;
+begin
+  Result := (Parent <> nil) or (FParentMenu <> nil);
+end;
 
 procedure TCustomMenuItem.CreateHandle;
 begin
@@ -75,7 +120,6 @@ begin
   inherited;
   ConnectGtkSignal('activate');
 end;
-
 
 procedure TCustomMenuItem.AddControl(AControl: TControl);
 begin
