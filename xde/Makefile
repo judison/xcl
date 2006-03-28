@@ -41,7 +41,6 @@ FRM_FILES =     compiler_opts.frm \
 all: xde
 
 xde: sourceview/xclsourceview.ppu $(PAS_FILES) xde_xrc.pp icons/icons_xrc.pp
-	make -C $(XCL_PATH)
 	$(FPC) $(OPT) xde.pas
 
 icons/icons_xrc.pp:

@@ -289,9 +289,6 @@ begin
 end;
 
 procedure TMainForm.DoCloseQuery(var CanClose: Boolean);
-var
-  Buffer: TBuffer;
-  I: Integer;
 begin
   inherited;
   try
@@ -641,9 +638,22 @@ begin
   begin
     C := TComponent(ComponentTV.Model.GetPointerValue(It, 1));
     actAddComponentChild.Sensitive := (C is TNotebook) or (C is TActionList) or (C is TToolBar) or (C is TMenuBar) or (C is TMenuItem);
+    if (C is TNotebook) then
+      actAddComponentChild.Caption := 'Add TNotebookPage'
+    else if (C is TActionList) then
+      actAddComponentChild.Caption := 'Add TAction'
+    else if (C is TToolBar) then
+      actAddComponentChild.Caption := 'Add TToolItem'
+    else if (C is TMenuBar) or (C is TMenuItem) then
+      actAddComponentChild.Caption := 'Add TMenuItem'
+    else
+      actAddComponentChild.Caption := 'Add child...'
   end
   else
+  begin
     actAddComponentChild.Sensitive := False;
+    actAddComponentChild.Caption := 'Add child...'
+  end;
 end;
 
 procedure TMainForm.SelectForm(B: TBuffer);

@@ -51,8 +51,11 @@ var
   I,J: Integer;
   pg: TComponentPage;
   NBP: TNotebookPage;
-  TB: TToolBar;
-  TI: TToolItem;
+{
+  SW: TScrolledWindow;
+  VP: TViewPort;
+}
+  Box: THBox;
   Btn: TButton;
   Img: TImage;
   R: String;
@@ -68,14 +71,24 @@ begin
     NBP := TNotebookPage.Create(Self);
     NBP.Parent := Self;
     NBP.Caption := pg.Name;
-    TB := TToolBar.Create(Self);
-    TB.Parent := NBP;
+{
+    SW := TScrolledWindow.Create(Self);
+    SW.Parent := NBP;
+    SW.HPolicy := sbpAutomatic;
+    SW.VPolicy := sbpNever;
+    SW.HeightRequest := 23;
+    VP := TViewPort.Create(Self);
+    VP.Parent := SW;
+    VP.ShadowType := stNone;
+}
+    Box := THBox.Create(Self);
+    Box.Parent := NBP;
     for J := 0 to pg.Classes.Count -1 do
     begin
-      TI := TToolItem.Create(Self);
-      TI.Parent := TB;
       Btn := TButton.Create(Self);
-      Btn.Parent := TI;
+      Btn.Parent := Box;
+      Btn.BoxExpand := False;
+
       Btn.Relief := rlfNone;
       Btn.Tag := Integer(TComponentClass(pg.Classes[J]));
       Btn.OnClicked := @BtnClicked;
