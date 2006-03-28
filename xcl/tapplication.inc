@@ -204,7 +204,7 @@ begin
     WriteLn(E.Message);
     WriteLn('*************************');
   end;
-  InSE := False;}
+  InSE := False;
 end;
 {$ENDIF}
 

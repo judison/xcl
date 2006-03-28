@@ -25,6 +25,7 @@
 {$I tpixbuf.inc}
 {$I taccelgroup.inc}
 {$I taccelerator.inc}
+{$I tmenu.inc}
 //---------------------
 {$I tapplication.inc}
 {$I tcontrol.inc}
