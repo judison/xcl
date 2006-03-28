@@ -161,6 +161,14 @@ object TMainForm
       OnExecute = HelpAbout
     end
   end
+  object mnuObjInsp: TMenu
+    object TMenuItem
+      Action = actAddComponentChild
+    end
+    object TMenuItem
+      Action = actRemoveComponent
+    end
+  end
   object TVBox
     object TMenuBar
       object TMenuItem
@@ -372,6 +380,7 @@ object TMainForm
                     end>
                   HeadersVisible = False
                   SelectionMode = smBrowse
+                  PopupMenu = mnuObjInsp
                   OnSelectionChanged = CompChanged
                 end
               end

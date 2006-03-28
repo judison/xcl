@@ -13,8 +13,8 @@ object FrmProjectOpts: TFrmProjectOpts
           BorderWidth = 2
           object TLabel
             Caption = '_Output Path'
+            FocusControl = entOutputPath
             UseUnderline = True
-            XAlign = 0
             TableRightAttach = 1
             TableXPadding = 2
             TableXOptions = [aoFill]
@@ -22,8 +22,8 @@ object FrmProjectOpts: TFrmProjectOpts
           end
           object TLabel
             Caption = '_Unit Output Path'
+            FocusControl = entUnitOutputPath
             UseUnderline = True
-            XAlign = 0
             TableRightAttach = 1
             TableTopAttach = 1
             TableXPadding = 2
@@ -32,8 +32,8 @@ object FrmProjectOpts: TFrmProjectOpts
           end
           object TLabel
             Caption = '_Search Path'
+            FocusControl = entSearchPath
             UseUnderline = True
-            XAlign = 0
             TableRightAttach = 1
             TableTopAttach = 2
             TableXPadding = 2
@@ -42,7 +42,7 @@ object FrmProjectOpts: TFrmProjectOpts
           end
           object TLabel
             Caption = '_Conditionals'
-            XAlign = 0
+            FocusControl = entConditionals
             UseUnderline = True
             TableRightAttach = 1
             TableTopAttach = 4
@@ -105,7 +105,6 @@ object FrmProjectOpts: TFrmProjectOpts
     object THButtonBox
       Layout = bblEnd
       Spacing = 8
-      BoxExpand = False
       object TButton
         Caption = '_Cancel'
         IconName = 'gtk-cancel'
