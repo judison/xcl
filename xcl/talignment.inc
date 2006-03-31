@@ -26,6 +26,7 @@
     procedure CreateHandle; override;
   public
     constructor Create(AOwner: TComponent); override;
+    procedure SetAll(AXAlign, AYAlign: Single; AXScale, AYScale: Boolean);
   published
     property XAlign: Single read FXAlign write SetXAlign default 0.5;
     property YAlign: Single read FYAlign write SetYAlign default 0.5;
@@ -114,6 +115,15 @@ begin
     LYScale := 0;
 
   gtk_alignment_set(Handle, FXAlign, FYAlign, LXScale, LYScale);
+end;
+
+procedure TAlignment.SetAll(AXAlign, AYAlign: Single; AXScale, AYScale: Boolean);
+begin
+  FXAlign := AXAlign;
+  FYAlign := AYAlign;
+  FXScale := AXScale;
+  FYScale := AYScale;
+  SetAll;
 end;
 
 {$ENDIF}

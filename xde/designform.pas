@@ -8,7 +8,7 @@ interface
 uses Classes, SysUtils, xcl;
 
 type
-  TDesignForm = class(TFixed)
+  TDesignForm = class(TAlignment)
   private
     FTitle: String;
     FWidth: Integer;
@@ -19,6 +19,7 @@ type
     procedure GetChildren(Proc: TGetChildProc; Root: TComponent); override;
   public
     constructor Create(AOwner: TComponent); override;
+    function DesignShowProp(AName: ShortString): Boolean; override;
   published
     property Title: string read FTitle write FTitle;
     property Width: Integer read FWidth write FWidth;
@@ -34,9 +35,12 @@ implementation
 constructor TDesignForm.Create(AOwner: TComponent);
 begin
   inherited;
+  //== TAlignment Stuff
+  SetAll(0, 0, False, False);
+  //== (fake) TForm Stuff
   FResizable := True;
   FDecorated := True;
-  SetDesigning(True);
+  SetDesigning(True); 
 end;
 
 procedure TDesignForm.GetChildren(Proc: TGetChildProc; Root: TComponent);
@@ -50,5 +54,13 @@ begin
   inherited GetChildren(Proc, Root);
 end;
 
+function TDesignForm.DesignShowProp(AName: ShortString): Boolean;
+begin
+  if (AName = 'XAlign') or (AName = 'YAlign') or (AName = 'XScale') or (AName = 'YScale') or
+   (AName = 'PopupMenu') then // This is a workaround, There's a bug when load PopupMenu property (how to fix it?)
+    Result := False
+  else
+    Result := inherited;
+end;
 
 end.

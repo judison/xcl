@@ -42,7 +42,7 @@ implementation
 uses
   XCL,
   DB,
-  interbase,
+{$IFDEF HAS_INTERBASE}interbase,{$ENDIF}
   memds,
   dbf,
 //  mysqldb4,
@@ -98,10 +98,12 @@ begin
   RegisterComponents('Data Access', [TDBF]);
 end;
 
+{$IFDEF HAS_INTERBASE}
 procedure Interbase_Register;
 begin
   RegisterComponents('Data Access', [TIBDataBase, TIBTransaction, TIBQuery, TIBStoredProc]);
 end;
+{$ENDIF}
 
 procedure Memds_Register;
 begin
@@ -125,11 +127,11 @@ begin
   DB_Register;
   sqldb_Register;
   XCLDB.Register;
-  Interbase_Register;
+  {$IFDEF HAS_INTERBASE}Interbase_Register;{$ENDIF}
   Memds_Register;
   DBF_Register;
   //Mysql4_Register;
-  
+
   sdfdata.Register;
   {$IFDEF USE_GTK_SPELL}
   gtkspell.Register;
