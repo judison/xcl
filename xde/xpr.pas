@@ -730,6 +730,7 @@ begin
     FreeAndNil(FResources);
     FreeAndNil(FXMLDoc);
   end;
+  FFileName := '';
 end;
 
 function TXPRProject.NeedsToCompile: Boolean;

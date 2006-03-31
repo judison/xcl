@@ -1,13 +1,12 @@
-object TMainForm
+object MainForm: TMainForm
   Title = 'XDE'
   Width = 800
   Height = 600
   OnShow = MainFormShow
-  object PBLogo: TPixbuf
+  object PBLogo: TPixBuf
     Resource = 'xde'
   end
   object fcdOpen: TFileChooserDialog
-    FileAction = fcaOpen
     Title = 'Open File'
   end
   object fcdSaveAs: TFileChooserDialog
@@ -15,7 +14,6 @@ object TMainForm
     Title = 'Save As...'
   end
   object fcdOpenProject: TFileChooserDialog
-    FileAction = fcaOpen
     Title = 'Open Project'
   end
   object AboutDlg: TAboutDialog
@@ -25,8 +23,10 @@ object TMainForm
     Comments = 'XCL''s Development Environment'
     Website = 'http://xcl.sourceforge.net/'
     Logo = PBLogo
+    Title = 'About XDE'
   end
   object ProjectTS: TTreeStore
+    SortColumn = -2
     Structure = 'SP'
   end
   object TActionList
@@ -117,22 +117,26 @@ object TMainForm
       Caption = '_Compile'
       IconName = 'gtk-convert'
       OnExecute = ProjectCompile
+      OnUpdate = ProjectCompileUpd
     end
     object actProjectBuild: TAction
       Caption = '_Build'
       OnExecute = ProjectBuild
+      OnUpdate = ProjectBuildUpd
     end
     object actProjectRun: TAction
       Accelerator = 'F9'
       Caption = '_Run'
       IconName = 'gtk-execute'
       OnExecute = ProjectRun
+      OnUpdate = ProjectRunUpd
     end
     object actProjectOptions: TAction
       Accelerator = '<Shift><Ctrl>F11'
       Caption = '_Options'
       IconName = 'gtk-preferences'
       OnExecute = ProjectOptions
+      OnUpdate = ProjectOptionsUpd
     end
     object actRemoveComponent: TAction
       Caption = 'Remove Component'
@@ -272,49 +276,52 @@ object TMainForm
       BoxExpand = False
       object TVBox
         BoxExpand = False
-        object THBox
+        object TToolBar
+          ShowArrow = False
+          SmallIcons = True
+          ToolBarStyle = tbsIcons
+          BoxExpand = False
           object TToolItem
-            BoxExpand = False
             Action = actFileNew
           end
           object TToolItem
-            BoxExpand = False
             Action = actFileOpen
           end
           object TToolItem
-            BoxExpand = False
             Action = actFileSave
           end
           object TToolItem
-            BoxExpand = False
             Action = actFileSaveAs
           end
         end
-        object THBox
+        object TToolBar
+          ShowArrow = False
+          SmallIcons = True
+          ToolBarStyle = tbsIcons 
+          BoxExpand = False
           object TToolItem
-            BoxExpand = False
             Action = actProjectCompile
           end
           object TToolItem
-            BoxExpand = False
             Action = actProjectRun
           end
         end
       end
     end
     object THPaned
+      BoxExpand = True
       object nbSide: TNotebook
-        PanedShrink = False
         object npProjMan: TNotebookPage
           Caption = 'Project Manager'
           object TVBox
             object TToolBar
-              ToolBarStyle = tbsIcons
               SmallIcons = True
+              ToolBarStyle = tbsIcons
               object TToolItem
                 Action = actFileOpenProject
               end
               object TSeparatorToolItem
+                Homogeneous = False
               end
               object TToolItem
                 Action = actProjectAdd
@@ -323,6 +330,7 @@ object TMainForm
                 Action = actProjectRemove
               end
               object TSeparatorToolItem
+                Homogeneous = False
               end
               object TToolItem
                 Action = actProjectOptions
@@ -335,7 +343,7 @@ object TMainForm
               HeightRequest = 200
               BoxExpand = True
               object ProjectTV: TTreeView
-                Columns = <            
+                Columns = <                
                   item
                     Clickable = False
                     FixedWidth = 1
@@ -354,9 +362,10 @@ object TMainForm
           Caption = 'Object Inspector'
           object TVPaned
             object TVBox
+              PanedShrink = True
               object TToolBar
-                ToolBarStyle = tbsIcons
                 SmallIcons = True
+                ToolBarStyle = tbsIcons
                 object TToolItem
                   Action = actAddComponentChild
                 end
@@ -371,7 +380,7 @@ object TMainForm
                 HeightRequest = 200
                 BoxExpand = True
                 object ComponentTV: TTreeView
-                  Columns = <            
+                  Columns = <                  
                     item
                       Clickable = False
                       FixedWidth = 1
@@ -380,12 +389,14 @@ object TMainForm
                     end>
                   HeadersVisible = False
                   SelectionMode = smBrowse
-                  PopupMenu = mnuObjInsp
                   OnSelectionChanged = CompChanged
+                  PopupMenu = mnuObjInsp
                 end
               end
             end
             object TNotebook
+              PanedResize = True
+              PanedShrink = True
               object TNotebookPage
                 Caption = 'Properties'
                 object TScrolledWindow
@@ -421,6 +432,8 @@ object TMainForm
       object NB: TNotebook
         Scrollable = True
         OnSwitchPage = SwitchPage
+        PanedResize = True
+        PanedShrink = True
       end
     end
     object TStatusBar

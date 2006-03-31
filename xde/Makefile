@@ -38,25 +38,19 @@ FRM_FILES =     compiler_opts.frm \
 		txtbuffer.frm \
 		main.frm
 
-all: xde
+all: xde.o
 
-xde: sourceview/xclsourceview.ppu $(PAS_FILES) xde_xrc.pp icons/icons_xrc.pp
+xde.o: $(PAS_FILES) xde_xrc.pp icons/icons_xrc.pp
 	$(FPC) $(OPT) xde.pas
 
 icons/icons_xrc.pp:
 	make -C icons
 
-$(XRC):
-	make -C $(XRC_PATH)
-
-xde_xrc.pp: $(FRM_FILES) license.str $(XRC)
+xde_xrc.pp: $(FRM_FILES) license.str
 	$(XRC) $(FRM_FILES) license.str $@
 
-sourceview/xclsourceview.ppu:
-	make -C sourceview
-
 clean:
-	rm -f *~ *.ppu *.xrc *_xrc.pp *.o ppas.sh core xde out.frm
+	rm -f *~ *.ppu *.xrc *_xrc.pp *.o *.exe link.res ppas.sh core xde
 	make -C sourceview clean
 	make -C icons clean
 

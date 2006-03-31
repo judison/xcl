@@ -35,6 +35,10 @@ type
     actFileClose: TAction;
     actFileCloseAll: TAction;
     actFileQuit: TAction;
+    actProjectBuild: TAction;
+    actProjectCompile: TAction;
+    actProjectRun: TAction;
+    actProjectOptions: TAction;
     actAddComponentChild: TAction;
     TopToolBox: THBox;
     AboutDlg: TAboutDialog;
@@ -64,9 +68,13 @@ type
     procedure FileCloseAllUpd(Sender: TObject);
     procedure FileQuit(Sender: TObject);
     procedure ProjectBuild(Sender: TObject);
+    procedure ProjectBuildUpd(Sender: TObject);
     procedure ProjectCompile(Sender: TObject);
+    procedure ProjectCompileUpd(Sender: TObject);
     procedure ProjectRun(Sender: TObject);
+    procedure ProjectRunUpd(Sender: TObject);
     procedure ProjectOptions(Sender: TObject);
+    procedure ProjectOptionsUpd(Sender: TObject);
     procedure HelpAbout(Sender: TObject);
     procedure ShowCompilerOptions(Sender: TObject);
     procedure ShowEditorOptions(Sender: TObject);
@@ -316,6 +324,11 @@ begin
   end;
 end;
 
+procedure TMainForm.ProjectBuildUpd(Sender: TObject);
+begin
+  actProjectBuild.Sensitive := Project.FileName <> '';
+end;
+
 procedure TMainForm.ProjectCompile(Sender: TObject);
 var
   C: TCompiler;
@@ -326,6 +339,11 @@ begin
   finally
     C.Free;
   end;
+end;
+
+procedure TMainForm.ProjectCompileUpd(Sender: TObject);
+begin
+  actProjectCompile.Sensitive := Project.FileName <> '';
 end;
 
 procedure TMainForm.ProjectRun(Sender: TObject);
@@ -363,6 +381,11 @@ begin
   end;
 end;
 
+procedure TMainForm.ProjectRunUpd(Sender: TObject);
+begin
+  actProjectRun.Sensitive := Project.FileName <> '';
+end;
+
 procedure TMainForm.ProjectOptions(Sender: TObject);
 var
   Frm: TFrmProjectOpts;
@@ -375,6 +398,11 @@ begin
   finally
     Frm.Free;
   end;
+end;
+
+procedure TMainForm.ProjectOptionsUpd(Sender: TObject);
+begin
+  actProjectOptions.Sensitive := Project.FileName <> '';
 end;
 
 procedure TMainForm.HelpAbout(Sender: TObject);

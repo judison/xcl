@@ -21,6 +21,7 @@ interface
 
 uses Classes, SysUtils, xcl, typinfo;
 
+
 type
   TComponentEditor = class(TComponent)
   private
