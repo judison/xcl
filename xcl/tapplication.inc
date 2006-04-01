@@ -104,12 +104,19 @@ begin
     while (gtk_events_pending > 0) do
       gtk_main_iteration_do(False); // Don't Block
    
+    //===============================
+    // Idle (Does not glib implement some standard way to do it?)
     I := 0;
     while I < FActionList.Count do
     begin
       TCustomAction(FActionList[I]).Update;
       Inc(I);
     end;
+    // TForm must call some Application.AddForm, like TCustomAction does
+    for I := 0 to ComponentCount -1 do
+      if Components[I] is TForm then
+        TForm(Components[I]).DoIdle;
+    //===============================
   
     if ABlock then
       gtk_main_iteration_do(True); // Block

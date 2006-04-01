@@ -37,6 +37,7 @@
     //--
     procedure ConnectSignals; override;
     procedure DoCloseQuery(var CanClose: Boolean); virtual;
+    procedure DoIdle; virtual;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -350,6 +351,11 @@ procedure TForm.DoDeleteEvent(var Msg: TGtkSigEvent);
 begin
   Close;
   Msg.Stop := True;
+end;
+
+procedure TForm.DoIdle;
+begin
+  //--
 end;
 
 procedure TForm.AddAccelGroup(AAccelGroup: TAccelGroup);
