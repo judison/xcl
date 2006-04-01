@@ -4,7 +4,7 @@ XRC_PATH=$(XCL_PATH)/tools
 XRC=$(XRC_PATH)/xrc
 
 OPT=-Fu$(XCL_PATH) -Fu./sourceview
-FPC=ppc386
+FPC=fpc
 
 #	selector.xpm \
 #	taccellabel.xpm \
@@ -101,10 +101,7 @@ ICON_FILES = unknown.xpm \
 
 all: icons_xrc.pp
 
-$(XRC):
-	make -C $(XRC_PATH)
-
-icons_xrc.pp: xde.png $(ICON_FILES) $(XRC)
+icons_xrc.pp: xde.png $(ICON_FILES)
 	$(XRC) xde.png $(ICON_FILES) $@
 
 clean:

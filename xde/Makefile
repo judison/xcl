@@ -4,7 +4,7 @@ XRC_PATH=$(XCL_PATH)/tools
 XRC=$(XRC_PATH)/xrc
 
 OPT=-Fu$(XCL_PATH) -Fu$(XCL_PATH)/extra  -Fu./sourceview -Fu./icons
-FPC=ppc386
+FPC=fpc
 
 PAS_FILES =	buffer.pas \
 		bufferlist.pas \
@@ -43,10 +43,13 @@ all: xde.o
 xde.o: $(PAS_FILES) xde_xrc.pp icons/icons_xrc.pp
 	$(FPC) $(OPT) xde.pas
 
+$(XRC).o:
+	make -C $(XRC_PATH)
+
 icons/icons_xrc.pp:
 	make -C icons
 
-xde_xrc.pp: $(FRM_FILES) license.str
+xde_xrc.pp: $(FRM_FILES) license.str $(XRC).o
 	$(XRC) $(FRM_FILES) license.str $@
 
 clean:

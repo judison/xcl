@@ -2,7 +2,7 @@
 XCL_PATH=../../xcl
 
 OPT=-Fu$(XCL_PATH)
-FPC=ppc386
+FPC=fpc
 
 all: xclsourceview.ppu
 
