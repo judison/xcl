@@ -19,7 +19,7 @@ unit main;
 interface
 
 uses Classes, SysUtils, xcl, Buffer, BufferList, xclsourceview, componentpalette,
-  propeditor, designform, xpr, Compiler;
+  propeditor, designform, xpr, Compiler, CompilerMsg;
 
 type
   TMainForm = class(TForm)
@@ -35,6 +35,7 @@ type
     actFileClose: TAction;
     actFileCloseAll: TAction;
     actFileQuit: TAction;
+    actViewCompilerMsg: TAction;
     actProjectBuild: TAction;
     actProjectCompile: TAction;
     actProjectRun: TAction;
@@ -53,6 +54,7 @@ type
     nbSide: TNotebook;
     npProjMan: TNotebookPage;
     npObjIns: TNotebookPage;
+    nbBottom: TNotebook;
     procedure FileOpen(Sender: TObject);
     procedure FileOpenProject(Sender: TObject);
     procedure FileNew(Sender: TObject);
@@ -67,6 +69,7 @@ type
     procedure FileCloseAll(Sender: TObject);
     procedure FileCloseAllUpd(Sender: TObject);
     procedure FileQuit(Sender: TObject);
+    procedure ViewCompilerMsg(Sender: TObject);
     procedure ProjectBuild(Sender: TObject);
     procedure ProjectBuildUpd(Sender: TObject);
     procedure ProjectCompile(Sender: TObject);
@@ -99,6 +102,7 @@ type
     procedure UpdateProjectManager;
   protected
     procedure DoCloseQuery(var CanClose: Boolean); override;
+    procedure DoIdle; override;
   public
     LangMan: TSourceLanguagesManager;
     CompPalette: TComponentPalette;
@@ -108,6 +112,8 @@ type
     CompEd: TComponentEditor;
     MyForm: TDesignForm;
     Project: TXPRProject;
+    //--
+    npCompilerMsg: TCompilerMsgPage;
     //--
     constructor Create(AOwner: TComponent); override;
     //--
@@ -146,6 +152,9 @@ begin
 
   Project := TXPRProject.Create;
   //Icon := PBLogo; //Bugs on Win32!!!
+
+  npCompilerMsg := TCompilerMsgPage.Create(Self);
+  //npCompilerMsg.Parent := nbBottom;
 end;
 
 function TMainForm.CurrentBuffer: TBuffer;
@@ -229,7 +238,7 @@ procedure TMainForm.FileOpenProject(Sender: TObject);
 begin
   if (fcdOpenProject.Execute = -3) and FileExists(fcdOpenProject.FileName) then
   begin
-    Project.Load(fcdOpenProject.FileName);
+    Project.Load(ExtractFileName(fcdOpenProject.FileName));
     UpdateProjectManager;
   end;
 end;
@@ -310,6 +319,11 @@ end;
 procedure TMainForm.FileQuit(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TMainForm.ViewCompilerMsg(Sender: TObject);
+begin
+  npCompilerMsg.Parent := nbBottom;
 end;
 
 procedure TMainForm.ProjectBuild(Sender: TObject);
@@ -462,6 +476,11 @@ begin
   NB.NextPage;
 end;
 
+procedure TMainForm.DoIdle;
+begin
+  nbBottom.Visible := nbBottom.PageCount > 0;
+end;
+
 procedure TMainForm.UpdateProjectManager;
 var
   It, P, PP: TTreeIter;
@@ -481,6 +500,8 @@ begin
       ProjectTS.SetPointerValue(It, 1, Project.Sources.Units[I]);
     end;
 
+    ProjectTV.ExpandTo(It);
+
     for I := 0 to Project.Sources.IncludeCount -1 do
     begin
       ProjectTS.Append(It, PP);
@@ -498,6 +519,8 @@ begin
       ProjectTS.SetStringValue(It, 0, Project.Resources[I].RType + ' \ ' + Project.Resources[I].RName);
       ProjectTS.SetPointerValue(It, 1, Project.Resources[I]);
     end;
+
+    ProjectTV.SelectIter(PP);
   end;
 end;
 
@@ -652,6 +675,8 @@ begin
       PaletteClassSelected(Self, TAction)
     else if C is TToolBar then
       PaletteClassSelected(Self, TToolItem)
+    else if C is TButtonBox then
+      PaletteClassSelected(Self, TButton)
     else if (C is TMenuBar) or (C is TMenuItem) then
       PaletteClassSelected(Self, TMenuItem)
   end;
@@ -665,23 +690,23 @@ begin
   if ComponentTV.GetSelected(It) then
   begin
     C := TComponent(ComponentTV.Model.GetPointerValue(It, 1));
-    actAddComponentChild.Sensitive := (C is TNotebook) or (C is TActionList) or (C is TToolBar) or (C is TMenuBar) or (C is TMenuItem);
     if (C is TNotebook) then
       actAddComponentChild.Caption := 'Add TNotebookPage'
     else if (C is TActionList) then
       actAddComponentChild.Caption := 'Add TAction'
     else if (C is TToolBar) then
       actAddComponentChild.Caption := 'Add TToolItem'
+    else if (C is TButtonBox) then
+      actAddComponentChild.Caption := 'Add TButton'
     else if (C is TMenuBar) or (C is TMenuItem) then
       actAddComponentChild.Caption := 'Add TMenuItem'
     else
       actAddComponentChild.Caption := 'Add child...'
   end
   else
-  begin
-    actAddComponentChild.Sensitive := False;
-    actAddComponentChild.Caption := 'Add child...'
-  end;
+    actAddComponentChild.Caption := 'Add child...';
+
+  actAddComponentChild.Sensitive := actAddComponentChild.Caption <> 'Add child...';
 end;
 
 procedure TMainForm.SelectForm(B: TBuffer);
