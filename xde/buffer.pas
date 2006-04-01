@@ -19,10 +19,10 @@ unit Buffer;
 
 interface
 
-uses Classes, SysUtils, xcl;
+uses Classes, SysUtils, XCL, ExCtrls;
 
 type
-  TBuffer = class(TNotebookPage)
+  TBuffer = class(TNotebookPageEx)
   private
     // Properties
     FModified: Boolean;
@@ -32,11 +32,8 @@ type
     // Non Visual
     procedure UpdateCaption;
     //--
-    procedure CloseBtnClicked(Sender: TObject);
   protected
-    FCloseBtn: TButton;
-    procedure CreateControls; override;
-    procedure DestroyControls; override;
+    procedure CloseBtnClicked(Sender: TObject); override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -60,34 +57,6 @@ begin
   inherited;
   UseUnderline := False;
   FLabel.UseMarkup := True;
-end;
-
-procedure TBuffer.CreateControls;
-begin
-  inherited;
-
-  FCloseBtn := TButton.Create(Self);
-  FCloseBtn.IconName := 'gtk-close';
-  FCloseBtn.IconSize := iszMenu;
-  FCloseBtn.Relief := rlfNone;
-  FCloseBtn.WidthRequest := 16;
-  FCloseBtn.HeightRequest := 16;
-  FCloseBtn.OnClicked := @CloseBtnClicked;
-  FCloseBtn.Parent := FBox;
-  FCloseBtn.BoxExpand := False;
-end;
-
-procedure TBuffer.DestroyControls;
-begin
-
-  if Assigned(FCloseBtn) then
-  begin
-    try FBox.RemoveControl(FCloseBtn); except end;
-    FCloseBtn.Free;
-    FCloseBtn := nil;
-  end;
-
-  inherited;
 end;
 
 destructor TBuffer.Destroy;

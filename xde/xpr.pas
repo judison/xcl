@@ -692,8 +692,10 @@ procedure TXPRProject.Load(AFileName: String);
 begin
   Close;
 
-  FFileName := AFileName;
-  ReadXMLFile(FXMLDoc, AFileName);
+  ChDir(ExtractFileDir(AFileName));
+
+  FFileName := ExtractFileName(AFileName);
+  ReadXMLFile(FXMLDoc, FFileName);
 
   PostLoad;
 end;

@@ -6,11 +6,13 @@ XRC=$(XRC_PATH)/xrc
 OPT=-Fu$(XCL_PATH) -Fu$(XCL_PATH)/extra  -Fu./sourceview -Fu./icons
 FPC=fpc
 
-PAS_FILES =	buffer.pas \
+PAS_FILES =	exctrls.pas \
+		buffer.pas \
 		bufferlist.pas \
 		txtbuffer.pas \
 		pasbuffer.pas \
 		frmbuffer.pas \
+		compilermsg.pas \
 		executor.pas \
 		compiler.pas \
 		compilingdlg.pas \

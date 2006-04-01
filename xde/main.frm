@@ -100,6 +100,10 @@ object MainForm: TMainForm
       Caption = '_Project Manager'
       OnExecute = ShowProjectManager
     end
+    object actViewCompilerMsg: TAction
+      Caption = 'Compiler Messages'
+      OnExecute = ViewCompilerMsg
+    end
     object actProjectAdd: TAction
       Accelerator = '<Shift>F11'
       Caption = '_Add File...'
@@ -220,6 +224,11 @@ object MainForm: TMainForm
         object TSeparatorMenuItem
         end
         object TMenuItem
+          Action = actViewCompilerMsg
+        end
+        object TSeparatorMenuItem
+        end
+        object TMenuItem
           Action = actViewToggleFormCode
         end
       end
@@ -280,7 +289,7 @@ object MainForm: TMainForm
           ShowArrow = False
           SmallIcons = True
           ToolBarStyle = tbsIcons
-          BoxExpand = False
+          BoxExpand = True
           object TToolItem
             Action = actFileNew
           end
@@ -298,7 +307,7 @@ object MainForm: TMainForm
           ShowArrow = False
           SmallIcons = True
           ToolBarStyle = tbsIcons 
-          BoxExpand = False
+          BoxExpand = True
           object TToolItem
             Action = actProjectCompile
           end
@@ -429,11 +438,18 @@ object MainForm: TMainForm
           end
         end
       end
-      object NB: TNotebook
-        Scrollable = True
-        OnSwitchPage = SwitchPage
-        PanedResize = True
-        PanedShrink = True
+      object TVPaned
+        object NB: TNotebook
+          Scrollable = True
+          OnSwitchPage = SwitchPage
+          PanedResize = True
+          PanedShrink = False
+        end
+        object nbBottom: TNotebook
+          Visible = True
+          PanedResize = False
+          PanedShrink = False
+        end
       end
     end
     object TStatusBar
