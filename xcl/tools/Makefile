@@ -3,13 +3,13 @@ OPT=-Fu$(XCL_PATH)
 FPC=ppc386
 XRC=./xrc
 
-all: xrc gtkpas
+all: xrc.o gtkpas.o
 
-xrc: xrc.pas
+xrc.o: xrc.pas
 	$(FPC) $(OPT) xrc.pas
 
-gtkpas: gtkpas.pas
+gtkpas.o: gtkpas.pas
 	$(FPC) $(OPT) gtkpas.pas
 
 clean:
-	rm -f *~ *.ppu *.o *.xrc ppas.sh core xrc gtkpas
+	rm -f *~ *.ppu *.o *.exe ppas.sh core xrc gtkpas

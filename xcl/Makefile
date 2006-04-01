@@ -1,5 +1,5 @@
 OPT=
-FPC=ppc386
+FPC=fpc
 
 all: xcl.ppu xcldb.ppu
 	make -C tools
