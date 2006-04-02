@@ -100,6 +100,9 @@ type
     function AddTree(C: TComponent; P: TTreeIter): TTreeIter;
     //--
     procedure UpdateProjectManager;
+
+    //===
+    procedure ReadCompilerLine(Sender: TObject; ALine: String);
   protected
     procedure DoCloseQuery(var CanClose: Boolean); override;
     procedure DoIdle; override;
@@ -154,7 +157,8 @@ begin
   //Icon := PBLogo; //Bugs on Win32!!!
 
   npCompilerMsg := TCompilerMsgPage.Create(Self);
-  //npCompilerMsg.Parent := nbBottom;
+  npCompilerMsg.Parent := nbBottom;
+  npCompilerMsg.Hide;
 end;
 
 function TMainForm.CurrentBuffer: TBuffer;
@@ -323,7 +327,15 @@ end;
 
 procedure TMainForm.ViewCompilerMsg(Sender: TObject);
 begin
-  npCompilerMsg.Parent := nbBottom;
+  if npCompilerMsg.Visible then
+    npCompilerMsg.Hide
+  else
+    npCompilerMsg.Show;
+end;
+
+procedure TMainForm.ReadCompilerLine(Sender: TObject; ALine: String);
+begin
+  npCompilerMsg.Process(ALine);
 end;
 
 procedure TMainForm.ProjectBuild(Sender: TObject);
@@ -332,6 +344,8 @@ var
 begin
   C := TCompiler.Create;
   try
+    npCompilerMsg.Clear;
+    C.OnReadLine := @ReadCompilerLine;
     C.Compile(Project, True, False);
   finally
     C.Free;
@@ -349,6 +363,8 @@ var
 begin
   C := TCompiler.Create;
   try
+    npCompilerMsg.Clear;
+    C.OnReadLine := @ReadCompilerLine;
     C.Compile(Project, False, False);
   finally
     C.Free;
@@ -371,6 +387,8 @@ begin
   begin
     C := TCompiler.Create;
     try
+      npCompilerMsg.Clear;
+      C.OnReadLine := @ReadCompilerLine;
       OK := C.Compile(Project, False, True);
     finally
       C.Free;

@@ -70,7 +70,6 @@ begin
     Inc(FHints);
     Frm.lblHints.Caption := Format('<b>Hints:</b> %d', [FHints]);
   end;
-  //WriteLn('>>> ', ALine);
   inherited;
 end;
 
@@ -147,7 +146,7 @@ begin
         Frm.lblStatus.Caption := 'Aborted by User';
       end
       else
-        Frm.Title := 'Compiled';
+        Frm.Title := 'Done';
 
       if (not AutoClose) or FAborted then
       begin
