@@ -26,6 +26,7 @@ type
     FSW: TScrolledWindow;
     FTV: TTreeView;
     FLS: TListStore;
+    FParentNotebook: TNotebook;
   protected
     procedure CloseBtnClicked(Sender: TObject); override;
   public
@@ -33,6 +34,10 @@ type
     //==
     procedure Clear;
     procedure Add(AStr: String);
+    procedure Process(AStr: String);
+    //==
+    procedure Show; override;
+    procedure Hide; override;
   end;
 
 implementation
@@ -41,6 +46,7 @@ implementation
 
 constructor TCompilerMsgPage.Create(AOwner: TComponent);
 begin
+  FParentNotebook := nil;
   inherited;
   Caption := 'Compiler Messages';
   //==
@@ -66,9 +72,26 @@ begin
   end;
 end;
 
+procedure TCompilerMsgPage.Show;
+begin
+  if Assigned(FParentNotebook) then
+    Parent := FParentNotebook;
+  inherited;
+end;
+
+procedure TCompilerMsgPage.Hide;
+begin
+  if Assigned(Parent) and (Parent is TNotebook) then
+  begin
+    FParentNotebook := TNotebook(Parent);
+    Parent := nil;
+  end;
+  inherited;
+end;
+
 procedure TCompilerMsgPage.CloseBtnClicked(Sender: TObject);
 begin
-  Parent := nil;
+  Hide;
 end;
 
 procedure TCompilerMsgPage.Clear;
@@ -82,6 +105,35 @@ var
 begin
   FLS.Append(It);
   FLS.SetStringValue(It, 0, AStr);
+  //==
+  Show;
+end;
+
+procedure TCompilerMsgPage.Process(AStr: String);
+var
+  P: Integer;
+begin
+  P := Pos(' Error: ', AStr);
+  if P = 0 then
+  begin
+    P := Pos(' Warning: ', AStr);
+    if P = 0 then
+    begin
+      P := Pos(' Fatal: ', AStr);
+      if P = 0 then
+      begin
+        P := Pos(' Note: ', AStr);
+        if P = 0 then
+        begin
+          P := Pos(' Hint: ', AStr);
+        end;
+      end;
+    end;
+  end;
+  if P > 0 then
+  begin
+    Add(AStr);
+  end;
 end;
 
 end.
