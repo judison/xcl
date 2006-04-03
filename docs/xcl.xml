@@ -100,27 +100,27 @@
         <seealso></seealso>
       </element>
       <element name="TResizeMode.rmParent">
-        <short></short>
+        <short>Pass resize request to the parent</short>
       </element>
       <element name="TResizeMode.rmQueue">
-        <short></short>
+        <short>Queue resizes on this widget</short>
       </element>
       <element name="TResizeMode.rmImmediate">
-        <short></short>
+        <short>Perform the resizes now</short>
       </element>
       <element name="TShadowType">
-        <short></short>
+        <short>Used to change the appearance of an outline typically provided by a <link id="TFrame">TFrame</link>.</short>
         <descr></descr>
         <seealso></seealso>
       </element>
       <element name="TShadowType.stNone">
-        <short></short>
+        <short>No outline.</short>
       </element>
       <element name="TShadowType.stIn">
-        <short></short>
+        <short>The outline is bevelled inwards.</short>
       </element>
       <element name="TShadowType.stOut">
-        <short></short>
+        <short>The outline is bevelled outwards like a button.</short>
       </element>
       <element name="TShadowType.stEtchedIn">
         <short></short>
@@ -129,21 +129,21 @@
         <short></short>
       </element>
       <element name="TJustification">
-        <short></short>
+        <short>Used for justifying the text inside a <link id="TLabel">TLabel</link>.</short>
         <descr></descr>
-        <seealso></seealso>
+        <seealso><link id="TAlignment">TAlignment</link></seealso>
       </element>
       <element name="TJustification.jsLeft">
-        <short></short>
+        <short>The text is placed at the left edge of the label.</short>
       </element>
       <element name="TJustification.jsRight">
-        <short></short>
+        <short>The text is placed at the right edge of the label.</short>
       </element>
       <element name="TJustification.jsCenter">
-        <short></short>
+        <short>The text is placed in the center of the label.</short>
       </element>
       <element name="TJustification.jsFill">
-        <short></short>
+        <short>The text is placed distributed across the label.</short>
       </element>
       <element name="TUpdatePolicy">
         <short></short>
@@ -160,35 +160,39 @@
         <short></short>
       </element>
       <element name="TScrollBarPolicy">
-        <short></short>
+        <short>Determines when a scroll bar will be visible.</short>
         <descr></descr>
-        <seealso></seealso>
+        <seealso><link id="TScrollBar"/></seealso>
       </element>
       <element name="TScrollBarPolicy.sbpAlways">
-        <short></short>
+        <short>The scrollbar is always visible.</short>
       </element>
       <element name="TScrollBarPolicy.sbpAutomatic">
-        <short></short>
+        <short>The scrollbar will appear and disappear as necessary.</short>
       </element>
       <element name="TScrollBarPolicy.sbpNever">
-        <short></short>
+        <short>The scrollbar will never appear.</short>
       </element>
       <element name="TPosition">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short>Describes which edge of a widget a certain feature is positioned at.</short>
+        <descr>Like the tabs of a <link id="TNotebook"/>, the handle of a <link id="THandleBox"/> or the valuel of a <link id="TScale"/>.</descr>
+        <seealso>
+          <link id="TNotebook"/>
+          <link id="THandleBox"/>
+          <link id="TScale"/>
+        </seealso>
       </element>
       <element name="TPosition.psLeft">
-        <short></short>
+        <short>The feature is at the left edge.</short>
       </element>
       <element name="TPosition.psRight">
-        <short></short>
+        <short>The feature is at the right edge.</short>
       </element>
       <element name="TPosition.psTop">
-        <short></short>
+        <short>The feature is at the top edge.</short>
       </element>
       <element name="TPosition.psBottom">
-        <short></short>
+        <short>The feature is at the bottom edge.</short>
       </element>
       <element name="TButtonBoxLayout">
         <short></short>
@@ -1508,7 +1512,7 @@
         <short></short>
       </element>
       <element name="TPixBuf">
-        <short></short>
+        <short>The TPixbuf structure contains information that describes an image in memory.</short>
         <descr></descr>
         <errors></errors>
         <seealso></seealso>
@@ -1575,7 +1579,7 @@
       </element>
       <element name="TPixBuf.FileName">
         <short></short>
-        <descr></descr>
+        <descr>Loads an image from a file. The file format is detected automatically.</descr>
         <seealso></seealso>
       </element>
       <element name="TPixBuf.Resource">
@@ -1963,7 +1967,7 @@
         <seealso></seealso>
       </element>
       <element name="TControl">
-        <short></short>
+        <short>Base class for all Controls</short>
         <descr></descr>
         <errors></errors>
         <seealso></seealso>
@@ -2200,7 +2204,7 @@
         <short></short>
       </element>
       <element name="TControl.GetHandle">
-        <short></short>
+        <short>Returns the GtkWidget handle associated.</short>
         <descr></descr>
         <errors></errors>
         <seealso></seealso>
@@ -2227,14 +2231,14 @@
         <short></short>
       </element>
       <element name="TControl.GrabFocus">
-        <short></short>
-        <descr></descr>
+        <short>Grab Focus</short>
+        <descr>Causes control to have the keyboard focus for the <link id="TForm"/> it's inside. It must be a focusable control, such as a <link id="TEntry"/>; something like <link id="TFrame"/> won't work.</descr>
         <errors></errors>
         <seealso></seealso>
       </element>
       <element name="TControl.IsFocus">
-        <short></short>
-        <descr></descr>
+        <short>Determines if the widget is the focus control within its toplevel.</short>
+        <descr>Determines if the widget is the focus control within its toplevel. (This does not mean that the cfHasFocus flag is necessarily set; cfHasFocus will only be set if the toplevel widget additionally has the global input focus.)</descr>
         <errors></errors>
         <seealso></seealso>
       </element>
@@ -2331,23 +2335,25 @@
         <seealso></seealso>
       </element>
       <element name="TControl.Sensitive">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short>Whether the widget responds to input.</short>
+        <descr>Sets the sensitivity of a control. A control is sensitive if the user can interact with it. Insensitive controls are "grayed out" and the user can't interact with them. Insensitive controls are known as "inactive", "disabled", or "ghosted" in some other toolkits.</descr>
+        <seealso>
+          <link id="TControl.Visible"/>
+        </seealso>
       </element>
       <element name="TControl.Visible">
-        <short></short>
+        <short>Whether the control is visible.</short>
         <descr></descr>
         <seealso></seealso>
       </element>
       <element name="TControl.WidthRequest">
         <short></short>
-        <descr></descr>
+        <descr>Override for width request of the control, or -1 if natural request should be used.</descr>
         <seealso></seealso>
       </element>
       <element name="TControl.HeightRequest">
         <short></short>
-        <descr></descr>
+        <descr>Override for height request of the widget, or -1 if natural request should be used.</descr>
         <seealso></seealso>
       </element>
       <element name="TControl.FixedX">
@@ -2451,10 +2457,18 @@
         <seealso></seealso>
       </element>
       <element name="TMiscControl">
-        <short></short>
-        <descr></descr>
+        <short>Base class for controls with alignments and padding</short>
+        <descr>
+          <p>The TMiscControl is an abstract control which is not useful itself, but is used to derive subclasses which have alignment and padding attributes.</p>
+					<p>The horizontal and vertical padding properties allows extra space to be added around the control.</p>
+					<p>The horizontal and vertical alignment properties enable the control to be positioned within its allocated area. Note that if the widget is added to a container in such a way that it expands automatically to fill its allocated area, the alignment settings will not alter the controls position.</p>
+				</descr>
         <errors></errors>
-        <seealso></seealso>
+        <seealso>
+          <link id="TLabel"/>
+          <link id="TImage"/>
+          <link id="TArrow"/>
+        </seealso>
       </element>
       <element name="TMiscControl.GetXPad.Result">
         <short></short>
@@ -2487,71 +2501,71 @@
         <short></short>
       </element>
       <element name="TMiscControl.GetPadding">
-        <short></short>
+        <short>Gets both vertical and horizontal padding</short>
         <descr></descr>
         <errors></errors>
         <seealso></seealso>
       </element>
       <element name="TMiscControl.GetPadding.AXPad">
-        <short></short>
+        <short>variable to store padding in the X direction</short>
       </element>
       <element name="TMiscControl.GetPadding.AYPad">
-        <short></short>
+        <short>variable to store padding in the Y direction</short>
       </element>
       <element name="TMiscControl.SetPadding">
-        <short></short>
+        <short>Sets both vertical and horizontal padding</short>
         <descr></descr>
         <errors></errors>
         <seealso></seealso>
       </element>
       <element name="TMiscControl.SetPadding.AXPad">
-        <short></short>
+        <short>the amount of space to add on the left and right of the widget, in pixels</short>
       </element>
       <element name="TMiscControl.SetPadding.AYPad">
-        <short></short>
+        <short>the amount of space to add on the top and bottom of the widget, in pixels</short>
       </element>
       <element name="TMiscControl.GetAlignment">
-        <short></short>
+        <short>Gets both vertical and horizontal alignment</short>
         <descr></descr>
         <errors></errors>
         <seealso></seealso>
       </element>
       <element name="TMiscControl.GetAlignment.AXAlign">
-        <short></short>
+        <short>variable to store the horizontal alignment</short>
       </element>
       <element name="TMiscControl.GetAlignment.AYAlign">
-        <short></short>
+        <short>variable to store the vertical alignment</short>
       </element>
       <element name="TMiscControl.SetAlignment">
-        <short></short>
+        <short>Sets both vertical and horizontal alignment</short>
         <descr></descr>
         <errors></errors>
         <seealso></seealso>
       </element>
       <element name="TMiscControl.SetAlignment.AXAlign">
-        <short></short>
+        <short>the horizontal alignment, from 0 (left) to 1 (right)</short>
       </element>
       <element name="TMiscControl.SetAlignment.AYAlign">
-        <short></short>
+        <short>the vertical alignment, from 0 (top) to 1 (bottom)</short>
       </element>
       <element name="TMiscControl.XPad">
-        <short></short>
-        <descr></descr>
+        <short>Horizontal Padding</short>
+        <descr>The amount of space to add on the left and right of the widget, in pixels.</descr>
         <seealso></seealso>
       </element>
       <element name="TMiscControl.YPad">
-        <short></short>
-        <descr></descr>
+        <short>Vertical Padding</short>
+        <descr>The amount of space to add on the top and bottom of the widget, in pixels.</descr>
         <seealso></seealso>
       </element>
       <element name="TMiscControl.XAlign">
-        <short></short>
-        <descr></descr>
+        <short>Horizontal Alignment</short>
+        <descr>The horizontal alignment, from 0 (left) to 1 (right). Reversed for RTL layouts.</descr>
         <seealso></seealso>
       </element>
       <element name="TMiscControl.YAlign">
-        <short></short>
-        <descr></descr>
+        <short>Vertical Alignment</short>
+        <descr>The vertical alignment, from 0 (top) to 1 (bottom).</descr>
         <seealso></seealso>
       </element>
       <element name="TArrow">
