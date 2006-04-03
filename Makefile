@@ -1,12 +1,10 @@
-OPT=
-FPC=fpc
-
 all:
 	make -C xcl
 	make -C xde
+	make -C docs
 
-run:
-	make -C xde run
+html:
+	make -C docs html
 
 clean:
 	rm -f *~
