@@ -91,7 +91,7 @@ type
   {  |   |   |-} TNotebookPage = class;
   {  |   |   |-} THandleBox = class;
   {  |   |   |-} TExpander = class;
-  {  |   |   |-} TViewPort = class;
+  {  |   |   |-} TViewport = class;
   {  |   |   \-} TCustomToolItem = class;
   {  |   |       |-} TToolItem = class;
   {  |   |       |-  TToolButton = class; XCL Deprecated (use TToolItem)}
