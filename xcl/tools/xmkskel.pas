@@ -153,7 +153,11 @@ function TSkelEngine.CreateElement(AClass: TPTreeElement; const AName: String;
   var
    lel: TDOMElement;
   begin
-    Result:=Assigned(AParent) and (Length(AName) > 0) and
+    if ((APasElement.ClassType = TPasArgument) and (FindXMLElement(APasElement.Parent.FullName) = nil)) or
+       ((APasElement.ClassType = TPasResultElement) and (FindXMLElement(APasElement.Parent.FullName) = nil)) then
+      Result := False
+    else
+      Result:=Assigned(AParent) and (Length(AName) > 0) and
             (not DisableArguments or (APasElement.ClassType <> TPasArgument)) and
             (not DisableFunctionResults or (APasElement.ClassType <> TPasResultElement)) and
             (not DisablePrivate or (AVisibility<>visPrivate)) and
