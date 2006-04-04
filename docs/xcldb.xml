@@ -2,502 +2,502 @@
 <fpdoc-descriptions>
   <package name="xcl">
     <module name="xcldb">
-      <short></short>
-      <descr></descr>
+      <short/>
+      <descr/>
       <element name="Classes">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="Sysutils">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="xcl">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="db">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink.GetCanModify.Result">
-        <short></short>
+        <short/>
       </element>
       <element name="TFieldDataLink.SetEditing.AValue">
-        <short></short>
+        <short/>
       </element>
       <element name="TFieldDataLink.SetField.AValue">
-        <short></short>
+        <short/>
       </element>
       <element name="TFieldDataLink.SetFieldName.AValue">
-        <short></short>
+        <short/>
       </element>
       <element name="TFieldDataLink.FocusControl.Field">
-        <short></short>
+        <short/>
       </element>
       <element name="TFieldDataLink.RecordChanged.Field">
-        <short></short>
+        <short/>
       </element>
       <element name="TFieldDataLink.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink.Edit">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink.Edit.Result">
-        <short></short>
+        <short/>
       </element>
       <element name="TFieldDataLink.Modified">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink.Reset">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink.CanModify">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink.Control">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink.Editing">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink.Field">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink.FieldName">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink.OnDataChange">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink.OnEditingChange">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink.OnUpdateData">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TFieldDataLink.OnActiveChange">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDataSetAction">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetAction.SetDataSource.AValue">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetAction.Notification.AComponent">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetAction.Notification.Operation">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetAction.IsCaptionStored.Result">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetAction.IsIconNameStored.Result">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetAction.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetAction.Create.AOwner">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetAction.DataSource">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDataSetAction.Caption">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDataSetAction.IconName">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDataSetAction.Visible">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDataSetAction.OnExecute">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDataSetAction.OnUpdate">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDataSetFirst">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetFirst.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetFirst.Create.AOwner">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetLast">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetLast.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetLast.Create.AOwner">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetNext">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetNext.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetNext.Create.AOwner">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetPrior">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetPrior.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetPrior.Create.AOwner">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetRefresh">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetRefresh.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetRefresh.Create.AOwner">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetCancel">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetCancel.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetCancel.Create.AOwner">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetDelete">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetDelete.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetDelete.Create.AOwner">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetEdit">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetEdit.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetEdit.Create.AOwner">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetInsert">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetInsert.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetInsert.Create.AOwner">
-        <short></short>
+        <short/>
       </element>
       <element name="TDataSetPost">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetPost.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDataSetPost.Create.AOwner">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBLabel">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDBLabel.DataChange.Sender">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBLabel.GetDataField.Result">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBLabel.SetDataField.AValue">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBLabel.GetDataSource.Result">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBLabel.SetDataSource.AValue">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBLabel.GetField.Result">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBLabel.Notification.AComponent">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBLabel.Notification.Operation">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBLabel.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDBLabel.Create.AOwner">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBLabel.Destroy">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDBLabel.Field">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDBLabel.DataField">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDBLabel.DataSource">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDBEntry">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDBEntry.ActiveChange.Sender">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.DataChange.Sender">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.EditingChange.Sender">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.UpdateData.Sender">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.GetDataField.Result">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.SetDataField.AValue">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.GetDataSource.Result">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.SetDataSource.AValue">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.GetField.Result">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.DoChanged.Msg">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.DoFocusIn.Msg">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.DoFocusOut.Msg">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.Notification.AComponent">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.Notification.Operation">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDBEntry.Create.AOwner">
-        <short></short>
+        <short/>
       </element>
       <element name="TDBEntry.Destroy">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TDBEntry.Field">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDBEntry.DataField">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDBEntry.DataSource">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDBEntry.HasFrame">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDBEntry.MaxLength">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDBEntry.Visibility">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDBEntry.WidthChars">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="TDBEntry.OnChanged">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="Register">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
     </module>
   </package>
