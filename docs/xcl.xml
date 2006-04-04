@@ -103,7 +103,7 @@
         <short>Pass resize request to the parent</short>
       </element>
       <element name="TResizeMode.rmQueue">
-        <short>Queue resizes on this widget</short>
+        <short>Queue resizes on this control</short>
       </element>
       <element name="TResizeMode.rmImmediate">
         <short>Perform the resizes now</short>
