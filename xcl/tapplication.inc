@@ -21,6 +21,7 @@
   protected
     procedure SetTitle(const AValue: string); override;
     procedure DoRun; override;
+    procedure DoIdle;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -91,39 +92,58 @@ begin
   FActionList.Remove(AAction);
 end;
 
-procedure TApplication.ProcessMessages; 
+procedure TApplication.ProcessMessages;
 begin
   ProcessMessages(False);
 end;
 
-procedure TApplication.ProcessMessages(ABlock: Boolean); 
-var
-  I: Integer;
+procedure TApplication.ProcessMessages(ABlock: Boolean);
 begin
+  // TODO: Remove this try ... except
   try
     while (gtk_events_pending > 0) do
       gtk_main_iteration_do(False); // Don't Block
-   
-    //===============================
-    // Idle (Does not glib implement some standard way to do it?)
-    I := 0;
-    while I < FActionList.Count do
-    begin
-      TCustomAction(FActionList[I]).Update;
-      Inc(I);
-    end;
-    // TForm must call some Application.AddForm, like TCustomAction does
-    for I := 0 to ComponentCount -1 do
-      if Components[I] is TForm then
-        TForm(Components[I]).DoIdle;
-    //===============================
-  
-    if ABlock then
+
+    DoIdle;
+
+    if (not Terminated) and ABlock then
       gtk_main_iteration_do(True); // Block
   except
     on E: Exception do
+    begin
+      WriteLn('You are not supossed to read it!!! please tell me (judison@gmail.com)');
       ShowException(E);
+    end;
   end;
+end;
+
+procedure TApplication.DoIdle;
+var
+  I: Integer;
+begin
+  // Action Lists
+  I := 0;
+  while I < FActionList.Count do
+  begin
+    try
+      TCustomAction(FActionList[I]).Update;
+    except
+      on E: Exception do
+        ShowException(E);
+    end;
+    Inc(I);
+  end;
+
+  // Forms
+  // TODO: TForm must call some AddForm, like TCustomAction does
+  for I := 0 to ComponentCount -1 do
+    if Components[I] is TForm then
+    try
+      TForm(Components[I]).DoIdle;
+    except
+      on E: Exception do
+        ShowException(E);
+    end;
 end;
 
 procedure TApplication.DoRun;
@@ -146,12 +166,33 @@ begin
   inherited;
   g_set_application_name(PChar(AValue));
 end;
+{
+procedure hnd_log(log_domain: pgchar; log_level: TGLogLevelFlags; msg: pgchar; user_data: gpointer); cdecl;
+begin
+  case log_level of
+    G_LOG_LEVEL_ERROR + G_LOG_FLAG_FATAL: Application.ShowMessage(mtError, [mbOK], 'Error', log_domain + '-ERROR', msg);
+    G_LOG_LEVEL_CRITICAL: Application.ShowMessage(mtError, [mbOK], 'Critical', log_domain + '-CRITICAL', msg);
+    G_LOG_LEVEL_WARNING: Application.ShowMessage(mtWarning, [mbOK], 'Warning', log_domain + '-WARNING', msg);
+    G_LOG_LEVEL_MESSAGE: Application.ShowMessage(mtInfo, [mbOK], 'Message', log_domain + '-MESSAGE', msg);
+    G_LOG_LEVEL_INFO: Application.ShowMessage(mtInfo, [mbOK], 'Info', log_domain + '-INFO', msg);
+    G_LOG_LEVEL_DEBUG: Application.ShowMessage(mtInfo, [mbOK], 'Debug', log_domain + '-DEBUG', msg);
+  else
+    WriteLn('=====================================================');
+    WriteLn('Domain : ', log_domain);
+    WriteLn('Level  : ', Integer(log_level));
+    WriteLn('Message: ', Msg);
+  end
+end;
+}
 
 procedure TApplication.Initialize;
 begin
   inherited;
   FCurrentLocale := PChar(gtk_set_locale);
   gtk_init(@argc, @argv);
+
+//  g_log_set_handler('Gtk', G_LOG_FLAG_FATAL {or G_LOG_FLAG_RECURSION} or G_LOG_LEVEL_ERROR or G_LOG_LEVEL_CRITICAL or G_LOG_LEVEL_WARNING or G_LOG_LEVEL_MESSAGE or G_LOG_LEVEL_INFO or G_LOG_LEVEL_DEBUG , @hnd_log, nil);
+//  g_log_set_handler('GLib', G_LOG_FLAG_FATAL {or G_LOG_FLAG_RECURSION} or G_LOG_LEVEL_ERROR or G_LOG_LEVEL_CRITICAL or G_LOG_LEVEL_WARNING or G_LOG_LEVEL_MESSAGE or G_LOG_LEVEL_INFO or G_LOG_LEVEL_DEBUG , @hnd_log, nil);
 
   // create default colormap
   FColormap := TColormap.Create(gdk_colormap_get_system);
@@ -167,17 +208,13 @@ var
   InSE: Boolean = False;
 
 procedure TApplication.ShowException(E: Exception);
-{$IFDEF Win32}
+{IFDEF Win32
 begin
   WriteLn('Exception (',E.ClassName,'):');
   WriteLn(E.Message);
   WriteLn('*************************');
 end;
-{$ELSE}
-var
-  Dlg: Pointer;
-  Msg: String;
-  Frm: Pointer;
+ELSE}
 begin
   if E is EAbort then
     exit;
@@ -190,30 +227,14 @@ begin
   end;
   InSE := True;
 
-  Dlg := nil;
-  if Assigned(FMainForm) then
-    Frm := FMainForm.Handle
+  if E.ClassType = Exception then
+    ShowMessage(mtError, [mbOK], 'Exception', 'Exception:', E.Message)
   else
-    Frm := nil;
+    ShowMessage(mtError, [mbOK], 'Exception', 'Exception '+E.ClassName+':', E.Message);
 
-  ProcessMessages(False);
-
-  Msg := Format('Exception (%s):'#10'%s', [E.ClassName, E.Message]);
-  Dlg := gtk_message_dialog_new(Frm, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, PChar(Msg));
-  if Assigned(Dlg) then
-  begin
-    gtk_dialog_run(Dlg);
-    gtk_widget_destroy(Dlg);
-  end
-  else
-  begin
-    WriteLn('Exception (',E.ClassName,'):');
-    WriteLn(E.Message);
-    WriteLn('*************************');
-  end;
   InSE := False;
 end;
-{$ENDIF}
+{ENDIF}
 
 procedure TApplication.CreateForm(AClass: TFormClass; var Ref);
 begin
