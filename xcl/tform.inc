@@ -372,8 +372,13 @@ end;
 
 procedure TForm.ReadBinFrm(AStream: TStream);
 begin
-  AStream.Position := 0;
-  AStream.ReadComponent(Self);
+  try
+    AStream.Position := 0;
+    AStream.ReadComponent(Self);
+  except
+    on E: Exception do
+      Application.ShowException(E);
+  end;
 end;
 
 procedure TForm.ReadTxtFrm(AStream: TStream);

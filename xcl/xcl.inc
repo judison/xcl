@@ -99,3 +99,4 @@
 {$I util_color.inc}
 {$I util_signals.inc}
 {$I util_resources.inc}
+{$I util_gerror.inc}

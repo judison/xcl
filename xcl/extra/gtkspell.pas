@@ -26,6 +26,8 @@ interface
 uses Classes, xcl;
 
 type
+  EGtkSpellError = class(EGError);
+
   TGtkSpell = class(TComponent)
   private
     Handle: Pointer;
@@ -67,7 +69,19 @@ function  gtkspell_get_from_text_view(view: PGtkTextView): Pointer; cdecl; exter
 procedure gtkspell_detach(spell: Pointer); cdecl; external gtkspelllib;
 function  gtkspell_set_language(spell: Pointer; lang: PGChar; error: PPGError): gboolean; cdecl; external gtkspelllib;
 procedure gtkspell_recheck_all(spell: Pointer); cdecl; external gtkspelllib;
+function  gtkspell_error_quark: TGQuark; cdecl; external gtkspelllib;
 //==================
+
+procedure RaiseGtkSpellError(var AError: Pointer);
+begin
+  if Assigned(AError) then
+  begin
+    if PGError(AError)^.Domain = gtkspell_error_quark then
+      EGtkSpellError.Create(PGError(AError)^.Domain, PGError(AError)^.Code, PGError(AError)^.Message)
+    else
+      RaiseGError(AError);
+  end;
+end;
 
 { TGtkSpell }
 
@@ -95,7 +109,11 @@ begin
 end;
 
 procedure TGtkSpell.SetTextView(AValue: TTextView);
+var
+  Err: PGError;
 begin
+  Err := nil;
+
   if AValue <> FTextView then
   begin
     Detach;
@@ -105,27 +123,32 @@ begin
     if FTextView <> nil then
     begin
       if FLanguage = '' then
-        Handle := gtkspell_new_attach(FTextView.GetHandle, nil, nil)
+        Handle := gtkspell_new_attach(FTextView.GetHandle, nil, @err)
       else
-        Handle := gtkspell_new_attach(FTextView.GetHandle, PChar(FLanguage), nil);
+        Handle := gtkspell_new_attach(FTextView.GetHandle, PChar(FLanguage), @err);
 
+      RaiseGtkSpellError(Err);
+      {
       if Handle = nil then
       begin
         FTextView := nil;
         raise Exception.Create('GtkSpell can''t attach to this TextView.');
       end;
+      }
     end;
   end;
 end;
 
 procedure TGtkSpell.SetLanguage(AValue: String);
+var
+  Err: PGError;
 begin
   if AValue <> FLanguage then
   begin
-    if gtkspell_set_language(Handle, PChar(AValue), nil) then
-      FLanguage := AValue
-    else
-      raise Exception.Create('Can''t set this language.');
+    Err := nil;
+    if gtkspell_set_language(Handle, PChar(AValue), @Err) then
+      FLanguage := AValue;
+    RaiseGtkSpellError(Err);
   end;
 end;
 

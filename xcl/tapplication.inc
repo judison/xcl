@@ -238,9 +238,14 @@ end;
 
 procedure TApplication.CreateForm(AClass: TFormClass; var Ref);
 begin
-  TForm(Ref) := AClass.Create(Self);
-  if FMainForm = nil then
-    FMainForm := TForm(Ref);
+  try
+    TForm(Ref) := AClass.Create(Self);
+    if FMainForm = nil then
+      FMainForm := TForm(Ref);
+  except
+    on E:Exception do
+      ShowException(E);
+  end;
 end;
 
 function TApplication.ShowMessage(AType: TMessageType; AButtons: TMessageButtons; ATitle: String; AMsg: String; ASec: String): TMessageResponse; inline;
