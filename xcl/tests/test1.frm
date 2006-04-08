@@ -2,7 +2,7 @@ object TTest1
   Title = 'Teste Ola Mundo'
   OnShow = MyFormShow
   object PB: TPixBuf
-    IconName = 'stock_bell'
+    IconName = 'stock_bellaoe'
     IconSize = 32
   end
   object TActionList

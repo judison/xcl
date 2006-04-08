@@ -28,6 +28,11 @@ function g_closure_new_simple(sizeof_closure:guint; data:gpointer):PGClosure; cd
 
 function gdk_event_new(_type: TGdkEventType): PGdkEvent;  cdecl; external gdklib;
 
+//==
+function gtk_file_chooser_error_quark: TGQuark; cdecl; external gtklib;
+function gtk_file_system_error_quark: TGQuark; cdecl; external gtklib;
+function gtk_icon_theme_error_quark: TGQuark; cdecl; external gtklib;
+
 // GtkMessageDialog
 
 procedure gtk_message_dialog_format_secondary_text(dialog: pointer; msg: pgchar); cdecl; external gtklib;

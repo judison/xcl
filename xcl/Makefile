@@ -1,4 +1,4 @@
-OPT=
+OPT=-dGTK2_6
 FPC=fpc
 
 all: xcl.ppu xcldb.ppu

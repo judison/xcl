@@ -103,10 +103,9 @@ begin
     begin
       err := nil;
       FGdkPixBuf := gdk_pixbuf_new_from_file(PChar(FFileName), @err);
-      if err <> nil then
-      begin
-        WriteLn('GTK Error loading pixbuf!');
-      end;
+
+      RaiseGError(err);
+
       if Assigned(FGdkPixBuf) then
         g_object_ref(FGdkPixBuf);
     end;
@@ -135,6 +134,7 @@ var
   RData: Pointer;
   RSize: LongWord;
   PixData: TGdkPixData;
+  Err: PGError;
 begin
   if AValue <> FResource then
   begin
@@ -150,11 +150,22 @@ begin
 
     try
       GetResource('PIXDATA', FResource, RData, RSize);
-      gdk_pixdata_deserialize(@PixData, RSize, RData, nil);
-      FGdkPixBuf := gdk_pixbuf_from_pixdata(@pixdata, false, nil);
+
+      Err := nil;
+      gdk_pixdata_deserialize(@PixData, RSize, RData, @Err);
+      RaiseGError(Err);
+  
+      Err := nil;
+      FGdkPixBuf := gdk_pixbuf_from_pixdata(@pixdata, false, @Err);
+      RaiseGError(Err);
+  
       if Assigned(FGdkPixBuf) then
         g_object_ref(FGdkPixBuf);
     except
+      on EResNotFound do
+      ; // Ignore
+      else
+        raise;
     end;
 
     Changed;
@@ -176,6 +187,7 @@ end;
 procedure TPixBuf.SetIconName(AName: String; ASize: Integer);
 var
   icon_theme: Pointer;
+//  Err: PGError;
 begin
   if Assigned(FGdkPixBuf) then
   begin
@@ -193,7 +205,14 @@ begin
   if (FIconSize > 0) and (FIconName <> '') then
   begin
     icon_theme := gtk_icon_theme_get_default();
+
     FGdkPixBuf := gtk_icon_theme_load_icon(icon_theme, PChar(FIconName), FIconSize, 0, nil);
+
+// By now we don't want to raise an exception
+//    Err := nil;
+//    FGdkPixBuf := gtk_icon_theme_load_icon(icon_theme, PChar(FIconName), FIconSize, 0, @Err);
+//    RaiseGError(Err);
+
     // Don't ref count!
   end;
 

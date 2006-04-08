@@ -12,6 +12,8 @@
 {** INTERFACE *************************************}{$IFDEF INC_READ_INTERFACE}
 
 type
+  EResNotFound = class(Exception);
+
   TResourceStream = class(TCustomMemoryStream)
   public
     constructor Create(RType, RName: AnsiString);
@@ -96,7 +98,7 @@ begin
       exit;
     end;
   end;
-  raise Exception.CreateFmt('Resource not found: %s\%s', [RType, RName]);
+  raise EResNotFound.CreateFmt('Resource not found: %s\%s', [RType, RName]);
 end;
 
 {$ENDIF}
