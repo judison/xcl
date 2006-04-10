@@ -165,7 +165,7 @@ var
   PP: PPropList;
   PI: PTypeInfo;
   I: Longint;
-  TopP: Integer;
+  TopP: Word;
   C: TControl;
   O: TObject;
   procedure AddProp(AProp: PPropInfo; AClass: TPropertyEditorClass; AEvent: Boolean);
@@ -506,7 +506,7 @@ end;
 
 procedure TEnumPropEditor.CompChanged;
 var
-  b: integer;
+  B: Integer;
   It: TTreeIter;
 begin
   B := GetOrdProp(FComp, FProp);

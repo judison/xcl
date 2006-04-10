@@ -19,7 +19,7 @@ unit main;
 interface
 
 uses Classes, SysUtils, xcl, Buffer, BufferList, xclsourceview, componentpalette,
-  propeditor, designform, xpr, Compiler, CompilerMsg;
+  propeditor, designform, xpr, Compiler, CompilerMsg, dbg;
 
 type
   TMainForm = class(TForm)
@@ -94,13 +94,13 @@ type
     procedure MainFormShow(Sender: TObject);
     procedure ProjectTVRowActivated(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn);
   private
+    //--
     procedure PaletteClassSelected(Sender: TObject; AClass: TComponentClass);
     //
     function CurrentBuffer: TBuffer;
     function AddTree(C: TComponent; P: TTreeIter): TTreeIter;
     //--
     procedure UpdateProjectManager;
-
     //===
     procedure ReadCompilerLine(Sender: TObject; ALine: String);
   protected
@@ -112,9 +112,12 @@ type
     //--
     Buffers: TBufferList;
     //--
+    //--
     CompEd: TComponentEditor;
     MyForm: TDesignForm;
     Project: TXPRProject;
+    //--
+    Debugger: TDebugger;
     //--
     npCompilerMsg: TCompilerMsgPage;
     //--
@@ -141,6 +144,8 @@ constructor TMainForm.Create(AOwner: TComponent);
 begin
   inherited;
   LangMan := TSourceLanguagesManager.Create(Self);
+  //==
+  Debugger := TDebugger.Create(Self);
   //==
   CompPalette := TComponentPalette.Create(Self);
   CompPalette.Parent := TopToolBox;
@@ -380,7 +385,7 @@ procedure TMainForm.ProjectRun(Sender: TObject);
 var
   C: TCompiler;
   OK: Boolean;
-  P: TProcess;
+//  P: TProcess;
 begin
 
   if Project.NeedsToCompile then
@@ -399,6 +404,11 @@ begin
 
   if OK then
   begin
+    Debugger.CreateTargetProcess(GetCurrentDir+'/'+Project.ProjectExeFile);
+  end;
+{
+  if OK then
+  begin
     P := TProcess.Create(nil);
     try
       P.CommandLine := GetCurrentDir+'/'+Project.ProjectExeFile;
@@ -411,6 +421,7 @@ begin
       P.Free;
     end;
   end;
+}
 end;
 
 procedure TMainForm.ProjectRunUpd(Sender: TObject);

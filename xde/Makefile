@@ -3,7 +3,7 @@ XRC_PATH=$(XCL_PATH)/tools
 
 XRC=$(XRC_PATH)/xrc
 
-OPT=-Fu$(XCL_PATH) -Fu$(XCL_PATH)/extra  -Fu./sourceview -Fu./icons
+OPT=-g -Fu$(XCL_PATH) -Fu$(XCL_PATH)/extra  -Fu./sourceview -Fu./icons
 FPC=fpc
 
 PAS_FILES =	exctrls.pas \

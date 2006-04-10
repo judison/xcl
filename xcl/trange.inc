@@ -21,18 +21,18 @@
     procedure SetInverted(AValue: Boolean);
     procedure SetUpdatePolicy(AValue: TUpdatePolicy);
     function IsMyAdjStored: Boolean;
-    function GetLower: Double;
-    function GetUpper: Double;
-    function GetValue: Double;
-    function GetStepIncrement: Double;
-    function GetPageIncrement: Double;
-    function GetPageSize: Double;
-    procedure SetLower(AValue: Double);
-    procedure SetUpper(AValue: Double);
-    procedure SetValue(AValue: Double);
-    procedure SetStepIncrement(AValue: Double);
-    procedure SetPageIncrement(AValue: Double);
-    procedure SetPageSize(AValue: Double);
+    function GetLower: Single;
+    function GetUpper: Single;
+    function GetValue: Single;
+    function GetStepIncrement: Single;
+    function GetPageIncrement: Single;
+    function GetPageSize: Single;
+    procedure SetLower(AValue: Single);
+    procedure SetUpper(AValue: Single);
+    procedure SetValue(AValue: Single);
+    procedure SetStepIncrement(AValue: Single);
+    procedure SetPageIncrement(AValue: Single);
+    procedure SetPageSize(AValue: Single);
   protected
     procedure CreateMyAdj;
     procedure DestroyMyAdj;
@@ -43,12 +43,12 @@
     property Inverted: Boolean read GetInverted write SetInverted default False;
     property UpdatePolicy: TUpdatePolicy read GetUpdatePolicy write SetUpdatePolicy default upContinuous;
     //---
-    property Lower: Double read GetLower write SetLower stored IsMyAdjStored;
-    property Upper: Double read GetUpper write SetUpper stored IsMyAdjStored;
-    property Value: Double read GetValue write SetValue stored IsMyAdjStored;
-    property StepIncrement: Double read GetStepIncrement write SetStepIncrement stored IsMyAdjStored;
-    property PageIncrement: Double read GetPageIncrement write SetPageIncrement stored IsMyAdjStored;
-    property PageSize: Double read GetPageSize write SetPageSize stored IsMyAdjStored;
+    property Lower: Single read GetLower write SetLower stored IsMyAdjStored;
+    property Upper: Single read GetUpper write SetUpper stored IsMyAdjStored;
+    property Value: Single read GetValue write SetValue stored IsMyAdjStored;
+    property StepIncrement: Single read GetStepIncrement write SetStepIncrement stored IsMyAdjStored;
+    property PageIncrement: Single read GetPageIncrement write SetPageIncrement stored IsMyAdjStored;
+    property PageSize: Single read GetPageSize write SetPageSize stored IsMyAdjStored;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
@@ -120,62 +120,62 @@ begin
   Result := (FAdjustment = FMyAdjustment);
 end;
 
-function TRange.GetLower: Double;
+function TRange.GetLower: Single;
 begin
   Result := Adjustment.Lower;
 end;
 
-function TRange.GetUpper: Double;
+function TRange.GetUpper: Single;
 begin
   Result := Adjustment.Upper;
 end;
 
-function TRange.GetValue: Double;
+function TRange.GetValue: Single;
 begin
   Result := Adjustment.Value;
 end;
 
-function TRange.GetStepIncrement: Double;
+function TRange.GetStepIncrement: Single;
 begin
   Result := Adjustment.StepIncrement;
 end;
 
-function TRange.GetPageIncrement: Double;
+function TRange.GetPageIncrement: Single;
 begin
   Result := Adjustment.PageIncrement;
 end;
 
-function TRange.GetPageSize: Double;
+function TRange.GetPageSize: Single;
 begin
   Result := Adjustment.PageSize;
 end;
 
-procedure TRange.SetLower(AValue: Double);
+procedure TRange.SetLower(AValue: Single);
 begin
   Adjustment.Lower := AValue;
 end;
 
-procedure TRange.SetUpper(AValue: Double);
+procedure TRange.SetUpper(AValue: Single);
 begin
   Adjustment.Upper := AValue;
 end;
 
-procedure TRange.SetValue(AValue: Double);
+procedure TRange.SetValue(AValue: Single);
 begin
   Adjustment.Value := AValue;
 end;
 
-procedure TRange.SetStepIncrement(AValue: Double);
+procedure TRange.SetStepIncrement(AValue: Single);
 begin
   Adjustment.StepIncrement := AValue;
 end;
 
-procedure TRange.SetPageIncrement(AValue: Double);
+procedure TRange.SetPageIncrement(AValue: Single);
 begin
   Adjustment.PageIncrement := AValue;
 end;
 
-procedure TRange.SetPageSize(AValue: Double);
+procedure TRange.SetPageSize(AValue: Single);
 begin
   Adjustment.PageSize := AValue;
 end;
