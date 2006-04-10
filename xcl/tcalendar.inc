@@ -57,7 +57,7 @@ end;
 
 function TCalendar.GetDate: TDateTime;
 var
-  lY,lM,lD: dword;
+  lY,lM,lD: word;
 begin
   gtk_calendar_get_date(Handle, @lY, @lM, @lD);
   Result := EncodeDate(lY, lM+1, lD);
