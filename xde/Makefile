@@ -20,6 +20,7 @@ PAS_FILES =	exctrls.pas \
 		compiler_opts.pas \
 		editor_opts.pas \
 		frm_newfile.pas \
+		formatread.pas \
 		dbg.pas \
 		jitform.pas \
 		jitforms.pas \
