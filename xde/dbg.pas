@@ -55,7 +55,15 @@ uses
 {$IFDEF UNIX}
   Unix, BaseUnix,
 {$ENDIF}
-  glib2;
+  glib2, formatread;
+
+// Talvez usando o --annotate=3 ele nunca mante linhas nao inteiras....
+// entao daria pra ir dando read_chars ateh achar um #13 ou #10
+// --
+// gtk tem uma funcao read line??
+// ----------------
+// Retirar o TargetProcess, com annotation, da pra separar o output do gdb
+// do output da app... :D
 
 function hnd_io_std(source: PGIOChannel; condition: TGIOCondition; data: gpointer): gboolean; cdecl;
 var
@@ -106,7 +114,7 @@ begin
   FAcceptCmd := False;
 
   FDbgProcess := TProcess.Create(Self);
-  FDbgProcess.CommandLine := 'gdb -q';
+  FDbgProcess.CommandLine := 'gdb -q --annotate=3';
   // TODO: under win9x and winMe should be created with console, otherwise no break can be sent.
   FDbgProcess.Options:= [poUsePipes, poNoConsole, poStdErrToOutPut, poNewProcessGroup];
   FDbgProcess.ShowWindow := swoNone;
@@ -133,7 +141,7 @@ begin
   if Result then
   begin
     SendCmd('attach %d', [FTargetProcess.Handle]);
-    SendCmd('c');
+    SendCmd('continue');
   end;
 end;
 
@@ -182,12 +190,14 @@ begin
   else
     FDbgOutputBuf := FDbgOutputBuf + C;
   //--
+{
   if FDbgOutputBuf = '(gdb) ' then
   begin
     DoDbgOutput(FDbgOutputBuf);
     FDbgOutputBuf := '';
     FAcceptCmd := True;
-  end
+  end;
+}
 end;
 
 procedure TDebugger.DoDbgOutput(const AText: String);
