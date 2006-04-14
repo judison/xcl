@@ -145,8 +145,6 @@ begin
   inherited;
   LangMan := TSourceLanguagesManager.Create(Self);
   //==
-  Debugger := TDebugger.Create(Self);
-  //==
   CompPalette := TComponentPalette.Create(Self);
   CompPalette.Parent := TopToolBox;
 //  CompPalette.BoxExpand := True;
@@ -164,6 +162,8 @@ begin
   npCompilerMsg := TCompilerMsgPage.Create(Self);
   npCompilerMsg.Parent := nbBottom;
   npCompilerMsg.Hide;
+  //==
+  Debugger := TDebugger.Create(Self);
 end;
 
 function TMainForm.CurrentBuffer: TBuffer;
@@ -404,24 +404,11 @@ begin
 
   if OK then
   begin
-    Debugger.CreateTargetProcess(GetCurrentDir+'/'+Project.ProjectExeFile);
+    Debugger.Load(Project.ProjectExeFile);
+    // Set breakpoints...
+    Debugger.RunTarget;
   end;
-{
-  if OK then
-  begin
-    P := TProcess.Create(nil);
-    try
-      P.CommandLine := GetCurrentDir+'/'+Project.ProjectExeFile;
-      P.Execute;
-      while (not Application.Terminated) and P.Running do
-        Application.ProcessMessages(True);
-      if P.Running then // Means Application Terminated
-        P.Terminate(0);
-    finally
-      P.Free;
-    end;
-  end;
-}
+
 end;
 
 procedure TMainForm.ProjectRunUpd(Sender: TObject);

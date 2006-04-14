@@ -23,29 +23,44 @@ uses
   Classes, SysUtils, Process, XCL;
 
 type
+  PBreakpoint = ^TBreakpoint;
+  TBreakpoint = record
+    ID: Integer;
+    SourceFile: String;
+    SourceLine: Integer;
+  end;
+
   TDebugger = class(TComponent)
   private
     FIOChannel: Pointer;
     //==
     FDbgProcess: TProcess;
-    FTargetProcess: TProcess;
-    FDbgOutputBuf: String;
     //==
-    FAcceptCmd: Boolean;
+    FTargetRunning: Boolean;
+    FTargetPID: LongWord;
+    FPrompt: Integer; //-1 Nothing, 0 pre-prompt, 1 prompt, 2 post-prompt
+    //==
+    FSendCmdPassed: Boolean;
   protected
     procedure CreateDebugProcess;
+    procedure FinalizeDebugProcess;
+    //--
+    procedure DoDbgOutput(const AText: String);
     procedure SendCmd(const ACommand: String);
     procedure SendCmd(const ACommand: String; Values: array of const);
-    procedure DoDbgOutputChar(C: Char);
-    procedure DoDbgOutput(const AText: String);
+    //--
+    procedure WaitForPrompt(AKill: Boolean = True);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    //==
-    function CreateTargetProcess(const ACommand: String): Boolean;
-    function TargetProcessRunning: Boolean;
-    //====================================
+    //===========================
+    procedure Load(AExeFile: String);
+    procedure RunTarget;
+    //===========================
+    procedure InterruptTarget;
   public
+    property TargetRunning: Boolean read FTargetRunning;
+    // property TargetExists: Boolean;
     property DebugProcess: TProcess read FDbgProcess;
   end;
 
@@ -57,26 +72,21 @@ uses
 {$ENDIF}
   glib2, formatread;
 
-// Talvez usando o --annotate=3 ele nunca mante linhas nao inteiras....
-// entao daria pra ir dando read_chars ateh achar um #13 ou #10
-// --
-// gtk tem uma funcao read line??
-// ----------------
-// Retirar o TargetProcess, com annotation, da pra separar o output do gdb
-// do output da app... :D
-
 function hnd_io_std(source: PGIOChannel; condition: TGIOCondition; data: gpointer): gboolean; cdecl;
 var
-  C: Char;
+  L: PChar;
+  S: String;
   R: LongWord;
   Err: PGError;
 begin
   try
     Err := nil;
-    g_io_channel_read_chars(source, @C, 1, @R, @Err);
+    g_io_channel_read_line(source, @L, nil, @R, @Err);
     RaiseGError(Err);
     //--
-    TDebugger(data).DoDbgOutputChar(C);
+    S := L;
+    S := Copy(S, 1, R);
+    TDebugger(data).DoDbgOutput(S);
   except
     on E: Exception do
       Application.ShowException(E);
@@ -89,30 +99,22 @@ end;
 constructor TDebugger.Create(AOwner: TComponent);
 begin
   inherited;
-  FTargetProcess := nil;
-  //==
-  CreateDebugProcess;
+  FSendCmdPassed := True;
+  FPrompt := -1;
+  FTargetRunning := False;
+  FDbgProcess := nil;
 end;
 
 destructor TDebugger.Destroy;
 begin
-  if Assigned(FDbgProcess) and (FDbgProcess.Running) then
-    FDbgProcess.Terminate(0);
-
-  try
-    FreeAndNil(FDbgProcess);
-  except
-    on E: Exception do
-      Application.ShowMessage(mtError, 'Exeption while freeing debugger: ' + E.Message);
-  end;
+  if Assigned(FDbgProcess) then
+    FinalizeDebugProcess;
 
   inherited;
 end;
 
 procedure TDebugger.CreateDebugProcess;
 begin
-  FAcceptCmd := False;
-
   FDbgProcess := TProcess.Create(Self);
   FDbgProcess.CommandLine := 'gdb -q --annotate=3';
   // TODO: under win9x and winMe should be created with console, otherwise no break can be sent.
@@ -123,55 +125,53 @@ begin
 
   FIOChannel := g_io_channel_unix_new(FDbgProcess.Output.Handle);
   g_io_add_watch(FIOChannel, G_IO_IN, @hnd_io_std, Pointer(Self));
+
+  //== Configuration
+  WaitForPrompt(False); SendCmd('set height 0');
+  WaitForPrompt(False); SendCmd('set width 0');
 end;
 
-function TDebugger.CreateTargetProcess(const ACommand: String): Boolean;
+procedure TDebugger.FinalizeDebugProcess;
 begin
-  if Assigned(FTargetProcess) then
-    FTargetProcess.Free;
+  if (FDbgProcess.Running) then
+    FDbgProcess.Terminate(0);
 
-  FTargetProcess := TProcess.Create(Self);
-  FTargetProcess.CommandLine := ACommand;
-  FTargetProcess.Options:= [poUsePipes, poNoConsole, poStdErrToOutPut];//, poRunSuspended];
-  //FTargetProcess.ShowWindow := swoNone; ??
-  FTargetProcess.Execute;
-
-  Result := FTargetProcess.Running;
-
-  if Result then
-  begin
-    SendCmd('attach %d', [FTargetProcess.Handle]);
-    SendCmd('continue');
-  end;
+  FDbgProcess.Free;
+  FDbgProcess := nil;
 end;
 
-function TDebugger.TargetProcessRunning: Boolean;
+procedure TDebugger.WaitForPrompt(AKill: Boolean = True);
 begin
-  Result := Assigned(FTargetProcess) and FTargetProcess.Running;
+  if not Assigned(FDbgProcess) then
+    CreateDebugProcess;
+  //--
+  while not FSendCmdPassed do
+    Application.ProcessMessages;
+  //--
+  if AKill and (FPrompt <> 1) and TargetRunning then
+    InterruptTarget;
+  //--
+  while FPrompt <> 1 do
+    Application.ProcessMessages;
 end;
 
 procedure TDebugger.SendCmd(const ACommand: String);
 begin
-  if (not FAcceptCmd) and TargetProcessRunning then
-  begin
-{$IFDEF UNIX}
-    fpKill(FTargetProcess.Handle, SIGINT);
-{$ELSE}
-    FTargetProcess.Suspend; // It's Right?
-{$ENDIF}
-    Application.ProcessMessages;
-    if not FAcceptCmd then
-      raise Exception.Create('Can''t interrupt target process.'+LineEnding+'Unable to send gdb command.');
-  end;
+  if ACommand = '' then
+    exit;
 
-  if ACommand <> '' then
-    FDbgProcess.Input.Write(ACommand[1], Length(ACommand));
+  if FPrompt <> 1 then
+    raise Exception.Create('No gdb prompt');
 
+  FDbgProcess.Input.Write(ACommand[1], Length(ACommand));
 {$IFDEF WIN32}
   FDbgProcess.Input.Write(LineEnding[1], Length(LineEnding));
 {$ELSE}
   FDbgProcess.Input.Write(LineEnding, Length(LineEnding));
 {$ENDIF}
+  FSendCmdPassed := False;
+
+  WriteLn('gdb <<< ', ACommand);
 end;
 
 procedure TDebugger.SendCmd(const ACommand: String; Values: array of const);
@@ -179,31 +179,65 @@ begin
   SendCmd(Format(ACommand, Values));
 end;
 
-procedure TDebugger.DoDbgOutputChar(C: Char);
-begin
-  if (C = #10) or (C = #13) then
-  begin
-    if Length(FDbgOutputBuf) > 0 then
-      DoDbgOutput(FDbgOutputBuf);
-    FDbgOutputBuf := '';
-  end
-  else
-    FDbgOutputBuf := FDbgOutputBuf + C;
-  //--
-{
-  if FDbgOutputBuf = '(gdb) ' then
-  begin
-    DoDbgOutput(FDbgOutputBuf);
-    FDbgOutputBuf := '';
-    FAcceptCmd := True;
-  end;
-}
-end;
-
 procedure TDebugger.DoDbgOutput(const AText: String);
-begin                          
-  WriteLn('>>> ', AText);
+var
+  An: String;
+  I1, I2: Integer;
+  S1: String;
+  IsGDB: Boolean;
+begin
+  IsGDB := True;
+  if (Length(AText) > 2) and (AText[1] = #26) and (AText[2] = #26) then
+  begin
+    An := Copy(AText, 3, Length(AText) - 2);
+    if An = 'pre-prompt' then
+      FPrompt := 0
+    else if An = 'prompt' then
+      FPrompt := 1
+    else if An = 'post-prompt' then
+    begin
+      FPrompt := 2;
+      FSendCmdPassed := True;
+    end
+    else if An = 'starting' then
+      FTargetRunning := True
+    else if (An = 'stopped') or (An = 'signal') then
+      FTargetRunning := False
+  end
+  else if FTargetRunning then
+    if FmtRead('[New Thread %d (LWP %d)]', AText, [@I1, @I2]) then
+      FTargetPID := I2
+    else if FmtRead('[Thread debugging using libthread_db %s]', AText, [@S1]) then
+    begin end
+    else
+      IsGDB := False;
+
+  if not IsGDB then
+    WriteLn('tgt >>> ', AText)
+  else if Length(AText) > 0 then
+    WriteLn('gdb >>> ', AText);
 end;
 
+procedure TDebugger.InterruptTarget;
+begin
+{$IFDEF UNIX}
+  fpKill(FTargetPID, SIGINT);
+{$ENDIF}
+{$IFDEF WIN32}
+  SuspendThread(FTargetPID); // Nao deve ser isso :(
+{$ENDIF}
+end;
+
+procedure TDebugger.Load(AExeFile: String);
+begin
+  WaitForPrompt;
+  SendCmd('file ' + AExeFile);
+end;
+
+procedure TDebugger.RunTarget;
+begin
+  WaitForPrompt;
+  SendCmd('run');
+end;
 
 end.
