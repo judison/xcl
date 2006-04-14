@@ -23,11 +23,38 @@ uses
   Classes, SysUtils, Process, XCL;
 
 type
+  TDebugger = class;
+
   PBreakpoint = ^TBreakpoint;
   TBreakpoint = record
-    ID: Integer;
+    ID: Integer; // -1 = unset at gdb
     SourceFile: String;
     SourceLine: Integer;
+    // Condition????
+  end;
+
+  TBreakpointList = class
+  private
+    FDebugger: TDebugger;
+    FList: TList;
+    function GetItem(AIndex: Integer): PBreakpoint;
+    function GetCount: Integer;
+    //--
+    procedure SyncItem(AItem: PBreakpoint);
+  public
+    constructor Create(ADebugger: TDebugger);
+    destructor Destroy; override;
+    //--
+    procedure Add(AFile: String; ALine: Integer);
+    procedure Delete(AIndex: Integer);
+    procedure Clear;
+    //--
+    function ItemByID(AID: Integer): PBreakpoint;
+    //==
+    procedure Invalidate;
+    //==
+    property Items[AIndex: Integer]: PBreakpoint read GetItem; default;
+    property Count: Integer read GetCount;
   end;
 
   TDebugger = class(TComponent)
@@ -37,15 +64,26 @@ type
     FDbgProcess: TProcess;
     //==
     FTargetRunning: Boolean;
+    FTargetExists: Boolean;
     FTargetPID: LongWord;
     FPrompt: Integer; //-1 Nothing, 0 pre-prompt, 1 prompt, 2 post-prompt
     //==
     FSendCmdPassed: Boolean;
+    FExecCmdOut: TStrings;
+    FInExecCmd: Boolean;
+    //==========
+    FBreakpoints: TBreakpointList;
   protected
     procedure CreateDebugProcess;
     procedure FinalizeDebugProcess;
     //--
+    procedure DoReadLine;
     procedure DoDbgOutput(const AText: String);
+
+    function  ExecCmd(const ACommand: String): String;
+    function  ExecCmd(const ACommand: String; const Args: array of const): String;
+    procedure ExecCmd(const ACommand: String; AResult: TStrings);
+
     procedure SendCmd(const ACommand: String);
     procedure SendCmd(const ACommand: String; Values: array of const);
     //--
@@ -60,8 +98,9 @@ type
     procedure InterruptTarget;
   public
     property TargetRunning: Boolean read FTargetRunning;
-    // property TargetExists: Boolean;
+    property TargetExists: Boolean read FTargetExists;
     property DebugProcess: TProcess read FDbgProcess;
+    property Breakpoints: TBreakpointList read FBreakpoints;
   end;
 
 implementation
@@ -94,14 +133,108 @@ begin
   Result := True;
 end;
 
+{ TBreakpointList }
+
+constructor TBreakpointList.Create(ADebugger: TDebugger);
+begin
+  FDebugger := ADebugger;
+  FList := TList.Create;
+end;
+
+destructor TBreakpointList.Destroy;
+begin
+  Clear;
+  FList.Free;
+  inherited;
+end;
+
+function TBreakpointList.GetItem(AIndex: Integer): PBreakpoint;
+begin
+  Result := PBreakpoint(FList.Items[AIndex]);
+end;
+
+function TBreakpointList.GetCount: Integer;
+begin
+  Result := FList.Count;
+end;
+
+procedure TBreakpointList.Add(AFile: String; ALine: Integer);
+var
+  It: PBreakpoint;
+begin
+  New(It);
+  try
+    It^.ID := -1;
+    It^.SourceFile := AFile;
+    It^.SourceLine := ALine;
+    FList.Add(It);
+  except
+    Dispose(It);
+    raise;
+  end;
+  if FDebugger.TargetExists then
+    SyncItem(It);
+end;
+
+procedure TBreakpointList.Delete(AIndex: Integer);
+var
+  It: PBreakpoint;
+begin
+  It := PBreakpoint(FList.Items[AIndex]);
+  FList.Delete(AIndex);
+  Dispose(It);
+end;
+
+procedure TBreakpointList.Clear;
+begin
+  while Count > 0 do
+    Delete(0);
+end;
+
+function TBreakpointList.ItemByID(AID: Integer): PBreakpoint;
+var
+  I: Integer;
+  It: PBreakpoint;
+begin
+  Result := nil;
+  for I := 0 to Count-1 do
+  begin
+    It := GetItem(I);
+    if It^.ID = AID then
+    begin
+      Result := It;
+      Break;
+    end;
+  end;
+end;
+
+procedure TBreakpointList.Invalidate;
+var
+  I: Integer;
+begin
+  for I := 0 to Count-1 do
+    GetItem(I)^.ID := -1;
+end;
+
+procedure TBreakpointList.SyncItem(AItem: PBreakpoint);
+begin
+  FDebugger.ExecCmd('break %s:%d', [AItem^.SourceFile, AItem^.SourceLine]);
+  AItem^.ID := 0;
+end;
+
 { TDebugger }
 
 constructor TDebugger.Create(AOwner: TComponent);
 begin
   inherited;
+  FBreakpoints := TBreakpointList.Create(Self);
+
   FSendCmdPassed := True;
+  FExecCmdOut := nil;
+  FInExecCmd := False;
   FPrompt := -1;
   FTargetRunning := False;
+  FTargetExists := False;
   FDbgProcess := nil;
 end;
 
@@ -179,13 +312,88 @@ begin
   SendCmd(Format(ACommand, Values));
 end;
 
+function TDebugger.ExecCmd(const ACommand: String): String;
+var
+  SL: TStringList;
+  I: Integer;
+begin
+  SL := TStringList.Create;
+  try
+    ExecCmd(ACommand, SL);
+
+    if SL.Count > 0 then
+    begin
+      Result := SL[0];
+      for I := 1 to SL.Count -1 do
+        Result := Result + LineEnding + SL.Text;
+    end
+    else
+      Result := '';
+  finally
+    SL.Free;
+  end;
+end;
+
+function TDebugger.ExecCmd(const ACommand: String; const Args: array of const): String;
+begin
+  Result := ExecCmd(Format(ACommand, Args));
+end;
+
+procedure TDebugger.ExecCmd(const ACommand: String; AResult: TStrings);
+var
+  R: Boolean;
+begin
+  FExecCmdOut := AResult;
+  try
+    R := TargetRunning;
+    try
+      WaitForPrompt(True);
+
+      FInExecCmd := True;
+      SendCmd(ACommand);
+      while FInExecCmd do
+        DoReadLine;
+    finally
+      if R and (FPrompt = 1) then
+        SendCmd('continue');
+    end;
+  finally
+    FExecCmdOut := nil;
+    FInExecCmd := False;
+  end;
+end;
+
+procedure TDebugger.DoReadLine;
+var
+  L: PChar;
+  S: String;
+  R: LongWord;
+  Err: PGError;
+begin
+  Err := nil;
+  g_io_channel_read_line(FIOChannel, @L, nil, @R, @Err);
+  RaiseGError(Err);
+  //--
+  S := L;
+  S := Copy(S, 1, R);
+  DoDbgOutput(S);
+end;
+
 procedure TDebugger.DoDbgOutput(const AText: String);
 var
   An: String;
   I1, I2: Integer;
   S1: String;
   IsGDB: Boolean;
+  procedure ExecOut(Str: String);
+  begin
+    if Assigned(FExecCmdOut) and (Length(Str) > 0) and (FPrompt = 2) then
+      FExecCmdOut.Add(Str);
+  end;
 begin
+  // TODO:
+  // - Setar TargetExists := False
+
   IsGDB := True;
   if (Length(AText) > 2) and (AText[1] = #26) and (AText[2] = #26) then
   begin
@@ -193,7 +401,10 @@ begin
     if An = 'pre-prompt' then
       FPrompt := 0
     else if An = 'prompt' then
-      FPrompt := 1
+    begin
+      FPrompt := 1;
+      FInExecCmd := False;
+    end
     else if An = 'post-prompt' then
     begin
       FPrompt := 2;
@@ -203,6 +414,8 @@ begin
       FTargetRunning := True
     else if (An = 'stopped') or (An = 'signal') then
       FTargetRunning := False
+    else
+      ExecOut(AText);
   end
   else if FTargetRunning then
     if FmtRead('[New Thread %d (LWP %d)]', AText, [@I1, @I2]) then
@@ -210,7 +423,9 @@ begin
     else if FmtRead('[Thread debugging using libthread_db %s]', AText, [@S1]) then
     begin end
     else
-      IsGDB := False;
+      IsGDB := False
+  else
+    ExecOut(AText);
 
   if not IsGDB then
     WriteLn('tgt >>> ', AText)
@@ -230,8 +445,8 @@ end;
 
 procedure TDebugger.Load(AExeFile: String);
 begin
-  WaitForPrompt;
-  SendCmd('file ' + AExeFile);
+  ExecCmd('file ' + AExeFile);
+  FTargetExists := True;
 end;
 
 procedure TDebugger.RunTarget;
