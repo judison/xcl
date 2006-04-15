@@ -185,9 +185,6 @@ begin
 end;
 
 procedure TPixBuf.SetIconName(AName: String; ASize: Integer);
-var
-  icon_theme: Pointer;
-//  Err: PGError;
 begin
   if Assigned(FGdkPixBuf) then
   begin
@@ -200,19 +197,11 @@ begin
   FResource := '';
   FFileName := '';
 
-
   // We need a way to get stock icon when IconName starts with 'gtk-'
   if (FIconSize > 0) and (FIconName <> '') then
   begin
-    icon_theme := gtk_icon_theme_get_default();
-
-    FGdkPixBuf := gtk_icon_theme_load_icon(icon_theme, PChar(FIconName), FIconSize, 0, nil);
-
-// By now we don't want to raise an exception
-//    Err := nil;
-//    FGdkPixBuf := gtk_icon_theme_load_icon(icon_theme, PChar(FIconName), FIconSize, 0, @Err);
-//    RaiseGError(Err);
-
+    if Application.IconTheme.HasIcon(FIconName) then
+      FGdkPixBuf := Application.IconTheme.LoadIcon(FIconName, FIconSize);
     // Don't ref count!
   end;
 

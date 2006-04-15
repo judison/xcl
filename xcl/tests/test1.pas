@@ -88,6 +88,11 @@ end;
 procedure TTest1.MyFormShow(Sender: TObject);
 begin
   WriteLn('hehe OnShow');
+{
+  Application.IconTheme.AppendSearchPath('/home/abdullah/source');
+  PB.IconSize := 24;
+  PB.IconName := 'step';
+}
 end;
 
 procedure TTest1.Btn1FocusIn(Sender: TObject);

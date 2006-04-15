@@ -49,6 +49,9 @@ procedure gtk_image_set_from_icon_name(image: pointer; icon_name: pgchar; size: 
 
 function gtk_icon_theme_get_default(): pointer; cdecl; external gtklib;
 function gtk_icon_theme_load_icon(icon_theme: pointer; icon_name: pgchar; size: gint; flags: longint; error: ppgerror): pointer; cdecl; external gtklib;
+function gtk_icon_theme_has_icon(icon_theme: pointer; icon_name: pgchar): gboolean; cdecl; external gtklib;
+procedure gtk_icon_theme_append_search_path(icon_theme: pointer; path: pgchar); cdecl; external gtklib;
+procedure gtk_icon_theme_prepend_search_path(icon_theme: pointer; path: pgchar); cdecl; external gtklib;
 
 // GtkAboutDialog (Since 2.6)
 

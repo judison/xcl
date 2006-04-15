@@ -675,6 +675,81 @@
         <errors/>
         <seealso/>
       </element>
+      <element name="TIconTheme">
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
+      </element>
+      <element name="TIconTheme.Create">
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
+      </element>
+      <element name="TIconTheme.Create.AHandle">
+        <short/>
+      </element>
+      <element name="TIconTheme.Destroy">
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
+      </element>
+      <element name="TIconTheme.GetHandle">
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
+      </element>
+      <element name="TIconTheme.GetHandle.Result">
+        <short/>
+      </element>
+      <element name="TIconTheme.AppendSearchPath">
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
+      </element>
+      <element name="TIconTheme.AppendSearchPath.APath">
+        <short/>
+      </element>
+      <element name="TIconTheme.PrependSearchPath">
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
+      </element>
+      <element name="TIconTheme.PrependSearchPath.APath">
+        <short/>
+      </element>
+      <element name="TIconTheme.HasIcon">
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
+      </element>
+      <element name="TIconTheme.HasIcon.Result">
+        <short/>
+      </element>
+      <element name="TIconTheme.HasIcon.AName">
+        <short/>
+      </element>
+      <element name="TIconTheme.LoadIcon">
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
+      </element>
+      <element name="TIconTheme.LoadIcon.Result">
+        <short/>
+      </element>
+      <element name="TIconTheme.LoadIcon.AName">
+        <short/>
+      </element>
+      <element name="TIconTheme.LoadIcon.ASize">
+        <short/>
+      </element>
       <element name="TColormap.Create">
         <short/>
         <descr/>
@@ -1958,6 +2033,11 @@
         <short/>
       </element>
       <element name="TApplication.Colormap">
+        <short/>
+        <descr/>
+        <seealso/>
+      </element>
+      <element name="TApplication.IconTheme">
         <short/>
         <descr/>
         <seealso/>
@@ -7381,10 +7461,10 @@
         <short/>
       </element>
       <element name="EResNotFound">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="TResourceStream">
         <short/>
@@ -7471,116 +7551,116 @@
         <short/>
       </element>
       <element name="EGError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="EGError.Domain">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="EGError.Code">
-        <short></short>
-        <descr></descr>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <seealso/>
       </element>
       <element name="EGError.Create">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="EGError.Create.ADomain">
-        <short></short>
+        <short/>
       </element>
       <element name="EGError.Create.ACode">
-        <short></short>
+        <short/>
       </element>
       <element name="EGError.Create.AMsg">
-        <short></short>
+        <short/>
       </element>
       <element name="EGConvertError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="EGFileError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="EGIOChannelError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="EGMarkupError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="EGShellError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="EGSpawnError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="EGdkError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="EGdkPixbufError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="EGtkError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="EGtkFileChooserError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="EGtkFileSystemError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="EGtkIconThemeError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="RaiseGError">
-        <short></short>
-        <descr></descr>
-        <errors></errors>
-        <seealso></seealso>
+        <short/>
+        <descr/>
+        <errors/>
+        <seealso/>
       </element>
       <element name="RaiseGError.AError">
-        <short></short>
+        <short/>
       </element>
       <element name="ObjectByHandle">
         <short/>
