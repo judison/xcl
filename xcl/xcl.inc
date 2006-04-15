@@ -12,6 +12,7 @@
 
 {$I gtk_signals.inc}
 {$I tcolormap.inc}
+{$I ticontheme.inc}
 {$I tglist.inc}
 {$I tgstrings.inc}
 //--------------------- Actions / ActionLists / ActionLinks

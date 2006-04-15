@@ -49,6 +49,7 @@ type
   TTextBuffer = class;
   TTimer = class;
   TColormap = class;
+  TIconTheme = class;
   {**************************}
   TGList = class;
   TGStrings = class;

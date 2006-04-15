@@ -14,6 +14,7 @@
   TApplication = class(TCustomApplication)
   private
     FColormap: TColormap;
+    FIconTheme: TIconTheme;
     FCurrentLocale: string;
     FMainForm: TForm;
     FActionList: TList;
@@ -46,6 +47,7 @@
     procedure RemoveAction(AAction: TCustomAction);
     //--
     property Colormap: TColormap read FColormap;
+    property IconTheme: TIconTheme read FIconTheme;
     property CurrentLocale: string read FCurrentLocale;
     property MainForm: TForm read FMainForm write FMainForm;
   end;
@@ -58,6 +60,7 @@ constructor TApplication.Create(AOwner: TComponent);
 begin
   inherited;
   FColormap := nil;
+  FIconTheme := nil;
   FActionList := TList.Create;
 end;
 
@@ -65,6 +68,9 @@ destructor TApplication.Destroy;
 begin
   if FColormap <> nil then
     FColormap.Free;
+
+  if FIconTheme <> nil then
+    FIconTheme.Free;
 
   inherited;
 
@@ -194,8 +200,10 @@ begin
 //  g_log_set_handler('Gtk', G_LOG_FLAG_FATAL {or G_LOG_FLAG_RECURSION} or G_LOG_LEVEL_ERROR or G_LOG_LEVEL_CRITICAL or G_LOG_LEVEL_WARNING or G_LOG_LEVEL_MESSAGE or G_LOG_LEVEL_INFO or G_LOG_LEVEL_DEBUG , @hnd_log, nil);
 //  g_log_set_handler('GLib', G_LOG_FLAG_FATAL {or G_LOG_FLAG_RECURSION} or G_LOG_LEVEL_ERROR or G_LOG_LEVEL_CRITICAL or G_LOG_LEVEL_WARNING or G_LOG_LEVEL_MESSAGE or G_LOG_LEVEL_INFO or G_LOG_LEVEL_DEBUG , @hnd_log, nil);
 
-  // create default colormap
+  // create default Colormap
   FColormap := TColormap.Create(gdk_colormap_get_system);
+  // create default IconTheme
+  FIconTheme := TIconTheme.Create(gtk_icon_theme_get_default);
   //-- Clipboards
   Clipboard := TClipboard.Create(GDK_SELECTION_CLIPBOARD);
   Primary := TClipboard.Create(GDK_SELECTION_PRIMARY);
