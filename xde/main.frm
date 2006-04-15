@@ -142,6 +142,28 @@ object MainForm: TMainForm
       OnExecute = ProjectOptions
       OnUpdate = ProjectOptionsUpd
     end
+    object actDebugPause: TAction
+      Caption = 'Pause'
+    end
+    object actDebugContinue: TAction
+      Caption = 'Continue'
+    end
+    object actDebugNext: TAction
+      Accelerator = 'F8'
+      Caption = 'Next'
+    end
+    object actDebugStep: TAction
+      Accelerator = 'F7'
+      Caption = 'Step'
+    end
+    object actDebugRunToCursor: TAction
+      Accelerator = 'F4'
+      Caption = 'Run to Cursor'
+    end
+    object actDebugKill: TAction
+      Accelerator = '<Ctrl>F2'
+      Caption = 'Kill'
+    end
     object actRemoveComponent: TAction
       Caption = 'Remove Component'
       IconName = 'gtk-remove'
@@ -260,6 +282,31 @@ object MainForm: TMainForm
         end
         object TMenuItem
           Action = actProjectOptions
+        end
+      end
+      object TMenuItem
+        Caption = '_Debug'
+        object TMenuItem
+          Action = actDebugPause
+        end
+        object TMenuItem
+          Action = actDebugContinue
+        end
+        object TSeparatorMenuItem
+        end
+        object TMenuItem
+          Action = actDebugNext
+        end
+        object TMenuItem
+          Action = actDebugStep
+        end
+        object TMenuItem
+          Action = actDebugRunToCursor
+        end
+        object TSeparatorMenuItem
+        end
+        object TMenuItem
+          Action = actDebugKill
         end
       end
       object TMenuItem
