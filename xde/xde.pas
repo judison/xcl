@@ -28,6 +28,7 @@ uses classes,
      componentpalette,
      regcomps,
      xde_xrc,
+     frm_EditFind,
      icons_xrc;
 
 begin
@@ -35,5 +36,6 @@ begin
   Application.Initialize;
   Application.Title := 'XDE: XCL''s Development Environment';
   Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TFrmEditFind, FrmEditFind);
   Application.Run; 
 end.

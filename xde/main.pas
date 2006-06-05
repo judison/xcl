@@ -69,6 +69,7 @@ type
     procedure FileCloseAll(Sender: TObject);
     procedure FileCloseAllUpd(Sender: TObject);
     procedure FileQuit(Sender: TObject);
+    procedure EditFind(Sender: TObject);
     procedure ViewCompilerMsg(Sender: TObject);
     procedure ProjectBuild(Sender: TObject);
     procedure ProjectBuildUpd(Sender: TObject);
@@ -136,7 +137,7 @@ implementation
 
 uses Process,
   project_opts, compiler_opts, editor_opts,
-  TxtBuffer, PasBuffer, FrmBuffer, frm_NewFile;
+  TxtBuffer, PasBuffer, FrmBuffer, frm_NewFile, frm_EditFind;
 
 { TMainForm }
 
@@ -328,6 +329,11 @@ end;
 procedure TMainForm.FileQuit(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TMainForm.EditFind(Sender: TObject);
+begin
+  FrmEditFind.ShowModal;
 end;
 
 procedure TMainForm.ViewCompilerMsg(Sender: TObject);
