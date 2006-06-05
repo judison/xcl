@@ -20,6 +20,7 @@ PAS_FILES =	exctrls.pas \
 		compiler_opts.pas \
 		editor_opts.pas \
 		frm_newfile.pas \
+		frm_editfind.pas \
 		formatread.pas \
 		dbg.pas \
 		jitform.pas \
@@ -37,6 +38,7 @@ FRM_FILES =     compiler_opts.frm \
 		project_opts.frm \
 		compilingdlg.frm \
 		frm_newfile.frm \
+		frm_editfind.frm \
 		frmbuffer.frm \
 		txtbuffer.frm \
 		main.frm

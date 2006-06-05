@@ -85,6 +85,12 @@ object MainForm: TMainForm
       IconName = 'gtk-quit'
       OnExecute = FileQuit
     end
+    object actEditFind: TAction
+      Accelerator = '<Ctrl>F'
+      Caption = '_Find'
+      IconName = 'gtk-find'
+      OnExecute = EditFind
+    end
     object actViewToggleFormCode: TAction
       Accelerator = 'F12'
       Caption = '_Toggle Form/Code'
@@ -201,6 +207,7 @@ object MainForm: TMainForm
   end
   object TVBox
     object TMenuBar
+      BoxExpand = False
       object TMenuItem
         Caption = '_File'
         object TMenuItem
@@ -233,6 +240,12 @@ object MainForm: TMainForm
         end
         object TMenuItem
           Action = actFileQuit
+        end
+      end
+      object TMenuItem
+        Caption = '_Edit'
+        object TMenuItem
+          Action = actEditFind
         end
       end
       object TMenuItem
@@ -333,6 +346,7 @@ object MainForm: TMainForm
       object TVBox
         BoxExpand = False
         object TToolBar
+          BoxExpand = False
           ShowArrow = False
           SmallIcons = True
           ToolBarStyle = tbsIcons
@@ -351,9 +365,10 @@ object MainForm: TMainForm
           end
         end
         object TToolBar
+          BoxExpand = False
           ShowArrow = False
           SmallIcons = True
-          ToolBarStyle = tbsIcons 
+          ToolBarStyle = tbsIcons
           BoxExpand = True
           object TToolItem
             Action = actProjectCompile
@@ -367,6 +382,7 @@ object MainForm: TMainForm
     object THPaned
       BoxExpand = True
       object nbSide: TNotebook
+        PanedShrink = True
         object npProjMan: TNotebookPage
           Caption = 'Project Manager'
           object TVBox
@@ -458,7 +474,7 @@ object MainForm: TMainForm
                 object TScrolledWindow
                   HPolicy = sbpAutomatic
                   VPolicy = sbpAutomatic
-                  object TViewPort
+                  object TViewport
                     ShadowType = stNone
                     object PropTable: TTable
                       NCols = 1
@@ -472,7 +488,7 @@ object MainForm: TMainForm
                 object TScrolledWindow
                   HPolicy = sbpAutomatic
                   VPolicy = sbpAutomatic
-                  object TViewPort
+                  object TViewport
                     ShadowType = stNone
                     object EventTable: TTable
                       NCols = 1
@@ -486,16 +502,14 @@ object MainForm: TMainForm
         end
       end
       object TVPaned
+        PanedResize = True
+        PanedShrink = True
         object NB: TNotebook
           Scrollable = True
           OnSwitchPage = SwitchPage
           PanedResize = True
-          PanedShrink = False
         end
         object nbBottom: TNotebook
-          Visible = True
-          PanedResize = False
-          PanedShrink = False
         end
       end
     end
