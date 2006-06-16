@@ -19,12 +19,12 @@ unit Compiler;
 
 interface
 
-uses Classes, SysUtils, XCL, Executor, XPR, CompilingDlg;
+uses Classes, SysUtils, XCL, Executor, XPR, Frm_Compiling;
 
 type
   TCompiler = class(TExecutor)
   private
-    Frm: TFrmCompilingDlg;
+    Frm: TFrmCompiling;
     FHints: Integer;
     FWarnings: Integer;
     FErrors: Integer;
@@ -39,7 +39,7 @@ type
 
 implementation
 
-uses gtk2, Main;
+uses gtk2, frm_Main;
 
 { TCompiler }
 
@@ -128,7 +128,7 @@ begin
     FErrors := 0;
     FAborted := False;
 
-    Frm := TFrmCompilingDlg.Create(nil);
+    Frm := TFrmCompiling.Create(nil);
     try
       Frm.lblProject.Caption := Format('<b>Project:</b> %s', [AProject.Name]);
       Frm.lblStatus.Caption := 'Initializing Compiler...';
@@ -137,7 +137,7 @@ begin
       Frm.Btn.OnClicked := @BtnStop;
 
       gtk_window_set_modal(Frm.GetHandle, True);
-      Frm.Show(MainForm);
+      Frm.Show(FrmMain);
 
       Execute(CmdLine);
       if FAborted then
@@ -153,7 +153,7 @@ begin
         Frm.Btn.Caption := '_OK';
         Frm.Btn.IconName := 'gtk-ok';
         Frm.Btn.OnClicked := @BtnOK;
-        Frm.ShowModal(MainForm);
+        Frm.ShowModal(FrmMain);
       end
       else
         Frm.Close;

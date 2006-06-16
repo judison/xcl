@@ -30,7 +30,7 @@ type
 
 implementation
 
-uses main, xclsourceview;
+uses frm_main, xclsourceview;
 
 { TPasBuffer }
 
@@ -40,7 +40,7 @@ var
 begin
   inherited;
   Buf.Highlight := True;
-  Lang := MainForm.LangMan.GetLanguageFromMime('text/x-pascal');
+  Lang := FrmMain.LangMan.GetLanguageFromMime('text/x-pascal');
 
   // String and Numbers
   Lang.SetTagStyle('String',                                                '#0000FF', '', False, False);

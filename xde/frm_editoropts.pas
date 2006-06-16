@@ -2,15 +2,15 @@
    XDE - XCL's Development Environment
    Copyright (C) 2005-2006 Judison Oliveira Gil Filho <judison@gmail.com>
 
-   See the file COPYING, included in this distribution, for
-   details about the copyright.
+   See the file COPYING, included in this distribution,
+   for details about the copyright.
 
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
 
-unit compiler_opts;
+unit frm_editoropts;
 
 {$H+}
 {$MODE ObjFpc}
@@ -20,7 +20,7 @@ interface
 uses Classes, xcl;
 
 type
-  TFrmCompilerOpts = class(TForm)
+  TFrmEditorOpts = class(TForm)
     procedure BtnOKClicked(Sender: TObject);
     procedure BtnCancelClicked(Sender: TObject);
   private
@@ -29,18 +29,18 @@ type
   end;
 
 var
-  FrmCompilerOpts: TFrmCompilerOpts;
+  FrmEditorOpts: TFrmEditorOpts;
 
 implementation
 
-{ TFrmCompilerOps }
+{ TFrmEditorOpts }
 
-procedure TFrmCompilerOpts.BtnOKClicked(Sender: TObject);
+procedure TFrmEditorOpts.BtnOKClicked(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TFrmCompilerOpts.BtnCancelClicked(Sender: TObject);
+procedure TFrmEditorOpts.BtnCancelClicked(Sender: TObject);
 begin
   Close;
 end;

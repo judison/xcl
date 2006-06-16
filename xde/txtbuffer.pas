@@ -44,15 +44,26 @@ implementation
 
 constructor TTxtBuffer.Create(AOwner: TComponent);
 var
-  Stream: TStream;
+  SW: TScrolledWindow;
 begin
   inherited;
-  Stream := TResourceStream.Create('FORMDATA', 'TTxtBuffer');
-  try
-    Stream.ReadComponent(Self);
-  finally
-    Stream.Free;
-  end;
+
+  //--
+  Buf := TSourceBuffer.Create(Self);
+  Buf.OnChanged := @BufChanged;
+
+  MainBox := TVBox.Create(Self);
+  MainBox.Parent := Self;
+    TextBox := TVBox.Create(Self);
+    TextBox.Parent := MainBox;
+      SW := TScrolledWindow.Create(Self);
+      SW.Parent := TextBox;
+      SW.ShadowType := stIn;
+        Edt := TSourceView.Create(Self);
+        Edt.Parent := SW;
+        Edt.FontDesc := 'Courier 10';
+        Edt.TextBuffer := Buf;
+  //--
 
   ShowCtrls;
   InitEdt;
@@ -64,6 +75,7 @@ end;
 
 destructor TTxtBuffer.Destroy;
 begin
+
   inherited;
 end;
 

@@ -20,22 +20,40 @@ program xde;
 
 uses classes,
      xcl,
-     main,
-     compiler_opts,
-     editor_opts,
+     //--
+     exctrls,
+     buffer,
+     bufferlist,
+     txtbuffer,
+     pasbuffer,
+     frmbuffer,
+     compilermsg,
+     executor,
+     compiler,
+     frm_compiling,
+     frm_projectopts,
+     frm_compileropts,
+     frm_editoropts,
      frm_newfile,
+     frm_editfind,
+     formatread,
+     dbg,
+     jitform,
      jitforms,
+     propeditor,
      componentpalette,
      regcomps,
+     xpr,
+     frm_main,
+     //--
      xde_xrc,
-     frm_EditFind,
      icons_xrc;
 
 begin
   DoRegComps;
   Application.Initialize;
   Application.Title := 'XDE: XCL''s Development Environment';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TFrmMain, FrmMain);
   Application.CreateForm(TFrmEditFind, FrmEditFind);
   Application.Run; 
 end.

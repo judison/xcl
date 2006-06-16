@@ -10,7 +10,7 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
 
-unit Project_Opts;
+unit frm_ProjectOpts;
 
 {$H+}
 {$MODE ObjFpc}
