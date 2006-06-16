@@ -1,8 +1,8 @@
-object MainForm: TMainForm
+object FrmMain: TFrmMain
   Title = 'XDE'
   Width = 800
   Height = 600
-  OnShow = MainFormShow
+  OnShow = FrmMainShow
   object PBLogo: TPixBuf
     Resource = 'xde'
   end

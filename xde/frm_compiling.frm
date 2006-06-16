@@ -1,4 +1,4 @@
-object FrmCompilingDlg: TFrmCompilingDlg
+object FrmCompiling: TFrmCompiling
   Title = 'Compiling...'
   BorderWidth = 3
   Resizable = False
@@ -66,7 +66,6 @@ object FrmCompilingDlg: TFrmCompilingDlg
       object Btn: TButton
         Caption = '_OK'
         IconName = 'gtk-ok'
-        OnClicked = BtnOKClicked
         BoxExpand = True
       end
     end

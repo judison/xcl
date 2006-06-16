@@ -10,7 +10,7 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
 
-unit CompilingDlg;
+unit frm_Compiling;
 
 {$H+}
 {$MODE ObjFpc}
@@ -20,7 +20,7 @@ interface
 uses Classes, SysUtils, XCL;
 
 type
-  TFrmCompilingDlg = class(TForm)
+  TFrmCompiling = class(TForm)
     lblProject: TLabel;
     lblStatus: TLabel;
     lblHints: TLabel;
@@ -33,11 +33,10 @@ type
   end;
 
 var
-  FrmCompilingDlg: TFrmCompilingDlg;
+  FrmCompiling: TFrmCompiling;
 
 implementation
 
-{ TFrmCompilingDlg }
-
+{ TFrmCompiling }
 
 end.

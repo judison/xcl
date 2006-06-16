@@ -9,7 +9,7 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 *)
-unit main;
+unit frm_main;
 
 {$H+}
 {$IFDEF FPC}
@@ -22,7 +22,7 @@ uses Classes, SysUtils, xcl, Buffer, BufferList, xclsourceview, componentpalette
   propeditor, designform, xpr, Compiler, CompilerMsg, dbg;
 
 type
-  TMainForm = class(TForm)
+  TFrmMain = class(TForm)
     fcdOpen: TFileChooserDialog;
     fcdOpenProject: TFileChooserDialog;
     fcdSaveAs: TFileChooserDialog;
@@ -92,7 +92,7 @@ type
     procedure AddComponentChild(Sender: TObject);
     procedure AddComponentChildUpd(Sender: TObject);
     procedure SwitchPage(Sender: TObject; NewPage: Integer);
-    procedure MainFormShow(Sender: TObject);
+    procedure FrmMainShow(Sender: TObject);
     procedure ProjectTVRowActivated(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn);
   private
     //--
@@ -131,17 +131,17 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  FrmMain: TFrmMain;
 
 implementation
 
 uses Process,
-  project_opts, compiler_opts, editor_opts,
+  frm_projectopts, frm_compileropts, frm_editoropts,
   TxtBuffer, PasBuffer, FrmBuffer, frm_NewFile, frm_EditFind;
 
-{ TMainForm }
+{ TFrmMain }
 
-constructor TMainForm.Create(AOwner: TComponent);
+constructor TFrmMain.Create(AOwner: TComponent);
 begin
   inherited;
   LangMan := TSourceLanguagesManager.Create(Self);
@@ -167,12 +167,12 @@ begin
   Debugger := TDebugger.Create(Self);
 end;
 
-function TMainForm.CurrentBuffer: TBuffer;
+function TFrmMain.CurrentBuffer: TBuffer;
 begin
   Result := TBuffer(NB.Pages[NB.CurrentPage]);
 end;
 
-procedure TMainForm.FileNew(Sender: TObject);
+procedure TFrmMain.FileNew(Sender: TObject);
 var
   B: TBuffer;
 begin
@@ -195,13 +195,13 @@ begin
   end;
 end;
 
-procedure TMainForm.FileOpen(Sender: TObject);
+procedure TFrmMain.FileOpen(Sender: TObject);
 begin
   if fcdOpen.Execute = -3 then
     DoFileOpen(fcdOpen.FileName);
 end;
 
-procedure TMainForm.DoFileOpen(AFileName: String);
+procedure TFrmMain.DoFileOpen(AFileName: String);
 var
   B: TBuffer;
   ext: String;
@@ -244,7 +244,7 @@ begin
 //    SelectForm(B); 
 end;
 
-procedure TMainForm.FileOpenProject(Sender: TObject);
+procedure TFrmMain.FileOpenProject(Sender: TObject);
 begin
   if (fcdOpenProject.Execute = -3) and FileExists(fcdOpenProject.FileName) then
   begin
@@ -253,53 +253,53 @@ begin
   end;
 end;
 
-procedure TMainForm.MainFormShow(Sender: TObject);
+procedure TFrmMain.FrmMainShow(Sender: TObject);
 begin
   Icon := PBLogo;
 end;
 
-procedure TMainForm.FileSave(Sender: TObject);
+procedure TFrmMain.FileSave(Sender: TObject);
 begin
   CurrentBuffer.Save;
 end;
 
-procedure TMainForm.FileSaveUpd(Sender: TObject);
+procedure TFrmMain.FileSaveUpd(Sender: TObject);
 begin
   actFileSave.Sensitive := CurrentBuffer <> nil;
 end;
 
-procedure TMainForm.FileSaveAs(Sender: TObject);
+procedure TFrmMain.FileSaveAs(Sender: TObject);
 begin
   if fcdSaveAs.Execute = -3 then
     CurrentBuffer.SaveAs(fcdSaveAs.FileName);
 end;
 
-procedure TMainForm.FileSaveAsUpd(Sender: TObject);
+procedure TFrmMain.FileSaveAsUpd(Sender: TObject);
 begin
   actFileSaveAs.Sensitive := CurrentBuffer <> nil;
 end;
 
-procedure TMainForm.FileSaveAll(Sender: TObject);
+procedure TFrmMain.FileSaveAll(Sender: TObject);
 begin
   //TODO
 end;
 
-procedure TMainForm.FileSaveAllUpd(Sender: TObject);
+procedure TFrmMain.FileSaveAllUpd(Sender: TObject);
 begin
   //TODO
 end;
 
-procedure TMainForm.FileClose(Sender: TObject);
+procedure TFrmMain.FileClose(Sender: TObject);
 begin
   CurrentBuffer.Close;
 end;
 
-procedure TMainForm.FileCloseUpd(Sender: TObject);
+procedure TFrmMain.FileCloseUpd(Sender: TObject);
 begin
   actFileClose.Sensitive := CurrentBuffer <> nil;
 end;
 
-procedure TMainForm.FileCloseAll(Sender: TObject);
+procedure TFrmMain.FileCloseAll(Sender: TObject);
 var
   lOK: Boolean;
 begin
@@ -310,12 +310,12 @@ begin
     Abort;
 end;
 
-procedure TMainForm.FileCloseAllUpd(Sender: TObject);
+procedure TFrmMain.FileCloseAllUpd(Sender: TObject);
 begin
   actFileCloseAll.Sensitive := CurrentBuffer <> nil;
 end;
 
-procedure TMainForm.DoCloseQuery(var CanClose: Boolean);
+procedure TFrmMain.DoCloseQuery(var CanClose: Boolean);
 begin
   inherited;
   try
@@ -326,17 +326,17 @@ begin
   end;
 end;
 
-procedure TMainForm.FileQuit(Sender: TObject);
+procedure TFrmMain.FileQuit(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TMainForm.EditFind(Sender: TObject);
+procedure TFrmMain.EditFind(Sender: TObject);
 begin
   FrmEditFind.ShowModal;
 end;
 
-procedure TMainForm.ViewCompilerMsg(Sender: TObject);
+procedure TFrmMain.ViewCompilerMsg(Sender: TObject);
 begin
   if npCompilerMsg.Visible then
     npCompilerMsg.Hide
@@ -344,12 +344,12 @@ begin
     npCompilerMsg.Show;
 end;
 
-procedure TMainForm.ReadCompilerLine(Sender: TObject; ALine: String);
+procedure TFrmMain.ReadCompilerLine(Sender: TObject; ALine: String);
 begin
   npCompilerMsg.Process(ALine);
 end;
 
-procedure TMainForm.ProjectBuild(Sender: TObject);
+procedure TFrmMain.ProjectBuild(Sender: TObject);
 var
   C: TCompiler;
 begin
@@ -363,12 +363,12 @@ begin
   end;
 end;
 
-procedure TMainForm.ProjectBuildUpd(Sender: TObject);
+procedure TFrmMain.ProjectBuildUpd(Sender: TObject);
 begin
   actProjectBuild.Sensitive := Project.FileName <> '';
 end;
 
-procedure TMainForm.ProjectCompile(Sender: TObject);
+procedure TFrmMain.ProjectCompile(Sender: TObject);
 var
   C: TCompiler;
 begin
@@ -382,12 +382,12 @@ begin
   end;
 end;
 
-procedure TMainForm.ProjectCompileUpd(Sender: TObject);
+procedure TFrmMain.ProjectCompileUpd(Sender: TObject);
 begin
   actProjectCompile.Sensitive := Project.FileName <> '';
 end;
 
-procedure TMainForm.ProjectRun(Sender: TObject);
+procedure TFrmMain.ProjectRun(Sender: TObject);
 var
   C: TCompiler;
   OK: Boolean;
@@ -417,12 +417,12 @@ begin
 
 end;
 
-procedure TMainForm.ProjectRunUpd(Sender: TObject);
+procedure TFrmMain.ProjectRunUpd(Sender: TObject);
 begin
   actProjectRun.Sensitive := Project.FileName <> '';
 end;
 
-procedure TMainForm.ProjectOptions(Sender: TObject);
+procedure TFrmMain.ProjectOptions(Sender: TObject);
 var
   Frm: TFrmProjectOpts;
 begin
@@ -436,12 +436,12 @@ begin
   end;
 end;
 
-procedure TMainForm.ProjectOptionsUpd(Sender: TObject);
+procedure TFrmMain.ProjectOptionsUpd(Sender: TObject);
 begin
   actProjectOptions.Sensitive := Project.FileName <> '';
 end;
 
-procedure TMainForm.HelpAbout(Sender: TObject);
+procedure TFrmMain.HelpAbout(Sender: TObject);
 var
   SL: TStringList;
   S: TStream;
@@ -463,7 +463,7 @@ begin
   AboutDlg.Execute;
 end;
 
-procedure TMainForm.ShowCompilerOptions(Sender: TObject);
+procedure TFrmMain.ShowCompilerOptions(Sender: TObject);
 begin
   FrmCompilerOpts := TFrmCompilerOpts.Create(nil);
   try
@@ -473,7 +473,7 @@ begin
   end;
 end;
 
-procedure TMainForm.ShowEditorOptions(Sender: TObject);
+procedure TFrmMain.ShowEditorOptions(Sender: TObject);
 begin
   FrmEditorOpts := TFrmEditorOpts.Create(nil);
   try
@@ -483,27 +483,27 @@ begin
   end;
 end;
 
-procedure TMainForm.SwitchPage(Sender: TObject; NewPage: Integer);
+procedure TFrmMain.SwitchPage(Sender: TObject; NewPage: Integer);
 begin
   SelectForm(TBuffer(NB.Pages[NewPage]));
 end;
 
-procedure TMainForm.GoLeft(Sender: TObject);
+procedure TFrmMain.GoLeft(Sender: TObject);
 begin
   NB.PrevPage;
 end;
 
-procedure TMainForm.GoRight(Sender: TObject);
+procedure TFrmMain.GoRight(Sender: TObject);
 begin
   NB.NextPage;
 end;
 
-procedure TMainForm.DoIdle;
+procedure TFrmMain.DoIdle;
 begin
   nbBottom.Visible := nbBottom.PageCount > 0;
 end;
 
-procedure TMainForm.UpdateProjectManager;
+procedure TFrmMain.UpdateProjectManager;
 var
   It, P, PP: TTreeIter;
   I: Integer;
@@ -546,7 +546,7 @@ begin
   end;
 end;
 
-procedure TMainForm.ProjectTVRowActivated(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn);
+procedure TFrmMain.ProjectTVRowActivated(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn);
 var
   Item: TXPRCustom;
 begin
@@ -560,7 +560,7 @@ begin
 end;
 
 
-procedure TMainForm.CompChanged(Sender: TObject);
+procedure TFrmMain.CompChanged(Sender: TObject);
 var
   It: TTreeIter;
   C: TComponent;
@@ -573,7 +573,7 @@ begin
   end;
 end;
 
-function TMainForm.AddTree(C: TComponent; P: TTreeIter): TTreeIter;
+function TFrmMain.AddTree(C: TComponent; P: TTreeIter): TTreeIter;
 var
   It: TTreeIter;
   I: Integer;
@@ -595,7 +595,7 @@ begin
   Result := It;
 end;
 
-procedure TMainForm.PaletteClassSelected(Sender: TObject; AClass: TComponentClass);
+procedure TFrmMain.PaletteClassSelected(Sender: TObject; AClass: TComponentClass);
 var
   C: TComponent;
   It: TTreeIter;
@@ -627,7 +627,7 @@ begin
   end;
 end;
 
-procedure TMainForm.SelectComp(C: TComponent);
+procedure TFrmMain.SelectComp(C: TComponent);
 
   function FindIter(var A: TTreeIter): boolean;
   var
@@ -658,7 +658,7 @@ begin
   end;
 end;
 
-procedure TMainForm.RemoveComponent(Sender: TObject);
+procedure TFrmMain.RemoveComponent(Sender: TObject);
 var
   It: TTreeIter;
   C,P: TComponent;
@@ -683,7 +683,7 @@ begin
   end;
 end;
 
-procedure TMainForm.AddComponentChild(Sender: TObject);
+procedure TFrmMain.AddComponentChild(Sender: TObject);
 var
   It: TTreeIter;
   C: TComponent;
@@ -704,7 +704,7 @@ begin
   end;
 end;
 
-procedure TMainForm.AddComponentChildUpd(Sender: TObject);
+procedure TFrmMain.AddComponentChildUpd(Sender: TObject);
 var
   It: TTreeIter;
   C: TComponent;
@@ -731,7 +731,7 @@ begin
   actAddComponentChild.Sensitive := actAddComponentChild.Caption <> 'Add child...';
 end;
 
-procedure TMainForm.SelectForm(B: TBuffer);
+procedure TFrmMain.SelectForm(B: TBuffer);
 var
   FB: TFrmBuffer;
 begin
@@ -749,7 +749,7 @@ begin
   end;
 end;
 
-procedure TMainForm.ToggleFormCode(Sender: TObject);
+procedure TFrmMain.ToggleFormCode(Sender: TObject);
 var
   FB: TFrmBuffer;
 begin
@@ -770,13 +770,13 @@ begin
   end;
 end;
 
-procedure TMainForm.ShowObjectInspector(Sender: TObject);
+procedure TFrmMain.ShowObjectInspector(Sender: TObject);
 begin
   nbSide.CurrentPage := nbSide.PageNum(npObjIns);
   ComponentTV.GrabFocus;
 end;
 
-procedure TMainForm.ShowProjectManager(Sender: TObject);
+procedure TFrmMain.ShowProjectManager(Sender: TObject);
 begin
   nbSide.CurrentPage := nbSide.PageNum(npProjMan);
   ProjectTV.GrabFocus;

@@ -47,18 +47,28 @@ implementation
 
 constructor TFrmBuffer.Create(AOwner: TComponent);
 var
-  Stream: TStream;
+  SW: TScrolledWindow;
 begin
   inherited;
 
   JITForms := TJitForms.Create;
 
-  Stream := TResourceStream.Create('FORMDATA', 'TFrmBuffer');
-  try
-    Stream.ReadComponent(Self);
-  finally
-    Stream.Free;
-  end;
+  //--
+  ComponentTS := TTreeStore.Create(Self);
+  ComponentTS.SortColumn := -2;
+  ComponentTS.Structure := 'SP';
+  
+  FormBox := TVBox.Create(Self);
+  FormBox.Parent := MainBox;
+
+  SW := TScrolledWindow.Create(Self);
+  SW.Parent := FormBox;
+  SW.HPolicy := sbpAutomatic;
+  SW.VPolicy := sbpAutomatic;
+
+  ClientArea := TViewPort.Create(Self);
+  ClientArea.Parent := SW;
+  //--
 
   Name := Name + IntToStr(Integer(Pointer(Self)));
 
