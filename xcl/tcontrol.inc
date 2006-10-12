@@ -624,7 +624,7 @@ end;
 procedure TControl.SetBoxExpand(AValue: Boolean);
 begin
   if Parent is TBox then
-    gtk_container_child_set(Parent.Handle, Handle, 'expand', [AValue, 0])
+    gtk_container_child_set(Parent.Handle, Handle, 'expand', [gboolean(AValue), 0])
   else
     raise Exception.Create('BoxExpand can be set only in a TBox Child.');
 end;
@@ -632,7 +632,7 @@ end;
 procedure TControl.SetBoxFill(AValue: Boolean);
 begin
   if Parent is TBox then
-    gtk_container_child_set(Parent.Handle, Handle, 'fill', [AValue, 0])
+    gtk_container_child_set(Parent.Handle, Handle, 'fill', [gboolean(AValue), 0])
   else
     raise Exception.Create('BoxFill can be set only in a TBox Child.');
 end;
@@ -700,7 +700,7 @@ end;
 procedure TControl.SetPanedResize(AValue: Boolean);
 begin
   if Parent is TPaned then
-    gtk_container_child_set(Parent.Handle, Handle, 'resize', [AValue, 0])
+    gtk_container_child_set(Parent.Handle, Handle, 'resize', [gboolean(AValue), 0])
   else
     raise Exception.Create('PanedResize can be set only in a TPaned Child.');
 end;
@@ -708,7 +708,7 @@ end;
 procedure TControl.SetPanedShrink(AValue: Boolean);
 begin
   if Parent is TPaned then
-    gtk_container_child_set(Parent.Handle, Handle, 'shrink', [AValue, 0])
+    gtk_container_child_set(Parent.Handle, Handle, 'shrink', [gboolean(AValue), 0])
   else
     raise Exception.Create('PanedShrink can be set only in a TPaned Child.');
 end;
