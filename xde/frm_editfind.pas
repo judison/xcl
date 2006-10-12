@@ -12,8 +12,8 @@
 
 unit frm_EditFind;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 
 interface
 

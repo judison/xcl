@@ -15,8 +15,8 @@
 *)
 program xmkskel;
 
+{$MODE OBJFPC}
 {$H+}
-{$MODE ObjFpc}
 
 uses
   SysUtils, Classes, PasTree, PParser, PScanner, DOM, XMLWrite, XMLRead;

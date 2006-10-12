@@ -17,8 +17,8 @@ unit xcl;
   {$FATAL If you wanna try this, remove directive and tell me what happens (judison@gmail.com)}
 {$ENDIF}
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 {$INLINE ON}
 {$MACRO ON} // We need it, for GTK Interfaces.
 

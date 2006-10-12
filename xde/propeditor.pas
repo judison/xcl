@@ -12,10 +12,10 @@
 
 unit PropEditor;
 
-{$H+}
 {$IFDEF FPC}
   {$MODE ObjFpc}
 {$ENDIF}
+{$H+}
 
 interface
 
@@ -537,13 +537,13 @@ var
   C: TComponent;
 begin
   FLS := TListStore.Create(Self);
-  FLS.Structure := 'SI';
+  FLS.Structure := 'SP';
 
   TheClass := TComponentClass(GetObjectPropClass(FComp, FProp^.Name));
 
   FLS.Append(It);
   FLS.SetStringValue(It, 0, 'nil');
-  FLS.SetIntegerValue(It, 1, 0);
+  FLS.SetPointerValue(It, 1, nil);
 
   Ow := FComp.Owner;
   for I := 0 to Ow.ComponentCount-1 do
@@ -554,7 +554,7 @@ begin
       S := C.Name;
       FLS.Append(It);
       FLS.SetStringValue(It, 0, S);
-      FLS.SetIntegerValue(It, 1, Integer(C));
+      FLS.SetPointerValue(It, 1, C);
     end;
   end;
 
@@ -575,7 +575,7 @@ begin
   B := FLS.GetIterFirst(It);
   while B do
   begin
-    C := TComponent(Pointer(FLS.GetIntegerValue(It, 1)));
+    C := TComponent(FLS.GetPointerValue(It, 1));
     if C = PC then
     begin
       B := False;
@@ -592,7 +592,7 @@ var
 begin
   if FComboBox.GetActiveIter(It) then
   begin
-    SetObjectProp(FComp, FProp, TComponent(Pointer(FLS.GetIntegerValue(It, 1))));
+    SetObjectProp(FComp, FProp, TComponent(FLS.GetPointerValue(It, 1)));
     Changed;
   end;
 end;

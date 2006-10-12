@@ -12,8 +12,8 @@
 
 unit Executor;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 
 interface
 

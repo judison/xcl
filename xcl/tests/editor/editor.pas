@@ -11,8 +11,8 @@
 *)
 program editor;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 
 uses Classes, SysUtils, xcl,
      main, editor_xrc;

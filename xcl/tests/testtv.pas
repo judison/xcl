@@ -11,8 +11,9 @@
 *)
 
 program testtv;
-{$H+}
+
 {$Mode ObjFpc}
+{$H+}
 
 uses Classes, SysUtils, xcl, testtv_xrc;
 

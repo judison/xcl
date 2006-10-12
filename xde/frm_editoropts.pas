@@ -12,8 +12,8 @@
 
 unit frm_editoropts;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 
 interface
 

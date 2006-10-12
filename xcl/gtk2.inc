@@ -297,3 +297,12 @@ procedure gtk_tool_button_set_use_underline(abutton: pointer; ause_underline: gb
 function gtk_tool_button_get_use_underline(abutton: pointer): gboolean; cdecl; external gtklib;
 procedure gtk_tool_button_set_stock_id(abutton: pointer; const astock_id: PGChar); cdecl; external gtklib;
 function gtk_tool_button_get_stock_id(abutton: pointer): PGChar; cdecl; external gtklib;
+
+
+//================================== bug in FPC's gtktreestore.inc
+
+function gtk_tree_store_iter_is_valid(tree_store:PGtkTreeStore; iter:PGtkTreeIter):gboolean; cdecl; external gtklib;
+procedure gtk_tree_store_reorder(tree_store:PGtkTreeStore; parent:PGtkTreeIter; new_order:pgint); cdecl; external gtklib;
+procedure gtk_tree_store_swap(tree_store:PGtkTreeStore; a:PGtkTreeIter; b:PGtkTreeIter); cdecl; external gtklib;
+procedure gtk_tree_store_move_before(tree_store:PGtkTreeStore; iter:PGtkTreeIter; position:PGtkTreeIter); cdecl; external gtklib;
+procedure gtk_tree_store_move_after(tree_store:PGtkTreeStore; iter:PGtkTreeIter; position:PGtkTreeIter); cdecl; external gtklib;

@@ -12,8 +12,8 @@
 
 unit frm_Compiling;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 
 interface
 

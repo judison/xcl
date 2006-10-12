@@ -109,7 +109,8 @@
         <short>Perform the resizes now</short>
       </element>
       <element name="TShadowType">
-        <short>Used to change the appearance of an outline typically provided by a <link id="TFrame">TFrame</link>.</short>
+        <short>Used to change the appearance of an outline typically provided by a           <link id="TFrame">TFrame</link>
+.</short>
         <descr/>
         <seealso/>
       </element>
@@ -129,7 +130,8 @@
         <short/>
       </element>
       <element name="TJustification">
-        <short>Used for justifying the text inside a <link id="TLabel">TLabel</link>.</short>
+        <short>Used for justifying the text inside a           <link id="TLabel">TLabel</link>
+.</short>
         <descr/>
         <seealso>
           <link id="TAlignment">TAlignment</link>
@@ -179,7 +181,10 @@
       </element>
       <element name="TPosition">
         <short>Describes which edge of a widget a certain feature is positioned at.</short>
-        <descr>Like the tabs of a <link id="TNotebook"/>, the handle of a <link id="THandleBox"/> or the valuel of a <link id="TScale"/>.</descr>
+        <descr>Like the tabs of a           <link id="TNotebook"/>
+, the handle of a           <link id="THandleBox"/>
+or the valuel of a           <link id="TScale"/>
+.</descr>
         <seealso>
           <link id="TNotebook"/>
           <link id="THandleBox"/>
@@ -219,7 +224,8 @@
         <short/>
       </element>
       <element name="TArrowType">
-        <short>Used to indicate the direction in which a <link id="TArrow"/> should point</short>
+        <short>Used to indicate the direction in which a           <link id="TArrow"/>
+should point</short>
         <descr/>
         <seealso>
           <link id="TArrow"/>
@@ -2318,7 +2324,10 @@
       </element>
       <element name="TControl.GrabFocus">
         <short>Grab Focus</short>
-        <descr>Causes control to have the keyboard focus for the <link id="TForm"/> it's inside. It must be a focusable control, such as a <link id="TEntry"/>; something like <link id="TFrame"/> won't work.</descr>
+        <descr>Causes control to have the keyboard focus for the           <link id="TForm"/>
+it's inside. It must be a focusable control, such as a           <link id="TEntry"/>
+; something like           <link id="TFrame"/>
+won't work.</descr>
         <errors/>
         <seealso/>
       </element>
@@ -2629,7 +2638,8 @@
         <descr>
           <p>TArrow should be used to draw simple arrows that need to point in one of the four cardinal directions (up, down, left, or right).</p>
           <p>The style of the arrow can be one of shadow in, shadow out, etched in, or etched out. Note that these directions and style types may be ammended in versions of Gtk to come.</p>
-          <p>TArrow will fill any space allocated to it, but since it is inherited from <link id="TMiscControl"/>, it can be padded and/or aligned, to fill exactly the space the programmer desires.</p>
+          <p>TArrow will fill any space allocated to it, but since it is inherited from             <link id="TMiscControl"/>
+, it can be padded and/or aligned, to fill exactly the space the programmer desires.</p>
         </descr>
         <errors/>
         <seealso/>
@@ -2728,7 +2738,8 @@
       </element>
       <element name="TLabel.Justify">
         <short>The alignment of the lines in the text of the label relative to each other</short>
-        <descr>This does NOT affect the alignment of the label within its allocation. See <link id="TMiscControl.XAlign"/> for that.</descr>
+        <descr>This does NOT affect the alignment of the label within its allocation. See           <link id="TMiscControl.XAlign"/>
+for that.</descr>
         <seealso>
           <link id="TMiscControl.XAlign"/>
         </seealso>

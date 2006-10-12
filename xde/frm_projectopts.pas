@@ -12,8 +12,8 @@
 
 unit frm_ProjectOpts;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 
 interface
 

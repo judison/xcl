@@ -12,8 +12,8 @@
 
 unit FormatRead;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 
 interface
 

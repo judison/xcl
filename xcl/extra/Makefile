@@ -4,7 +4,7 @@ XCL_PATH=..
 XRC=$(XCL_PATH)/tools/xrc
 
 OPT=-Fu$(XCL_PATH)
-FPC=ppc386
+FPC=fpc
 
 all: gtkspell.ppu
 
