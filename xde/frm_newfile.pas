@@ -12,10 +12,10 @@
 
 unit frm_newfile;
 
-{$H+}
 {$IFDEF FPC}
   {$MODE ObjFpc}
 {$ENDIF}
+{$H+}
 
 interface
 

@@ -14,8 +14,8 @@
 
 unit xcldb;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 {$INLINE ON}
 
 interface

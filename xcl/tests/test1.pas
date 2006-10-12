@@ -12,8 +12,8 @@
 
 program test1;
 
-{$H+}
 {$Mode ObjFpc}
+{$H+}
 
 uses Classes, SysUtils, xcl, gtkspell, test1_xrc;
 

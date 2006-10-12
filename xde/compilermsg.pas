@@ -11,10 +11,10 @@
 *)
 unit CompilerMsg;
 
-{$H+}
 {$IFDEF FPC}
   {$MODE ObjFpc}
 {$ENDIF}
+{$H+}
 
 interface
 

@@ -11,8 +11,8 @@
 *)
 unit main;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 
 interface
 

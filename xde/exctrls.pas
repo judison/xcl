@@ -11,10 +11,10 @@
 *)
 unit ExCtrls;
 
-{$H+}
 {$IFDEF FPC}
   {$MODE ObjFpc}
 {$ENDIF}
+{$H+}
 
 interface
 

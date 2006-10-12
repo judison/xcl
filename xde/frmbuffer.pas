@@ -12,10 +12,10 @@
 
 unit FrmBuffer;
 
-{$H+}
 {$IFDEF FPC}
   {$MODE ObjFpc}
 {$ENDIF}
+{$H+}
 
 interface
 

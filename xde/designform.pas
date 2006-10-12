@@ -1,7 +1,7 @@
 unit designform;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 
 interface
 

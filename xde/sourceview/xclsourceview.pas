@@ -13,8 +13,8 @@
 
 unit XCLSourceView;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 
 // If you don't have gtksourceview add a line
 // "#DEFINE DISABLE_GTK_SOURCE_VIEW" in your fpc.cfg

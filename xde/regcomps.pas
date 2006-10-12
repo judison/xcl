@@ -12,8 +12,8 @@
 
 unit regcomps;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 
 {$IFNDEF WIN32}
   {$DEFINE USE_PQ_CONN}

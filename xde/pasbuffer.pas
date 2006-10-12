@@ -12,10 +12,10 @@
 
 unit PasBuffer;
 
-{$H+}
 {$IFDEF FPC}
   {$MODE ObjFpc}
 {$ENDIF}
+{$H+}
 
 interface
 

@@ -1,6 +1,6 @@
 XCL_PATH=..
 OPT=-Fu$(XCL_PATH)
-FPC=ppc386
+FPC=fpc
 XRC=./xrc
 
 all: xrc.o gtkpas.o xmkskel.o

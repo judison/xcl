@@ -11,8 +11,8 @@
 *)
 program dbtest;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 
 uses Classes, SysUtils, xcl,
      main, dbtest_xrc;

@@ -18,8 +18,8 @@
 
 unit gtkspell;
 
+{$MODE OBJFPC}
 {$H+}
-{$MODE ObjFpc}
 
 interface
 

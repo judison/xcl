@@ -11,10 +11,10 @@
 *)
 unit frm_main;
 
-{$H+}
 {$IFDEF FPC}
   {$MODE ObjFpc}
 {$ENDIF}
+{$H+}
 
 interface
 

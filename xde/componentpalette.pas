@@ -12,8 +12,8 @@
 
 unit componentpalette;
 
-{$H+}
 {$MODE ObjFpc}
+{$H+}
 
 interface
 
@@ -38,6 +38,15 @@ implementation
 
 uses regcomps;
 
+{ TComponentButton }
+type
+  TComponentButton = class(TButton)
+  private
+    FCompClass: TComponentClass;
+  public
+    property CompClass: TComponentClass read FCompClass write FCompClass;
+  end; 
+
 { TComponentPalette }
 
 constructor TComponentPalette.Create(AOwner: TComponent);
@@ -56,7 +65,7 @@ var
   VP: TViewPort;
 }
   Box: THBox;
-  Btn: TButton;
+  Btn: TComponentButton;
   Img: TImage;
   R: String;
 begin
@@ -85,12 +94,13 @@ begin
     Box.Parent := NBP;
     for J := 0 to pg.Classes.Count -1 do
     begin
-      Btn := TButton.Create(Self);
+      Btn := TComponentButton.Create(Self);
       Btn.Parent := Box;
       Btn.BoxExpand := False;
 
       Btn.Relief := rlfNone;
-      Btn.Tag := Integer(TComponentClass(pg.Classes[J]));
+      //Btn.Tag := Integer(TComponentClass(pg.Classes[J]));
+      Btn.CompClass := TComponentClass(pg.Classes[J]);
       Btn.OnClicked := @BtnClicked;
       Btn.ToolTip := TComponentClass(pg.Classes[J]).ClassName;
 
@@ -109,7 +119,8 @@ end;
 procedure TComponentPalette.BtnClicked(Sender: TObject);
 begin
   if Assigned(FOnClassSelected) then
-    FOnClassSelected(Self, TComponentClass(Pointer(TComponent(Sender).Tag)));
+    //FOnClassSelected(Self, TComponentClass(Pointer(TComponent(Sender).Tag)));
+    FOnClassSelected(Self, TComponentButton(Sender).CompClass);
 end;
 
 end.
