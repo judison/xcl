@@ -161,7 +161,7 @@ type
   end;
 
 const
-  GTKSignalHandlers_Count = 46;
+  GTKSignalHandlers_Count = 47;
   GTKSignalHandlers: array[0..GTKSignalHandlers_Count-1] of TSignalHandler = (
     //** GtkWidget Events ****************************************************
     (Signal: 'button-press-event';          Handler: @Hnd_GTK_GenericEvent),
@@ -174,6 +174,7 @@ const
     (Signal: 'event';                       Handler: @Hnd_GTK_GenericEvent),
     (Signal: 'event-after';                 Handler: @Hnd_GTK_GenericEvent),
     (Signal: 'expose-after';                Handler: @Hnd_GTK_GenericEvent),
+    (Signal: 'expose-event';                Handler: @Hnd_GTK_GenericEvent),
     (Signal: 'focus-in-event';              Handler: @Hnd_GTK_GenericEvent),
     (Signal: 'focus-out-event';             Handler: @Hnd_GTK_GenericEvent),
     (Signal: 'key-press-event';             Handler: @Hnd_GTK_GenericEvent),

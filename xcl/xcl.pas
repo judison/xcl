@@ -111,6 +111,7 @@ type
   {  |       \-} TButtonBox = class;
   {  |           |-} THButtonBox = class;
   {  |           \-} TVButtonBox = class;
+  {  |-} TDrawingArea = class;
   {  |-} TEntry = class;
   {  |   \-} TSpinButton = class;
   {  |-} TTextView = class;
@@ -150,6 +151,7 @@ type
   { *** Events *** }
   TSwitchPageEvent = procedure(Sender: TObject; NewPage: Integer) of object;
   TRowActivatedEvent = procedure(Sender: TObject; const Iter: TTreeIter; Column: TTreeViewColumn) of object;
+  TExposeEvent = procedure(Sender: TObject; Area: TRect) of object;
 
   { *** Enumerations *** }
   TResizeMode = (rmParent, rmQueue, rmImmediate);
@@ -273,6 +275,7 @@ initialization
   RegisterClass(TVBox);                 //OK
   RegisterClass(THButtonBox);           //OK
   RegisterClass(TVButtonBox);           //OK
+  RegisterClass(TDrawingArea);
   RegisterClass(TEntry);                //OK
   RegisterClass(TSpinButton);           //OK
   RegisterClass(TTextView);             //OK

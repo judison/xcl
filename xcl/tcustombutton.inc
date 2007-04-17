@@ -124,8 +124,8 @@ end;
 procedure TCustomButton.CreateControls;
 begin
   FAlignment := TAlignment.Create(Self);
-  FAlignment.XScale := False;
-  FAlignment.YScale := False;
+  FAlignment.XScale := 0;
+  FAlignment.YScale := 0;
 
   FBox := THBox.Create(Self);
   FBox.Parent := FAlignment;
