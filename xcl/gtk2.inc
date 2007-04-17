@@ -27,6 +27,10 @@ function g_closure_new_simple(sizeof_closure:guint; data:gpointer):PGClosure; cd
 // GDK
 
 function gdk_event_new(_type: TGdkEventType): PGdkEvent;  cdecl; external gdklib;
+procedure gdk_draw_pixbuf(drawable: PGdkDrawable; gc:PGdkGC; src:PGdkPixbuf;
+            xsrc:gint; ysrc:gint; xdest:gint; ydest:gint;
+            width:gint; height:gint; dither:TGdkRgbDither;
+            x_dither:gint; y_dither:gint); cdecl; external gdklib;
 
 //==
 function gtk_file_chooser_error_quark: TGQuark; cdecl; external gtklib;

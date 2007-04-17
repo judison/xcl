@@ -111,7 +111,10 @@
     procedure DoPopupMenu(var Msg: TGtkSig); message 'GTK:popup-menu'; virtual;
     procedure DoShow(var Msg: TGtkSig); message 'GTK:show'; virtual;
     procedure DoHide(var Msg: TGtkSig); message 'GTK:hide'; virtual;
-    procedure DoButtonPress(var Msg: TGtkSigEvent); message 'GTK:button-press-event'; virtual;
+    procedure DoRealize(var Msg: TGtkSig); message 'GTK:realize'; virtual;
+    procedure DoUnrealize(var Msg: TGtkSig); message 'GTK:unrealize'; virtual;
+    procedure DoExpose(var Msg: TGtkSigEvent); message 'GTK:button-press-event'; virtual;
+    procedure DoButtonPress(var Msg: TGtkSigEvent); message 'GTK:expose-event'; virtual;
     procedure DoFocusIn(var Msg: TGtkSigEvent); message 'GTK:focus-in-event'; virtual;
     procedure DoFocusOut(var Msg: TGtkSigEvent); message 'GTK:focus-out-event'; virtual;
   public
@@ -520,6 +523,21 @@ procedure TControl.DoHide(var Msg: TGtkSig);
 begin
   if Assigned(FOnHide) then
     FOnHide(Self);
+end;
+
+procedure TControl.DoRealize(var Msg: TGtkSig);
+begin
+  // nothing yet
+end;
+
+procedure TControl.DoUnrealize(var Msg: TGtkSig);
+begin
+  // nothing yet
+end;
+
+procedure TControl.DoExpose(var Msg: TGtkSigEvent);
+begin
+  // nothing yet
 end;
 
 procedure TControl.DoButtonPress(var Msg: TGtkSigEvent);

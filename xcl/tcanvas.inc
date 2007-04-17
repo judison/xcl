@@ -38,6 +38,9 @@
     procedure Rectangle(AFilled: Boolean; AX, AY, AWidth, AHeight: Integer); inline;
     procedure Arc(AFilled: Boolean; AX, AY, AWidth, AHeight, AAngle1, AAngle2: Integer); inline;
     //===============================
+    procedure DrawPixBuf(APixBuf: TPixBuf; ASrcX, ASrcY: Integer; ADstX, ADstY: Integer; AWidth, AHeight: Integer);
+    procedure DrawPixBuf(APixBuf: TPixBuf; ADstX, ADstY: Integer);
+    //===============================
     property Colormap: TColormap read FColorMap write SetColormap;
   published
     property Func: TCanvasFunction read FFunction write SetFunction default fnCopy;
@@ -155,6 +158,16 @@ end;
 procedure TCanvas.Arc(AFilled: Boolean; AX, AY, AWidth, AHeight, AAngle1, AAngle2: Integer); inline;
 begin
   gdk_draw_arc(FDrawable, FGC, LongInt(AFilled), AX, AY, AWidth, AHeight, AAngle1, AAngle2);
+end;
+
+procedure TCanvas.DrawPixBuf(APixBuf: TPixBuf; ASrcX, ASrcY: Integer; ADstX, ADstY: Integer; AWidth, AHeight: Integer);
+begin
+  gdk_draw_pixbuf(FDrawable, FGC, APixBuf.FGdkPixBuf, ASrcX, ASrcY, ADstX, ADstY, AWidth, AHeight, GDK_RGB_DITHER_NONE, 0, 0);
+end;
+
+procedure TCanvas.DrawPixBuf(APixBuf: TPixBuf; ADstX, ADstY: Integer);
+begin
+  gdk_draw_pixbuf(FDrawable, FGC, APixBuf.FGdkPixBuf, 0, 0, ADstX, ADstY, -1, -1, GDK_RGB_DITHER_NONE, 0, 0);
 end;
 
 {$ENDIF}

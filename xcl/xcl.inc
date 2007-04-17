@@ -65,6 +65,7 @@
 {$I ttable.inc}
 {$I tbox.inc}
 {$I tbuttonbox.inc}
+{$I tdrawingarea.inc}
 {$I tentry.inc}
 {$I tspinbutton.inc}
 {$I ttextview.inc}

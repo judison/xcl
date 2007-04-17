@@ -15,23 +15,23 @@
   private
     FXAlign: Single;
     FYAlign: Single;
-    FXScale: Boolean;
-    FYScale: Boolean;
+    FXScale: Single;
+    FYScale: Single;
     procedure SetXAlign(AValue: Single);
     procedure SetYAlign(AValue: Single);
-    procedure SetXScale(AValue: Boolean);
-    procedure SetYScale(AValue: Boolean);
+    procedure SetXScale(AValue: Single);
+    procedure SetYScale(AValue: Single);
     procedure SetAll; inline;
   protected
     procedure CreateHandle; override;
   public
     constructor Create(AOwner: TComponent); override;
-    procedure SetAll(AXAlign, AYAlign: Single; AXScale, AYScale: Boolean);
+    procedure SetAll(AXAlign, AYAlign, AXScale, AYScale: Single);
   published
     property XAlign: Single read FXAlign write SetXAlign default 0.5;
     property YAlign: Single read FYAlign write SetYAlign default 0.5;
-    property XScale: Boolean read FXScale write SetXScale default True;
-    property YScale: Boolean read FYScale write SetYScale default True;
+    property XScale: Single read FXScale write SetXScale default 1;
+    property YScale: Single read FYScale write SetYScale default 1;
   end;
 
 {** IMPLEMENTATION *******************}{$ENDIF}{$IFDEF INC_READ_IMPLEMENTATION}
@@ -42,26 +42,14 @@ constructor TAlignment.Create(AOwner: TComponent);
 begin
   FXAlign := 0.5;
   FYAlign := 0.5;
-  FXScale := True;
-  FYScale := True;
+  FXScale := 1;
+  FYScale := 1;
   inherited;
 end;
 
 procedure TAlignment.CreateHandle;
-var
-  LXScale, LYScale: Single;
 begin
-  if FXScale then
-    LXScale := 1
-  else
-    LXScale := 0;
-
-  if FYScale then
-    LYScale := 1
-  else
-    LYScale := 0;
-
-  Handle := gtk_alignment_new(FXAlign, FYAlign, LXScale, LYScale);
+  Handle := gtk_alignment_new(FXAlign, FYAlign, FXScale, FYScale);
 end;
 
 procedure TAlignment.SetXAlign(AValue: Single);
@@ -82,7 +70,7 @@ begin
   end;
 end;
 
-procedure TAlignment.SetXScale(AValue: Boolean);
+procedure TAlignment.SetXScale(AValue: Single);
 begin
   if FXScale <> AValue then
   begin
@@ -91,7 +79,7 @@ begin
   end;
 end;
 
-procedure TAlignment.SetYScale(AValue: Boolean);
+procedure TAlignment.SetYScale(AValue: Single);
 begin
   if FYScale <> AValue then
   begin
@@ -101,23 +89,11 @@ begin
 end;
 
 procedure TAlignment.SetAll; inline;
-var
-  LXScale, LYScale: Single;
 begin
-  if FXScale then
-    LXScale := 1
-  else
-    LXScale := 0;
-
-  if FYScale then
-    LYScale := 1
-  else
-    LYScale := 0;
-
-  gtk_alignment_set(Handle, FXAlign, FYAlign, LXScale, LYScale);
+  gtk_alignment_set(Handle, FXAlign, FYAlign, FXScale, FYScale);
 end;
 
-procedure TAlignment.SetAll(AXAlign, AYAlign: Single; AXScale, AYScale: Boolean);
+procedure TAlignment.SetAll(AXAlign, AYAlign, AXScale, AYScale: Single);
 begin
   FXAlign := AXAlign;
   FYAlign := AYAlign;

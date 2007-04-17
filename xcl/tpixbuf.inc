@@ -57,6 +57,11 @@ end;
 destructor TPixBuf.Destroy;
 begin
   FClientNotifyList.Free;
+  if Assigned(FGdkPixBuf) then
+    begin
+      g_object_unref(FGdkPixBuf);
+      FGdkPixBuf := nil;
+    end;
   inherited;
 end;
 
@@ -106,8 +111,9 @@ begin
 
       RaiseGError(err);
 
-      if Assigned(FGdkPixBuf) then
-        g_object_ref(FGdkPixBuf);
+      // acho q nao precisa disso
+      //if Assigned(FGdkPixBuf) then
+      //  g_object_ref(FGdkPixBuf);
     end;
     Changed;
   end;
