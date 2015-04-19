@@ -6,4 +6,4 @@ This project is currently outdated and not maintained.
   A GTK+ Based Object Pascal Component Library for GUI Development with FreePascal.
   
 ### XDE is XCL's Development Environment
-  A XCL Based Object Pascal Development Environment for Rapid Application Development with FreePascal
+  A XCL Based Object Pascal Development Environment for Rapid Application Development with FreePascal.
